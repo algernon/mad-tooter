@@ -58,8 +58,6 @@ const styles = theme => ({
     }),
   },
   menuButton: {
-      marginLeft: 12,
-      marginRight: 36,
       transition: theme.transitions.create(['color'], {
           easing: theme.transitions.easing.ease,
           duration: theme.transitions.duration.longest,
@@ -151,7 +149,7 @@ class MiniDrawer extends React.Component {
       <div className={classes.root}>
         <div className={classes.appFrame}>
           <AppBar className={classNames(classes.appBar, this.state.open && classes.appBarShift)} color="primary">
-            <Toolbar>
+            <Toolbar disableGutters>
               <IconButton
                 color="contrast"
                 aria-label="open drawer"
