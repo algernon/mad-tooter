@@ -54,7 +54,6 @@ const styles = theme => ({
     },
     expandOpen: {
         transform: 'rotate(180deg)',
-        color: theme.palette.action.disabled,
     },
     content: {
         paddingLeft: theme.spacing.unit * 2,
@@ -154,7 +153,6 @@ class TootCardMeta extends React.Component {
     render() {
         const classes = this.props.classes;
         const children = React.Children.toArray(this.props.children);
-        const icon = this.props.icon || 'info';
 
         return (
             <div>
@@ -167,7 +165,7 @@ class TootCardMeta extends React.Component {
                           className={classnames(classes.expand, {
                               [classes.expandOpen]: this.state.expanded,
                           })}>
-                <Icon>{icon}</Icon>
+                <Icon>keyboard_arrow_right</Icon>
               </IconButton>
             </div>
         );
@@ -255,7 +253,7 @@ class TootCard extends React.Component {
                              <span className="disabled">{this.props.authorID}</span>
                        </span>
                            <div className={classes.actor}>
-                                 <TootCardMeta classes={classes} icon="link">
+                                 <TootCardMeta classes={classes}>
                                        {mentionWidget} {boostWidget} {favWidget}
                                  </TootCardMeta>
                                </div>
@@ -282,7 +280,7 @@ class TootCard extends React.Component {
                 </Button>
                 <div className={classes.flexGrow} />
                 <div className={classes.meta}>
-                  <TootCardMeta classes={classes} icon="contacts">
+                  <TootCardMeta classes={classes}>
                     <Chip classes={classes.chip}
                           avatar={<Avatar className="default-account"><Icon className={classes.avatarIcon}>person</Icon></Avatar>}
                           label="@algernon"
