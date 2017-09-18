@@ -22,6 +22,7 @@ import TextField from 'material-ui/TextField';
 import Button from 'material-ui/Button';
 import ButtonBase from 'material-ui/ButtonBase';
 import Tooltip from 'material-ui/Tooltip';
+import { red, lime, green, lightGreen, pink, yellow, orange, amber } from 'material-ui/colors';
 
 const drawerWidth = 240;
 
@@ -57,8 +58,15 @@ const styles = theme => ({
     }),
   },
   menuButton: {
-    marginLeft: 12,
-    marginRight: 36,
+      marginLeft: 12,
+      marginRight: 36,
+      transition: theme.transitions.create(['color'], {
+          easing: theme.transitions.easing.ease,
+          duration: theme.transitions.duration.longest,
+      }),
+      '&:hover': {
+          color: theme.palette.primary.A100,
+      },
   },
   hide: {
     display: 'none',
@@ -113,7 +121,12 @@ const styles = theme => ({
         borderRadius: 64,
         '&:hover': {
             backgroundColor: 'inherit',
+            color: theme.palette.primary.A100,
         },
+        transition: theme.transitions.create(['color'], {
+            easing: theme.transitions.easing.ease,
+            duration: theme.transitions.duration.longest,
+        }),
     },
 });
 
