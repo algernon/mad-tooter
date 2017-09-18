@@ -131,6 +131,9 @@ const styles = theme => ({
             marginLeft: theme.spacing.unit,
         },
     },
+    avatar: {
+        cursor: 'pointer',
+    },
 });
 
 class TootCard extends React.Component {
@@ -212,6 +215,7 @@ class TootCard extends React.Component {
                           title: classes.cardTitle}}
                 className={classes.header}
                 avatar={<Avatar className={classes.avatar}
+                                    onClick={handleClick}
                                 src="https://trunk.mad-scientist.club/system/accounts/avatars/000/000/001/original/e54cf895c79a893c.jpg" />}
                 title={<span>
                        <span onClick={handleClick} className={classes.cardAuthor}>
