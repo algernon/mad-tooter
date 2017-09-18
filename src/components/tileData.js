@@ -10,17 +10,13 @@ export const staticItems = (
     <div>
       <ListItem button>
         <ListItemIcon>
-          <Tooltip label="Search" placement="bottom">
-            <Icon>search</Icon>
-          </Tooltip>
+          <Icon>search</Icon>
         </ListItemIcon>
         <ListItemText primary="Search" />
       </ListItem>
       <ListItem button>
         <ListItemIcon>
-          <Tooltip label="Home" placement="right">
-            <Icon color="accent">home</Icon>
-          </Tooltip>
+          <Icon color="accent">home</Icon>
         </ListItemIcon>
         <ListItemText primary="Timeline" />
       </ListItem>
