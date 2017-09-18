@@ -221,6 +221,15 @@ class MiniDrawer extends React.Component {
                 <ListItemText primary="Federated timeline" />
               </ListItem>
             </List>
+            <Divider />
+            <List className={classes.list}>
+              <ListItem button>
+                <ListItemIcon>
+                  <Icon>settings</Icon>
+                </ListItemIcon>
+                <ListItemText primary="Settings" />
+              </ListItem>
+            </List>
           </Drawer>
           <main className={classes.content}>
             <List className={classes.list} width="100%" dense>
