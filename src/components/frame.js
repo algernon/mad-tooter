@@ -59,7 +59,7 @@ const styles = theme => ({
     display: 'none',
   },
   drawerPaper: {
-    position: 'relative',
+    position: 'fixed',
     height: '100%',
       width: drawerWidth,
     transition: theme.transitions.create('width', {
@@ -94,6 +94,7 @@ const styles = theme => ({
     padding: 24,
     height: 'calc(100% - 56px)',
       marginTop: 56,
+      marginLeft: 60,
     [theme.breakpoints.up('sm')]: {
       height: 'calc(100% - 64px)',
       marginTop: 64,

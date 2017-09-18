@@ -31,10 +31,10 @@ const styles = theme => ({
             marginLeft: theme.spacing.unit,
         },
         '.boosted': {
-            backgroundColor: green['A100'],
+            //backgroundColor: green[50],
         },
         '.favourited': {
-            backgroundColor: pink[50],
+            //backgroundColor: pink[50],
         },
         '.default-account': {
             backgroundColor: `${theme.palette.primary['A100']} !important`,
