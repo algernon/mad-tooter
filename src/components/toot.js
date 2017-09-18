@@ -7,10 +7,11 @@ import Chip from 'material-ui/Chip';
 import Avatar from 'material-ui/Avatar';
 import Button from 'material-ui/Button';
 import Typography from 'material-ui/Typography';
-import { red, lime, green, lightGreen, pink } from 'material-ui/colors';
+import { red, lime, green, lightGreen, pink, yellow, orange, amber } from 'material-ui/colors';
 import Icon from 'material-ui/Icon';
 import IconButton from 'material-ui/IconButton';
 import Tooltip from 'material-ui/Tooltip';
+import Divider from 'material-ui/Divider';
 
 import classnames from 'classnames';
 import Card, { CardHeader, CardMedia, CardContent, CardActions } from 'material-ui/Card';
@@ -18,6 +19,15 @@ import Collapse from 'material-ui/transitions/Collapse';
 
 
 const styles = theme => ({
+    divider: {
+        marginTop: theme.spacing.unit * 2,
+    },
+    actionButton: {
+        transition: 'color 0.3s ease',
+        '&:hover': {
+            color: theme.palette.secondary.A400,
+        },
+    },
     card: {
         width: '100%',
     },
@@ -41,6 +51,7 @@ const styles = theme => ({
         paddingRight: theme.spacing.unit * 2,
         paddingTop: 0,
         paddingBottom: 0,
+        cursor: 'pointer',
     },
     header: {
         paddingLeft: theme.spacing.unit * 2,
@@ -54,12 +65,18 @@ const styles = theme => ({
     },
     boostActorChip: {
         backgroundColor: green.A400,
+        '&:hover': {
+            backgroundColor: green.A700,
+        }
     },
     boostActorChipAvatar: {
         backgroundColor: green.A200,
     },
     favActorChip: {
         backgroundColor: pink.A100,
+        '&:hover': {
+            backgroundColor: pink.A200,
+        }
     },
     favActorChipAvatar: {
         backgroundColor: pink[100],
@@ -67,6 +84,10 @@ const styles = theme => ({
     avatarIcon: {
         width: 'auto',
         height: 'auto',
+    },
+    meta: {
+        display: 'flex',
+        paddingRight: theme.spacing.unit * 2,
     },
 });
 
@@ -109,41 +130,47 @@ class SimpleCard extends React.Component {
         }
 
         return (
-            <Card className={cardClasses}>
+            <Card className={cardClasses}
+                  onClick={handleClick}>
               <CardHeader
                 className={classes.header}
                 avatar={<Avatar className={classes.avatar}
                                 src="https://trunk.mad-scientist.club/system/accounts/avatars/000/000/001/original/e54cf895c79a893c.jpg" />}
                 title={<span>{this.props.authorName} <span className="disabled">{this.props.authorID}</span> <div className={classes.actor}> {extraWidget} </div> </span>}
                 onClick={handleClick}
-                subheader={this.props.statusTime} />
+                subheader={this.props.statusTime}
+                />
               <CardContent className={classes.content}>
                   <Typography type="body1">
                     {children}
                   </Typography>
-                </CardContent>
-                <CardActions disableActionSpacing>
-                  <Button dense>
-                    <Icon>reply</Icon>
-                  </Button>
-                  <Button dense>
-                    <Icon>repeat</Icon>
-                  </Button>
-                  <Button dense>
-                    <Icon>star</Icon>
-                  </Button>
-                  <div className={classes.flexGrow} />
-                  <Icon className="toot-meta">account_circle</Icon>
+                  <Divider className={classes.divider} />
+              </CardContent>
+              <CardActions disableActionSpacing>
+                <Button dense className={classes.actionButton}>
+                  <Icon>reply</Icon>
+                </Button>
+                <Button dense className={classes.actionButton}>
+                  <Icon>repeat</Icon>
+                </Button>
+                <Button dense className={classes.actionButton}>
+                  <Icon>star</Icon>
+                </Button>
+                <div className={classes.flexGrow} />
+                <div className={classes.meta}>
                   <Chip classes={classes.chip}
-                        label="@algernon"
-                        onClick={handleClick}
-                        className={`${classes.chip} default-account`}
-                        />
-                  <Chip classes={classes.chip}
-                        label="@another"
-                        onClick={handleClick}
-                        className={classes.chip}
-                        />
+                        avatar={<Avatar className="default-account"><Icon className={classes.avatarIcon}>person</Icon></Avatar>}
+                          label="@algernon"
+                          onClick={handleClick}
+                          className={`${classes.chip}`}
+                          />
+                    <Chip classes={classes.chip}
+                          avatar={<Avatar><Icon className={classes.avatarIcon}>person</Icon></Avatar>}
+                          label="@another"
+                          onClick={handleClick}
+                          className={classes.chip}
+                          />
+                  </div>
                 </CardActions>
               </Card>
         );
