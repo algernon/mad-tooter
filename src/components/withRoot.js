@@ -46,7 +46,7 @@ const styles = theme => ({
             backgroundColor: "transparent",
         },
         '::-webkit-scrollbar-thumb': {
-            backgroundColor: `${theme.palette.action.disabled}`,
+            backgroundColor: theme.palette.action.disabled,
         },
     },
 });

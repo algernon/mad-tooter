@@ -8,18 +8,19 @@ import classNames from 'classnames';
 import Drawer from 'material-ui/Drawer';
 import AppBar from 'material-ui/AppBar';
 import Toolbar from 'material-ui/Toolbar';
-import List, { ListSubheader, ListItem } from 'material-ui/List';
+import List, { ListSubheader, ListItem, ListItemIcon, ListItemText } from 'material-ui/List';
 import { GridList, GridListTile } from 'material-ui/GridList';
 import Typography from 'material-ui/Typography';
 import Divider from 'material-ui/Divider';
 import IconButton from 'material-ui/IconButton';
 import MenuIcon from 'material-ui-icons/Menu';
 import ChevronLeftIcon from 'material-ui-icons/ChevronLeft';
-import { staticItems, timeLineItems } from './tileData';
 import TootCard from './toot';
 import TootButton from './tootButton';
 import Icon from 'material-ui/Icon';
 import TextField from 'material-ui/TextField';
+import Button from 'material-ui/Button';
+import ButtonBase from 'material-ui/ButtonBase';
 
 const drawerWidth = 240;
 
@@ -106,6 +107,13 @@ const styles = theme => ({
     flex: {
         flex: 1,
     },
+    titleButton: {
+        textTransform: 'none',
+        borderRadius: 64,
+        '&:hover': {
+            backgroundColor: 'inherit',
+        },
+    },
 });
 
 class MiniDrawer extends React.Component {
@@ -137,9 +145,14 @@ class MiniDrawer extends React.Component {
                 onClick={this.handleDrawerOpen}>
                 <Icon>whatshot</Icon>
               </IconButton>
-              <Typography type="title" color="inherit" noWrap className={classes.flex}>
-                Firehose
-              </Typography>
+              <div className={classes.flex}>
+                <Button color="contrast"
+                        className={classes.titleButton}>
+                  <Typography type="title" color="inherit" noWrap>
+                    Firehose
+                  </Typography>
+                </Button>
+              </div>
               <TextField
                 id="search"
                 type="search"
@@ -167,9 +180,35 @@ class MiniDrawer extends React.Component {
               </div>
             </div>
             <Divider />
-            <List className={classes.list}>{staticItems}</List>
+            <List className={classes.list}>
+              <ListItem button>
+                <ListItemIcon>
+                  <Icon color="accent">whatshot</Icon>
+                </ListItemIcon>
+                <ListItemText primary="Firehose" />
+              </ListItem>
+              <ListItem button>
+                <ListItemIcon>
+                  <Icon>people</Icon>
+                </ListItemIcon>
+                <ListItemText primary="Mentions" />
+              </ListItem>
+            </List>
             <Divider />
-            <List className={classes.list}>{timeLineItems}</List>
+            <List className={classes.list}>
+              <ListItem button>
+                <ListItemIcon>
+                  <Icon>domain</Icon>
+                </ListItemIcon>
+                <ListItemText primary="Local timeline" />
+              </ListItem>
+              <ListItem button>
+                <ListItemIcon>
+                  <Icon>public</Icon>
+                </ListItemIcon>
+                <ListItemText primary="Federated timeline" />
+              </ListItem>
+            </List>
           </Drawer>
           <main className={classes.content}>
             <List className={classes.list} width="100%" dense>
