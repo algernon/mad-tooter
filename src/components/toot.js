@@ -121,6 +121,15 @@ const styles = theme => ({
     },
     cardTitle: {
         lineHeight: "16px",
+        cursor: 'pointer',
+    },
+    cardAuthor: {
+        '&:hover .author': {
+            textDecoration: 'underline',
+        },
+        '& .disabled': {
+            marginLeft: theme.spacing.unit,
+        },
     },
 });
 
@@ -205,8 +214,8 @@ class TootCard extends React.Component {
                 avatar={<Avatar className={classes.avatar}
                                 src="https://trunk.mad-scientist.club/system/accounts/avatars/000/000/001/original/e54cf895c79a893c.jpg" />}
                 title={<span>
-                       <span onClick={handleClick}>
-                             {this.props.authorName}
+                       <span onClick={handleClick} className={classes.cardAuthor}>
+                             <span className="author">{this.props.authorName}</span>
                              <span className="disabled">{this.props.authorID}</span>
                        </span>
                            <div className={classes.actor}>
