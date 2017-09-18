@@ -3,6 +3,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import { withStyles } from 'material-ui/styles';
+import classNames from 'classnames';
 import Chip from 'material-ui/Chip';
 import Avatar from 'material-ui/Avatar';
 import Button from 'material-ui/Button';
@@ -18,7 +19,10 @@ import Paper from 'material-ui/Paper';
 import classnames from 'classnames';
 import Card, { CardHeader, CardMedia, CardContent, CardActions } from 'material-ui/Card';
 import Collapse from 'material-ui/transitions/Collapse';
+import Slide from 'material-ui/transitions/Slide';
 
+import Popover from 'material-ui/Popover';
+import Drawer from 'material-ui/Drawer';
 
 const styles = theme => ({
     divider: {
@@ -44,12 +48,13 @@ const styles = theme => ({
     },
     expand: {
         transform: 'rotate(0deg)',
-        transition: theme.transitions.create('transform', {
+        transition: theme.transitions.create(['transform', 'color'], {
             duration: theme.transitions.duration.shortest,
         }),
     },
     expandOpen: {
         transform: 'rotate(180deg)',
+        color: theme.palette.action.disabled,
     },
     content: {
         paddingLeft: theme.spacing.unit * 2,
@@ -134,15 +139,42 @@ const styles = theme => ({
     avatar: {
         cursor: 'pointer',
     },
+    tootCardMeta: {
+        display: 'inline-flex',
+    },
 });
 
-class TootCard extends React.Component {
+class TootCardMeta extends React.Component {
     state = { expanded: false };
 
     handleExpandClick = () => {
         this.setState({ expanded: !this.state.expanded });
-    };
+    }
 
+    render() {
+        const classes = this.props.classes;
+        const children = React.Children.toArray(this.props.children);
+        const icon = this.props.icon || 'info';
+
+        return (
+            <div>
+              <Slide in={this.state.expanded} direction="right">
+                <Paper elevation="0" square className={classes.tootCardMeta}>
+                  {children}
+                </Paper>
+              </Slide>
+              <IconButton onClick={this.handleExpandClick}
+                          className={classnames(classes.expand, {
+                              [classes.expandOpen]: this.state.expanded,
+                          })}>
+                <Icon>{icon}</Icon>
+              </IconButton>
+            </div>
+        );
+    }
+}
+
+class TootCard extends React.Component {
     render() {
         const classes = this.props.classes;
         const children = React.Children.toArray(this.props.children);
@@ -223,7 +255,9 @@ class TootCard extends React.Component {
                              <span className="disabled">{this.props.authorID}</span>
                        </span>
                            <div className={classes.actor}>
-                                 {mentionWidget} {boostWidget} {favWidget}
+                                 <TootCardMeta classes={classes} icon="link">
+                                       {mentionWidget} {boostWidget} {favWidget}
+                                 </TootCardMeta>
                                </div>
               </span>}
                 subheader={this.props.statusTime}
@@ -248,8 +282,9 @@ class TootCard extends React.Component {
                 </Button>
                 <div className={classes.flexGrow} />
                 <div className={classes.meta}>
-                  <Chip classes={classes.chip}
-                        avatar={<Avatar className="default-account"><Icon className={classes.avatarIcon}>person</Icon></Avatar>}
+                  <TootCardMeta classes={classes} icon="contacts">
+                    <Chip classes={classes.chip}
+                          avatar={<Avatar className="default-account"><Icon className={classes.avatarIcon}>person</Icon></Avatar>}
                           label="@algernon"
                           onClick={handleClick}
                           className={`${classes.chip}`}
@@ -260,6 +295,7 @@ class TootCard extends React.Component {
                           onClick={handleClick}
                           className={classes.chip}
                           />
+                    </TootCardMeta>
                   </div>
                 </CardActions>
               </Card>
