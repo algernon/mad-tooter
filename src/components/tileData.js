@@ -10,15 +10,9 @@ export const staticItems = (
     <div>
       <ListItem button>
         <ListItemIcon>
-          <Icon>search</Icon>
+          <Icon color="accent">whatshot</Icon>
         </ListItemIcon>
-        <ListItemText primary="Search" />
-      </ListItem>
-      <ListItem button>
-        <ListItemIcon>
-          <Icon color="accent">home</Icon>
-        </ListItemIcon>
-        <ListItemText primary="Timeline" />
+        <ListItemText primary="Firehose" />
       </ListItem>
       <ListItem button>
         <ListItemIcon>
@@ -35,15 +29,13 @@ export const timeLineItems = (
         <ListItemIcon>
           <Icon>domain</Icon>
         </ListItemIcon>
-        <ListItemText primary="Timeline"
-                      secondary="Local" />
+        <ListItemText primary="Local timeline" />
       </ListItem>
       <ListItem button>
         <ListItemIcon>
           <Icon>public</Icon>
         </ListItemIcon>
-        <ListItemText primary="Timeline"
-                      secondary="Federated" />
+        <ListItemText primary="Federated timeline" />
       </ListItem>
     </div>
 );

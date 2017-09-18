@@ -1,6 +1,7 @@
 /* eslint-disable flowtype/require-valid-file-annotation */
 
 import React from 'react';
+import { findDOMNode } from 'react-dom';
 import PropTypes from 'prop-types';
 import { withStyles } from 'material-ui/styles';
 import classNames from 'classnames';
@@ -17,8 +18,10 @@ import ChevronLeftIcon from 'material-ui-icons/ChevronLeft';
 import { staticItems, timeLineItems } from './tileData';
 import TootCard from './toot';
 import TootButton from './tootButton';
+import Icon from 'material-ui/Icon';
+import TextField from 'material-ui/TextField';
 
-const drawerWidth = 170;
+const drawerWidth = 240;
 
 const styles = theme => ({
   root: {
@@ -94,17 +97,20 @@ const styles = theme => ({
     padding: 24,
     height: 'calc(100% - 48px)',
       marginTop: 48,
-      marginLeft: 60,
+      //marginLeft: 60,
     [theme.breakpoints.up('sm')]: {
       height: 'calc(100% - 48px)',
       marginTop: 48,
     },
   },
+    flex: {
+        flex: 1,
+    },
 });
 
 class MiniDrawer extends React.Component {
   state = {
-    open: false,
+      open: false,
   };
 
   handleDrawerOpen = () => {
@@ -115,6 +121,7 @@ class MiniDrawer extends React.Component {
     this.setState({ open: false });
   };
 
+
   render() {
     const classes = this.props.classes;
 
@@ -122,24 +129,33 @@ class MiniDrawer extends React.Component {
       <div className={classes.root}>
         <div className={classes.appFrame}>
           <AppBar className={classNames(classes.appBar, this.state.open && classes.appBarShift)} color="primary">
-            <Toolbar disableGutters={!this.state.open}>
+            <Toolbar>
               <IconButton
                 color="contrast"
                 aria-label="open drawer"
-                onClick={this.handleDrawerOpen}
-                className={classNames(classes.menuButton, this.state.open && classes.hide)}
-              >
-                <MenuIcon />
+                className={classes.menuButton}
+                onClick={this.handleDrawerOpen}>
+                <Icon>whatshot</Icon>
               </IconButton>
-              <Typography type="title" color="inherit" noWrap>
-                Timeline
+              <Typography type="title" color="inherit" noWrap className={classes.flex}>
+                Firehose
               </Typography>
+              <TextField
+                id="search"
+                type="search"
+                placeholder="Search text..."
+                className={classes.textField}
+                margin="dense"
+                />
+              <IconButton color="default">
+                <Icon>search</Icon>
+              </IconButton>
             </Toolbar>
           </AppBar>
           <Drawer
-            type="permanent"
+            type="temporary"
             classes={{
-              paper: classNames(classes.drawerPaper, !this.state.open && classes.drawerPaperClose),
+                paper: classes.drawerPaper
             }}
             open={this.state.open}
           >

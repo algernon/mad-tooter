@@ -102,7 +102,10 @@ const styles = theme => ({
         paddingRight: theme.spacing.unit * 2,
     },
     cardSubHeader: {
-        fontSize: "12px",
+        fontSize: "11px",
+        lineHeight: "16px",
+    },
+    cardTitle: {
         lineHeight: "16px",
     },
 });
@@ -170,7 +173,8 @@ class TootCard extends React.Component {
         return (
             <Card className={cardClasses}>
               <CardHeader
-                classes={{subheader: classes.cardSubHeader}}
+                classes={{subheader: classes.cardSubHeader,
+                          title: classes.cardTitle}}
                 className={classes.header}
                 avatar={<Avatar className={classes.avatar}
                                 src="https://trunk.mad-scientist.club/system/accounts/avatars/000/000/001/original/e54cf895c79a893c.jpg" />}
