@@ -76,7 +76,9 @@ const styles = theme => ({
         float: 'right',
     },
     boostActorChip: {
+        marginLeft: theme.spacing.unit,
         backgroundColor: green.A400,
+        color: '#fafafa',
         '&:hover': {
             backgroundColor: green.A700,
         }
@@ -84,8 +86,20 @@ const styles = theme => ({
     boostActorChipAvatar: {
         backgroundColor: green.A200,
     },
+    mention: {
+        height: 32,
+        display: 'flex',
+        alignItems: 'center',
+    },
+    mentionAvatar: {
+        backgroundColor: theme.palette.primary.A400,
+        boxShadow: "0 0 0 0 rgba(29, 233, 182, 0.7)",
+        animation: "pulse 1.25s infinite cubic-bezier(0.66, 0, 0, 1)",
+    },
     favActorChip: {
+        marginLeft: theme.spacing.unit,
         backgroundColor: pink.A100,
+        color: '#fafafa',
         '&:hover': {
             backgroundColor: pink.A200,
         }
@@ -127,25 +141,37 @@ class TootCard extends React.Component {
 
         let cardClasses = `${classes.card}`;
 
-        let extraWidget = null;
-        if (this.props.boostedBy) {
-            extraWidget = (
+        let boostWidget = null;
+        if (this.props.boostCount) {
+            boostWidget = (
                 <Chip classes={classes.boostActorChip}
-                      label={this.props.boostedBy}
+                      label={this.props.boostCount}
                       avatar={<Avatar className={classes.boostActorChipAvatar}><Icon className={classes.avatarIcon}>share</Icon></Avatar>}
                       className={classes.boostActorChip} />
             )
             cardClasses += " boosted";
         }
 
-        if (this.props.favedBy) {
-            extraWidget = (
+        let favWidget = null;
+        if (this.props.favCount) {
+            favWidget = (
                 <Chip classes={classes.favActorChip}
-                      label={this.props.favedBy}
+                      label={this.props.favCount}
                       avatar={<Avatar className={classes.favActorChipAvatar}><Icon className={classes.avatarIcon}>favorite</Icon></Avatar>}
                       className={classes.favActorChip} />
             )
             cardClasses += " favourited";
+        }
+
+        let mentionWidget = null;
+        if (this.props.mentioned) {
+            mentionWidget = (
+                <div className={classes.mention}>
+                  <Avatar className={classes.mentionAvatar}>
+                    <Icon className={classes.avatarIcon}>notifications</Icon>
+                  </Avatar>
+                </div>
+            )
         }
 
         let mediaWidget = null;
@@ -178,7 +204,15 @@ class TootCard extends React.Component {
                 className={classes.header}
                 avatar={<Avatar className={classes.avatar}
                                 src="https://trunk.mad-scientist.club/system/accounts/avatars/000/000/001/original/e54cf895c79a893c.jpg" />}
-                title={<span><span onClick={handleClick}>{this.props.authorName} <span className="disabled">{this.props.authorID}</span></span> <div className={classes.actor}> {extraWidget} </div> </span>}
+                title={<span>
+                       <span onClick={handleClick}>
+                             {this.props.authorName}
+                             <span className="disabled">{this.props.authorID}</span>
+                       </span>
+                           <div className={classes.actor}>
+                                 {mentionWidget} {boostWidget} {favWidget}
+                               </div>
+              </span>}
                 subheader={this.props.statusTime}
                 />
               <CardContent className={classes.content}

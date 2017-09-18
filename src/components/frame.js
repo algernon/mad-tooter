@@ -21,6 +21,7 @@ import Icon from 'material-ui/Icon';
 import TextField from 'material-ui/TextField';
 import Button from 'material-ui/Button';
 import ButtonBase from 'material-ui/ButtonBase';
+import Tooltip from 'material-ui/Tooltip';
 
 const drawerWidth = 240;
 
@@ -215,24 +216,36 @@ class MiniDrawer extends React.Component {
               <ListItem>
                 <TootCard authorName="Gergely Nagy" withMedia
                             authorID="@algernon"
-                            statusTime="2017-09-16 15:05:05"
-                            favedBy="someone">
-                  Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor
-                  incididunt ut labore et dolore magna aliqua.
+                          statusTime="2017-09-16 15:05:05"
+                          favCount="100"
+                          boostCount="10"
+                          mentioned>
+                  <p>
+                    Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor
+                    incididunt ut labore et dolore magna aliqua.
+                  </p>
+                  <p>
+                    <Tooltip label="algernon@trunk.mad-scientist.club" placement="bottom">
+                      <span className="h-card">
+                        <a href="#" className="u-url mention">@<span>algernon</span></a>
+                      </span>
+                    </Tooltip>
+                  </p>
                 </TootCard>
               </ListItem>
               <ListItem>
                 <TootCard authorName="Gergely Nagy"
-                            authorID="@algernon"
-                            statusTime="2017-09-16 15:05:05"
-                            boostedBy="someone">
+                          authorID="@algernon"
+                          statusTime="2017-09-16 15:05:05"
+                          favCount="10">
                   Something wicked this way comes.
                 </TootCard>
               </ListItem>
               <ListItem>
                 <TootCard authorName="Gergely Nagy"
-                            authorID="@algernon"
-                            statusTime="2017-09-16 15:05:05">
+                          authorID="@algernon"
+                          statusTime="2017-09-16 15:05:05"
+                          boostCount="2">
                   Something in the way
                 </TootCard>
               </ListItem>

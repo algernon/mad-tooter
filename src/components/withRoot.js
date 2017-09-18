@@ -48,6 +48,11 @@ const styles = theme => ({
         '::-webkit-scrollbar-thumb': {
             backgroundColor: theme.palette.action.disabled,
         },
+        '.mention': {
+            color: theme.palette.primary[500],
+            textDecoration: 'none',
+            borderBottom: `1px dotted ${theme.palette.primary[500]}`,
+        },
     },
 });
 
