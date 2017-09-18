@@ -158,7 +158,7 @@ class MiniDrawer extends React.Component {
           <main className={classes.content}>
             <List className={classes.list} width="100%" dense>
               <ListItem>
-                <SimpleCard authorName="Gergely Nagy"
+                <SimpleCard authorName="Gergely Nagy" withMedia
                             authorID="@algernon"
                             statusTime="2017-09-16 15:05:05"
                             favedBy="someone">

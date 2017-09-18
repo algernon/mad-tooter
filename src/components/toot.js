@@ -12,6 +12,8 @@ import Icon from 'material-ui/Icon';
 import IconButton from 'material-ui/IconButton';
 import Tooltip from 'material-ui/Tooltip';
 import Divider from 'material-ui/Divider';
+import GridList, { GridListTile } from 'material-ui/GridList';
+import Paper from 'material-ui/Paper';
 
 import classnames from 'classnames';
 import Card, { CardHeader, CardMedia, CardContent, CardActions } from 'material-ui/Card';
@@ -27,6 +29,9 @@ const styles = theme => ({
         '&:hover': {
             color: theme.palette.secondary.A400,
         },
+    },
+    galleryImage: {
+        cursor: 'zoom-in',
     },
     card: {
         width: '100%',
@@ -52,6 +57,13 @@ const styles = theme => ({
         paddingTop: 0,
         paddingBottom: 0,
         cursor: 'pointer',
+    },
+    media: {
+        paddingLeft: theme.spacing.unit * 2,
+        paddingRight: theme.spacing.unit * 2,
+        paddingTop: theme.spacing.unit,
+        paddingBottom: 0,
+        cursor: 'zoom',
     },
     header: {
         paddingLeft: theme.spacing.unit * 2,
@@ -88,6 +100,10 @@ const styles = theme => ({
     meta: {
         display: 'flex',
         paddingRight: theme.spacing.unit * 2,
+    },
+    cardSubHeader: {
+        fontSize: "12px",
+        lineHeight: "16px",
     },
 });
 
@@ -129,23 +145,46 @@ class SimpleCard extends React.Component {
             cardClasses += " favourited";
         }
 
+        let mediaWidget = null;
+        if (this.props.withMedia) {
+            mediaWidget = (
+                <CardContent className={classes.media}>
+                  <Paper square>
+                    <GridList>
+                      <GridListTile>
+                        <a href="#">
+                          <img className={classes.galleryImage}
+                               src="https://trunk.mad-scientist.club/system/media_attachments/files/000/278/684/small/4abe59b20006b5fe.png?1505735848" /></a>
+                      </GridListTile>
+                      <GridListTile>
+                        <a href="#">
+                          <img className={classes.galleryImage}
+                            src="https://trunk.mad-scientist.club/system/media_attachments/files/000/278/685/small/1be520e07214a553.png?1505735881" /></a>
+                      </GridListTile>
+                    </GridList>
+                  </Paper>
+                </CardContent>
+            );
+        }
+
         return (
-            <Card className={cardClasses}
-                  onClick={handleClick}>
+            <Card className={cardClasses}>
               <CardHeader
+                classes={{subheader: classes.cardSubHeader}}
                 className={classes.header}
                 avatar={<Avatar className={classes.avatar}
                                 src="https://trunk.mad-scientist.club/system/accounts/avatars/000/000/001/original/e54cf895c79a893c.jpg" />}
-                title={<span>{this.props.authorName} <span className="disabled">{this.props.authorID}</span> <div className={classes.actor}> {extraWidget} </div> </span>}
-                onClick={handleClick}
+                title={<span><span onClick={handleClick}>{this.props.authorName} <span className="disabled">{this.props.authorID}</span></span> <div className={classes.actor}> {extraWidget} </div> </span>}
                 subheader={this.props.statusTime}
                 />
-              <CardContent className={classes.content}>
+              <CardContent className={classes.content}
+                           onClick={handleClick}>
                   <Typography type="body1">
                     {children}
                   </Typography>
-                  <Divider className={classes.divider} />
               </CardContent>
+              {mediaWidget}
+              <Divider className={classes.divider} />
               <CardActions disableActionSpacing>
                 <Button dense className={classes.actionButton}>
                   <Icon>reply</Icon>
