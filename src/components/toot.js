@@ -107,7 +107,7 @@ const styles = theme => ({
     },
 });
 
-class SimpleCard extends React.Component {
+class TootCard extends React.Component {
     state = { expanded: false };
 
     handleExpandClick = () => {
@@ -216,8 +216,8 @@ class SimpleCard extends React.Component {
     }
 }
 
-SimpleCard.propTypes = {
+TootCard.propTypes = {
     classes: PropTypes.object.isRequired,
 };
 
-export default withStyles(styles)(SimpleCard);
+export default withStyles(styles)(TootCard);

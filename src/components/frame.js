@@ -15,7 +15,7 @@ import IconButton from 'material-ui/IconButton';
 import MenuIcon from 'material-ui-icons/Menu';
 import ChevronLeftIcon from 'material-ui-icons/ChevronLeft';
 import { staticItems, timeLineItems } from './tileData';
-import SimpleCard from './toot';
+import TootCard from './toot';
 import TootButton from './tootButton';
 
 const drawerWidth = 170;
@@ -158,36 +158,36 @@ class MiniDrawer extends React.Component {
           <main className={classes.content}>
             <List className={classes.list} width="100%" dense>
               <ListItem>
-                <SimpleCard authorName="Gergely Nagy" withMedia
+                <TootCard authorName="Gergely Nagy" withMedia
                             authorID="@algernon"
                             statusTime="2017-09-16 15:05:05"
                             favedBy="someone">
                   Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor
                   incididunt ut labore et dolore magna aliqua.
-                </SimpleCard>
+                </TootCard>
               </ListItem>
               <ListItem>
-                <SimpleCard authorName="Gergely Nagy"
+                <TootCard authorName="Gergely Nagy"
                             authorID="@algernon"
                             statusTime="2017-09-16 15:05:05"
                             boostedBy="someone">
                   Something wicked this way comes.
-                </SimpleCard>
+                </TootCard>
               </ListItem>
               <ListItem>
-                <SimpleCard authorName="Gergely Nagy"
+                <TootCard authorName="Gergely Nagy"
                             authorID="@algernon"
                             statusTime="2017-09-16 15:05:05">
                   Something in the way
-                </SimpleCard>
+                </TootCard>
               </ListItem>
 
               <ListItem>
-                <SimpleCard authorName="Gergely Nagy"
+                <TootCard authorName="Gergely Nagy"
                             authorID="@algernon"
                             statusTime="2017-09-16 15:05:05">
                   Something in the way
-                </SimpleCard>
+                </TootCard>
               </ListItem>
 
             </List>
