@@ -236,11 +236,9 @@ class MiniDrawer extends React.Component {
                     incididunt ut labore et dolore magna aliqua.
                   </p>
                   <p>
-                    <Tooltip label="algernon@trunk.mad-scientist.club" placement="bottom">
-                      <span className="h-card">
-                        <a href="#" className="u-url mention">@<span>algernon</span></a>
-                      </span>
-                    </Tooltip>
+                    <span className="h-card">
+                      <a href="#" className="u-url mention" title="algernon@trunk.mad-scientist.club">@<span>algernon</span></a>
+                    </span>
                   </p>
                 </TootCard>
               </ListItem>
