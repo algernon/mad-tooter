@@ -35,6 +35,7 @@ class Timeline extends React.Component {
         }),
         timeline: [],
         updating: false,
+        streaming: new WebSocket('wss://trunk.mad-scientist.club/api/v1/streaming/?stream=user&access_token=' + AuthToken),
     };
 
     updateTimeline = () => {
@@ -42,12 +43,23 @@ class Timeline extends React.Component {
         this.state.axios.get("/timelines/home")
             .then((response) => {
                 this.setState({timeline: response.data,
-                               updating: false})
+                               updating: false});
             });
     }
 
     componentDidMount () {
+        let c = this;
         this.updateTimeline();
+        this.state.streaming.addEventListener('message', function (e) {
+            let event = JSON.parse(e.data);
+            if (event.event === "update") {
+                let newTL = c.state.timeline.slice();
+                let payload = JSON.parse(event.payload);
+                console.log(payload);
+                newTL.unshift(payload);
+                c.setState({timeline: newTL});
+            }
+        });
     }
 
     render () {
@@ -69,7 +81,7 @@ class Timeline extends React.Component {
                         </ListItem>
                     );
                 })}
-                <ReactInterval timeout={10000} enabled={true} callback={this.updateTimeline}/>
+                <ReactInterval timeout={10000} enabled={false} callback={this.updateTimeline}/>
               </List>
             </div>
         );
