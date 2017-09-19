@@ -131,6 +131,10 @@ const styles = theme => ({
             marginLeft: theme.spacing.unit,
         },
     },
+    cardVia: {
+        marginLeft: '1em',
+        opacity: '0.5',
+    },
     avatar: {
         cursor: 'pointer',
     },
@@ -278,22 +282,25 @@ class TootCardHeader extends React.Component {
 
         const avatar = (
             <Avatar className={classes.avatar}
-                    src={props.account.avatar} />
+                    src={props.toot.account.avatar} />
         );
 
-        let author = props.account;
-        if (props.reblog)
-            author = props.reblog.account;
-        let createdAt = props.created_at;
-        if (props.reblog)
-            createdAt = props.reblog.created_at;
+        let via = null;
+        if (props.via) {
+            via = (
+                <span className={classnames(classes.cardAuthor, classes.cardVia)}>
+                  ({props.via.account.display_name})
+                </span>
+            );
+        }
 
         const title = (
             <span>
               <span className={classes.cardAuthor}>
-                <span className="author">{author.display_name}</span>
-                <span className="disabled">{author.acct}</span>
+                <span className="author">{props.toot.account.display_name}</span>
+                <span className="disabled">{props.toot.account.acct}</span>
               </span>
+              {via}
               <div className={classes.actor}>
                 <SlideInInfo classes={classes}>
                   <MentionWidget mentions={props.mentions} classes={classes} />
@@ -302,7 +309,7 @@ class TootCardHeader extends React.Component {
                 </SlideInInfo>
               </div>
             </span>
-        )
+        );
 
         return (
             <CardHeader
@@ -311,7 +318,7 @@ class TootCardHeader extends React.Component {
               className={classes.header}
               avatar={avatar}
               title={title}
-              subheader={moment(createdAt).fromNow()} />
+              subheader={moment(props.toot.created_at).fromNow()} />
         );
     }
 }
@@ -331,9 +338,18 @@ class TootCard extends React.Component {
             alert("Clicked");
         }
 
+        if (this.props.toot.reblog) {
+            return (
+                <TootCard toot={this.props.toot.reblog}
+                          via={this.props.toot}
+                          classes={classes} />
+            );
+        }
+
         return (
             <Card className={classes.card}>
-              <TootCardHeader {...this.props.toot} />
+              <TootCardHeader toot={this.props.toot}
+                              via={this.props.via} />
 
               <CardContent className={classes.content}
                            onClick={handleClick}>
