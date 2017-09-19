@@ -1,7 +1,10 @@
+// @flow weak
+
 import axios from 'axios';
 
 export class MastodonAPI {
-    constructor(props) {
+    constructor(key, props) {
+        this.key = key;
         this.state = {
             http: axios.create({baseURL: props.api.baseURL,
                                 headers: {"Authorization": "Bearer " + props.auth.token}}),

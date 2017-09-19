@@ -77,41 +77,10 @@ const styles = theme => ({
         paddingTop: theme.spacing.unit * 2,
         paddingBottom: theme.spacing.unit / 2,
     },
-    actor: {
-        display: 'flex',
-        float: 'right',
-    },
-    boostActorChip: {
-        marginLeft: theme.spacing.unit,
-        backgroundColor: green.A400,
-        color: '#fafafa',
-        '&:hover': {
-            backgroundColor: green.A700,
-        }
-    },
-    boostActorChipAvatar: {
-        backgroundColor: green.A200,
-    },
     mention: {
         height: 32,
         display: 'flex',
         alignItems: 'center',
-    },
-    mentionAvatar: {
-        backgroundColor: theme.palette.primary.A400,
-        boxShadow: "0 0 0 0 rgba(29, 233, 182, 0.7)",
-        animation: "pulse 1.25s infinite cubic-bezier(0.66, 0, 0, 1)",
-    },
-    favActorChip: {
-        marginLeft: theme.spacing.unit,
-        backgroundColor: pink.A100,
-        color: '#fafafa',
-        '&:hover': {
-            backgroundColor: pink.A200,
-        }
-    },
-    favActorChipAvatar: {
-        backgroundColor: pink[100],
     },
     avatarIcon: {
         width: 'auto',
@@ -147,108 +116,6 @@ const styles = theme => ({
         display: 'inline-flex',
     },
 });
-
-class SlideInInfo extends React.Component {
-    state = { expanded: false };
-
-    handleExpandClick = () => {
-        this.setState({ expanded: !this.state.expanded });
-    }
-
-    render() {
-        const classes = this.props.classes;
-        const children = React.Children.toArray(this.props.children);
-
-        return (
-            <div>
-              <Slide in={this.state.expanded} direction="right">
-                <Paper elevation={0} square className={classes.slideInInfo}>
-                  {children}
-                </Paper>
-              </Slide>
-              <IconButton onClick={this.handleExpandClick}
-                          className={classnames(classes.expand, {
-                              [classes.expandOpen]: this.state.expanded,
-                          })}>
-                <Icon>keyboard_arrow_right</Icon>
-              </IconButton>
-            </div>
-        );
-    }
-}
-
-class BoostWidget extends React.Component {
-    render () {
-        const props = this.props;
-
-        let reblog_count = props.toot.reblogs_count;
-        if (props.toot.reblogged)
-            reblog_count++;
-        if (reblog_count <= 0)
-            return null;
-
-        const avatar = (
-            <Avatar className={props.classes.boostActorChipAvatar}>
-              <Icon className={props.classes.avatarIcon}>share</Icon>
-            </Avatar>
-        );
-
-        return (
-            <Chip label={reblog_count}
-                  avatar={avatar}
-                  className={props.classes.boostActorChip} />
-        );
-    }
-}
-
-class FavWidget extends React.Component {
-    render() {
-        const props = this.props;
-
-        let fav_count = props.toot.favourites_count;
-        if (props.toot.favourited)
-            fav_count++;
-        if (fav_count <= 0)
-            return null;
-
-        const avatar = (
-            <Avatar className={props.classes.favActorChipAvatar}>
-              <Icon className={props.classes.avatarIcon}>favorite</Icon>
-            </Avatar>
-        );
-
-        return (
-            <Chip label={fav_count}
-                  avatar={avatar}
-                  className={props.classes.favActorChip} />
-        );
-    }
-}
-
-class MentionWidget extends React.Component {
-    render () {
-        const props = this.props;
-        if (!props.mentions || props.mentions.length === 0)
-            return null;
-
-        let mentioned = false;
-        props.mentions.forEach((mention) => {
-            if (mention.url === "https://trunk.mad-scientist.club/@algernon")
-                mentioned = true;
-        })
-
-        if (!mentioned)
-            return null;
-
-        return (
-            <div className={props.classes.mention}>
-              <Avatar className={props.classes.mentionAvatar}>
-                <Icon className={props.classes.avatarIcon}>notifications</Icon>
-              </Avatar>
-            </div>
-        )
-    }
-}
 
 class MediaGallery extends React.Component {
     render() {
@@ -381,6 +248,7 @@ class TootCard extends React.Component {
             return (
                 <TootCard toot={this.props.toot.reblog}
                           via={this.props.toot}
+                          config={this.props.config}
                           classes={classes} />
             );
         }
@@ -437,20 +305,9 @@ class TootCard extends React.Component {
                 </Button>
                 <div className={classes.flexGrow} />
                 <div className={classes.meta}>
-                  <SlideInInfo classes={classes}>
-                    <MentionWidget mentions={this.props.toot.mentions} classes={classes} />
-                    <BoostWidget toot={this.props.toot} classes={classes}/>
-                    <FavWidget toot={this.props.toot} classes={classes} />
-
-                    <Chip avatar={<Avatar className="default-account"><Icon className={classes.avatarIcon}>person</Icon></Avatar>}
-                          label="@algernon"
-                          onClick={handleClick}
-                          className={classes.chip} />
-                    <Chip avatar={<Avatar><Icon className={classes.avatarIcon}>person</Icon></Avatar>}
-                          label="@another"
-                          onClick={handleClick}
-                          className={classes.chip} />
-                  </SlideInInfo>
+                  <Chip avatar={<Avatar><Icon className={classes.avatarIcon}>person</Icon></Avatar>}
+                        label={this.props.config.api.key}
+                        className={classes.chip} />
                 </div>
               </CardActions>
             </Card>

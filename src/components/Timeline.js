@@ -72,7 +72,7 @@ class Timeline extends React.Component {
                 {this.state.timeline.map(toot => {
                     return (
                         <ListItem key={`toot-${toot.id}`}>
-                          <TootCard toot={toot} />
+                          <TootCard toot={toot} config={this.props.config}/>
                         </ListItem>
                     );
                 })}
