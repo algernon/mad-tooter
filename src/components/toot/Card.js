@@ -305,7 +305,7 @@ class TootCardHeader extends React.Component {
             author = props.reblog.account;
         let createdAt = props.created_at;
         if (props.reblog)
-            createdAt = props.reblog.createdAt;
+            createdAt = props.reblog.created_at;
 
         const title = (
             <span>
