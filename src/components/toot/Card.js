@@ -385,13 +385,13 @@ class TootCard extends React.Component {
                             classes={classes} />
 
               <CardActions disableActionSpacing>
-                <Button dense className={classes.actionButton}>
+                <Button dense className={classes.actionButton} disabled>
                   <Icon>reply</Icon>
                 </Button>
-                <Button dense className={classes.actionButton}>
+                <Button dense className={classes.actionButton} disabled>
                   <Icon>repeat</Icon>
                 </Button>
-                <Button dense className={classes.actionButton}>
+                <Button dense className={classes.actionButton} disabled>
                   <Icon>star</Icon>
                 </Button>
                 <div className={classes.flexGrow} />

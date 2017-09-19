@@ -168,8 +168,9 @@ class TooterFrame extends React.Component {
                       type="search"
                       placeholder="Search text..."
                       className={classes.textField}
-                      margin="dense" />
-                    <IconButton color="default">
+                      margin="dense"
+                      disabled />
+                    <IconButton color="default" disabled>
                       <Icon>search</Icon>
                     </IconButton>
                   </Toolbar>
