@@ -18,6 +18,7 @@
     "jss-preset-default": "latest",
     "material-ui": "next",
     "material-ui-icons": "latest",
+    "moment": "^2.18.1",
     "prop-types": "latest",
     "react": "latest",
     "react-dom": "latest",

@@ -18,6 +18,8 @@ import classnames from 'classnames';
 import Card, { CardHeader, CardContent, CardActions } from 'material-ui/Card';
 import Slide from 'material-ui/transitions/Slide';
 
+import moment from 'moment';
+
 const styles = theme => ({
     divider: {
         marginTop: theme.spacing.unit * 2,
@@ -330,7 +332,7 @@ class TootCardHeader extends React.Component {
               className={classes.header}
               avatar={avatar}
               title={title}
-              subheader={createdAt} />
+              subheader={moment(createdAt).fromNow()} />
         );
     }
 }
