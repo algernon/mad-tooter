@@ -37,6 +37,10 @@ const styles = theme => ({
         justifyContent: 'flex-end',
         float: 'right',
     },
+    avatarIcon: {
+        width: 'auto',
+        height: 'auto',
+    },
 });
 
 class TootDialog extends React.Component {
@@ -70,9 +74,8 @@ class TootDialog extends React.Component {
               <DialogTitle>
                 Toot
                 <div className={classes.tootingAs}>
-                  <Chip label="@algernon"
-                        avatar={<Avatar className={classes.avatar}
-                                        src="https://trunk.mad-scientist.club/system/accounts/avatars/000/000/001/original/e54cf895c79a893c.jpg" />} />
+                  <Chip label={this.props.config.api.key}
+                        avatar={<Avatar><Icon className={classes.avatarIcon}>person</Icon></Avatar>} />
                 </div>
               </DialogTitle>
               <DialogContent>
