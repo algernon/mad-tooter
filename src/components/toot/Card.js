@@ -10,7 +10,6 @@ import Typography from 'material-ui/Typography';
 import { green, pink } from 'material-ui/colors';
 import Icon from 'material-ui/Icon';
 import IconButton from 'material-ui/IconButton';
-import Divider from 'material-ui/Divider';
 import GridList, { GridListTile } from 'material-ui/GridList';
 import Paper from 'material-ui/Paper';
 
@@ -384,8 +383,6 @@ class TootCard extends React.Component {
 
               <MediaGallery media={this.props.toot.media_attachments}
                             classes={classes} />
-
-              <Divider className={classes.divider} />
 
               <CardActions disableActionSpacing>
                 <Button dense className={classes.actionButton}>
