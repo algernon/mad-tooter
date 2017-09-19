@@ -30,6 +30,12 @@ const styles = theme => ({
             color: theme.palette.secondary.A400,
         },
     },
+    onButton: {
+        color: theme.palette.secondary.A400,
+        '&:hover': {
+            color: theme.palette.text.primary,
+        },
+    },
     galleryImage: {
         cursor: 'zoom-in',
     },
@@ -417,10 +423,16 @@ class TootCard extends React.Component {
                 <Button dense className={classes.actionButton} disabled>
                   <Icon>reply</Icon>
                 </Button>
-                <Button dense className={classes.actionButton} disabled>
+                <Button dense
+                        className={classnames(classes.actionButton, {
+                            [classes.onButton]: this.props.toot.reblogged,
+                        })} disabled>
                   <Icon>repeat</Icon>
                 </Button>
-                <Button dense className={classes.actionButton} disabled>
+                <Button dense disabled
+                        className={classnames(classes.actionButton, {
+                            [classes.onButton]: this.props.toot.favourited,
+                        })}>
                   <Icon>star</Icon>
                 </Button>
                 <div className={classes.flexGrow} />
