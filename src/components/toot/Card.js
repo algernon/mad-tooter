@@ -24,6 +24,8 @@ import Slide from 'material-ui/transitions/Slide';
 import Popover from 'material-ui/Popover';
 import Drawer from 'material-ui/Drawer';
 
+import axios from 'axios';
+
 const styles = theme => ({
     divider: {
         marginTop: theme.spacing.unit * 2,
@@ -278,8 +280,6 @@ MediaGallery = withStyles(styles)(MediaGallery);
 function TootCardHeader(props) {
     const classes = props.classes;
 
-    console.log(props);
-
     const avatar = (
         <Avatar className={classes.avatar}
                 src={props.account.avatar} />
@@ -318,6 +318,9 @@ TootCardHeader = withStyles(styles)(TootCardHeader);
 
 class TootCard extends React.Component {
     render() {
+        if (!this.props.toot)
+            return null;
+
         const classes = this.props.classes;
         const children = React.Children.toArray(this.props.children);
 

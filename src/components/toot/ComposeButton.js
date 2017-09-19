@@ -94,12 +94,11 @@ class TootDialog extends React.Component {
 TootDialog.propTypes = {
     classes: PropTypes.object.isRequired,
     onRequestClose: PropTypes.func,
-    selectedValue: PropTypes.string,
 };
 
-const TootDialogWrapped = withStyles(styles)(TootDialog);
+TootDialog = withStyles(styles)(TootDialog);
 
-class TootButton extends React.Component {
+class TootComposeButton extends React.Component {
     static defaultProps: {};
     state = {
         open: false,
@@ -117,17 +116,16 @@ class TootButton extends React.Component {
                     onClick={() => this.setState({ open: true })} >
               <Icon color="contrast">add</Icon>
             </Button>
-            <TootDialogWrapped
+            <TootDialog
               open={this.state.open}
-              onRequestClose={this.handleRequestClose}
-              />
+              onRequestClose={this.handleRequestClose} />
             </div>
         );
     }
 }
 
-TootButton.propTypes = {
+TootComposeButton.propTypes = {
     classes: PropTypes.object.isRequired,
 };
 
-export default withStyles(styles)(TootButton);
+export default withStyles(styles)(TootComposeButton);
