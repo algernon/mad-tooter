@@ -273,7 +273,7 @@ class MediaGallery extends React.Component {
         return (
             <CardContent className={classes.media}>
               <Paper square>
-                <GridList>
+                <GridList cellHeight="110">
                   {props.media.map(medium => (
                       <GridListTile>
                         <a href={medium.url}>
