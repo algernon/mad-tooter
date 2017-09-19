@@ -133,7 +133,6 @@ const styles = theme => ({
         },
     },
     cardVia: {
-        marginLeft: '1em',
         opacity: '0.5',
     },
     avatar: {
@@ -287,7 +286,7 @@ class TootCardHeader extends React.Component {
         if (props.via) {
             via = (
                 <span className={classnames(classes.cardAuthor, classes.cardVia)}>
-                  ({props.via.account.display_name})
+                  &nbsp; via {props.via.account.display_name}
                 </span>
             );
         }
@@ -298,8 +297,14 @@ class TootCardHeader extends React.Component {
                 <span className="author">{props.toot.account.display_name}</span>
                 <span className="disabled">{props.toot.account.acct}</span>
               </span>
-              {via}
             </span>
+        );
+
+        const subheader = (
+            <div>
+              {moment(props.toot.created_at).fromNow()}
+              {via}
+            </div>
         );
 
         return (
@@ -308,7 +313,7 @@ class TootCardHeader extends React.Component {
               className={classes.header}
               avatar={avatar}
               title={title}
-              subheader={moment(props.toot.created_at).fromNow()} />
+              subheader={subheader} />
         );
     }
 }
