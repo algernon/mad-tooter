@@ -156,7 +156,8 @@ class TooterFrame extends React.Component {
                     </IconButton>
                     <div className={classes.flex}>
                       <Button color="contrast"
-                              className={classes.titleButton}>
+                              className={classes.titleButton}
+                              onClick={() => { document.getElementsByTagName("main")[0].scrollTop = 0; }}>
                         <Typography type="title" color="inherit" noWrap>
                           Firehose
                         </Typography>
