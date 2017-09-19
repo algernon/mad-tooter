@@ -313,7 +313,7 @@ class TootCardHeader extends React.Component {
             <span>
               <span className={classes.cardAuthor}>
                 <span className="author">{author.display_name}</span>
-                <span className="disabled">{author.username}</span>
+                <span className="disabled">{author.acct}</span>
               </span>
               <div className={classes.actor}>
                 <SlideInInfo>
