@@ -33,7 +33,7 @@ const styles = theme => ({
         height: '100%',
     },
     appBar: {
-        position: 'absolute',
+        position: 'fixed',
         zIndex: theme.zIndex.navDrawer + 1,
         transition: theme.transitions.create(['width', 'margin'], {
             easing: theme.transitions.easing.sharp,
