@@ -298,13 +298,6 @@ class TootCardHeader extends React.Component {
                 <span className="disabled">{props.toot.account.acct}</span>
               </span>
               {via}
-              <div className={classes.actor}>
-                <SlideInInfo classes={classes}>
-                  <MentionWidget mentions={props.mentions} classes={classes} />
-                  <BoostWidget toot={props} classes={classes}/>
-                  <FavWidget toot={props} classes={classes} />
-                </SlideInInfo>
-              </div>
             </span>
         );
 
@@ -372,6 +365,10 @@ class TootCard extends React.Component {
                 <div className={classes.flexGrow} />
                 <div className={classes.meta}>
                   <SlideInInfo classes={classes}>
+                    <MentionWidget mentions={this.props.toot.mentions} classes={classes} />
+                    <BoostWidget toot={this.props.toot} classes={classes}/>
+                    <FavWidget toot={this.props.toot} classes={classes} />
+
                     <Chip avatar={<Avatar className="default-account"><Icon className={classes.avatarIcon}>person</Icon></Avatar>}
                           label="@algernon"
                           onClick={handleClick}
