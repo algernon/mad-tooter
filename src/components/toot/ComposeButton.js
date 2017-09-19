@@ -66,13 +66,13 @@ class TootDialog extends React.Component {
                            placeholder="What is on your mind?"/>
               </DialogContent>
               <DialogActions>
-                <Button dense className={classes.tootIconButton}>
+                <Button dense className={classes.tootIconButton} disabled>
                   <Icon>camera_alt</Icon>
                 </Button>
-                <Button dense className={classes.tootIconButton}>
+                <Button dense className={classes.tootIconButton} disabled>
                   <Icon>public</Icon>
                 </Button>
-                <Button dense className={classes.tootIconButton}>
+                <Button dense className={classes.tootIconButton} disabled>
                   <Icon>vignette</Icon>
                 </Button>
                 <div className={classes.divider} />
