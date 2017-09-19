@@ -10,9 +10,6 @@ import TextField from 'material-ui/TextField';
 import Chip from 'material-ui/Chip';
 import Avatar from 'material-ui/Avatar';
 
-import { AuthToken } from '../../config/authToken';
-import axios from 'axios';
-
 const styles = theme => ({
     button: {
         margin: theme.spacing.unit * 2,
@@ -45,10 +42,6 @@ const styles = theme => ({
 class TootDialog extends React.Component {
     state = {
         tootText: "",
-        axios: axios.create({
-            baseURL: 'https://trunk.mad-scientist.club/api/v1',
-            headers: {"Authorization": "Bearer " + AuthToken},
-        }),
     };
 
     handleRequestClose = () => {
@@ -56,9 +49,7 @@ class TootDialog extends React.Component {
     };
 
     postToot = () => {
-        this.state.axios.post("/statuses", {
-            status: this.state.tootText,
-        });
+        this.props.config.api.post(this.state.tootText);
         this.setState({tootText: ""});
         this.handleRequestClose();
     }
@@ -69,7 +60,7 @@ class TootDialog extends React.Component {
     }
 
     render() {
-        const { classes, onRequestClose, ...other } = this.props;
+        const { classes, onRequestClose, config, ...other } = this.props;
 
         return (
             <Dialog onRequestClose={this.handleRequestClose} {...other}
@@ -113,7 +104,6 @@ class TootDialog extends React.Component {
         );
     }
 }
-
 TootDialog.propTypes = {
     classes: PropTypes.object.isRequired,
     onRequestClose: PropTypes.func,
@@ -140,6 +130,7 @@ class TootComposeButton extends React.Component {
                 <Icon color="contrast">add</Icon>
               </Button>
               <TootDialog
+                config={this.props.config}
                 open={this.state.open}
                 onRequestClose={this.handleRequestClose} />
             </div>

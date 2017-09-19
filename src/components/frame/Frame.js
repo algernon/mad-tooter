@@ -229,7 +229,7 @@ class TooterFrame extends React.Component {
                 </Drawer>
                 <main className={classes.content}>
                   {children}
-                  <TootComposeButton />
+                  <TootComposeButton config={this.props.config} />
                 </main>
               </div>
             </div>

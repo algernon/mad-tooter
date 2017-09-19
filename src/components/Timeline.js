@@ -8,10 +8,6 @@ import { LinearProgress } from 'material-ui/Progress';
 
 import TootCard from './toot/Card';
 
-import { AuthToken } from '../config/authToken';
-
-import axios from 'axios';
-
 const styles = theme => ({
     list: {
         flex: "none",
@@ -27,15 +23,13 @@ const styles = theme => ({
 });
 
 class Timeline extends React.Component {
-    state = {
-        axios: axios.create({
-            baseURL: 'https://trunk.mad-scientist.club/api/v1',
-            headers: {"Authorization": "Bearer " + AuthToken},
-        }),
-        timeline: [],
-        updating: false,
-        streaming: new WebSocket('wss://trunk.mad-scientist.club/api/v1/streaming/?stream=user&access_token=' + AuthToken),
-    };
+    constructor(props) {
+        super(props);
+        this.state = {
+            timeline: [],
+            updating: false,
+        };
+    }
 
     updateTimeline(timeline, status) {
         let newTimeline = timeline.slice();
@@ -45,13 +39,14 @@ class Timeline extends React.Component {
 
     componentDidMount () {
         let c = this;
-        this.setState({updating: true})
-        this.state.axios.get("/timelines/home")
+        this.setState({updating: true});
+        console.log(this.props.config);
+        this.props.config.api.timelines("home")
             .then((response) => {
                 this.setState({timeline: response.data,
                                updating: false});
             });
-        this.state.streaming.addEventListener('message', function (e) {
+        this.props.config.api.streaming("user").addEventListener('message', function (e) {
             let event = JSON.parse(e.data);
             if (event.event === "update") {
                 let payload = JSON.parse(event.payload);

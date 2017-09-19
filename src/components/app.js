@@ -4,12 +4,13 @@ import React from 'react';
 
 import TootFrame from './frame/Frame';
 import Timeline from './Timeline';
+import { config } from '../config/config';
 
 class MadTooter extends React.Component {
     render() {
         return (
-            <TootFrame>
-              <Timeline />
+            <TootFrame config={config}>
+              <Timeline config={config}/>
             </TootFrame>
         );
     }
