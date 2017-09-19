@@ -12,10 +12,19 @@ import TootFrame from './frame/Frame';
 import { AuthToken } from '../config/authToken';
 
 import axios from 'axios';
+import ReactInterval from 'react-interval';
 
 const styles = theme => ({
     list: {
         flex: "none",
+    },
+    progress: {
+        position: 'absolute',
+        zIndex: 9999,
+        top: '64px',
+        left: '0px',
+        width: '100%',
+        opacity: 0.5,
     },
 });
 
@@ -26,31 +35,44 @@ class Timeline extends React.Component {
             headers: {"Authorization": "Bearer " + AuthToken},
         }),
         timeline: [],
+        updating: false,
     };
 
-    componentDidMount () {
+    updateTimeline = () => {
+        this.setState({updating: true})
         this.state.axios.get("/timelines/home")
             .then((response) => {
-                this.setState({timeline: response.data})
+                this.setState({timeline: response.data,
+                               updating: false})
             });
     }
 
+    componentDidMount () {
+        this.updateTimeline();
+    }
+
     render () {
-        if (this.state.timeline.length === 0)
-            return (
-                <LinearProgress color="accent" mode="query" />
+        let progressBar = null;
+        if (this.state.updating) {
+            progressBar = (
+                <LinearProgress color="primary" mode="indeterminate" className={this.props.classes.progress} />
             );
+        }
 
         return (
-            <List className={this.props.classes.list} width="100%" dense>
-              {this.state.timeline.map(toot => {
-                  return (
-                      <ListItem key={`toot-${toot.id}`}>
-                            <TootCard toot={toot} />
-                      </ListItem>
-                  );
-              })}
-            </List>
+            <div>
+              {progressBar}
+              <List className={this.props.classes.list} width="100%" dense>
+                {this.state.timeline.map(toot => {
+                    return (
+                        <ListItem key={`toot-${toot.id}`}>
+                          <TootCard toot={toot} />
+                        </ListItem>
+                    );
+                })}
+                <ReactInterval timeout={10000} enabled={true} callback={this.updateTimeline}/>
+              </List>
+            </div>
         );
     }
 }
