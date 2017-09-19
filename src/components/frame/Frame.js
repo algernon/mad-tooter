@@ -15,6 +15,7 @@ import ChevronLeftIcon from 'material-ui-icons/ChevronLeft';
 import Icon from 'material-ui/Icon';
 import TextField from 'material-ui/TextField';
 import Button from 'material-ui/Button';
+import Badge from 'material-ui/Badge';
 
 import TootComposeButton from '../toot/ComposeButton';
 
@@ -26,6 +27,10 @@ const styles = theme => ({
         height: '100%',
         zIndex: 1,
         overflowY: 'hidden',
+    },
+    unreadBadge: {
+        top: 0,
+        right: -4,
     },
     appFrame: {
         position: 'relative',
@@ -155,13 +160,15 @@ class TooterFrame extends React.Component {
                       <Icon>whatshot</Icon>
                     </IconButton>
                     <div className={classes.flex}>
-                      <Button color="contrast"
-                              className={classes.titleButton}
-                              onClick={() => { document.getElementsByTagName("main")[0].scrollTop = 0; }}>
-                        <Typography type="title" color="inherit" noWrap>
-                          Firehose
-                        </Typography>
-                      </Button>
+                      <Badge badgeContent={0} color="accent" classes={{badge: classes.unreadBadge}}>
+                        <Button color="contrast"
+                                className={classes.titleButton}
+                                onClick={() => { document.getElementsByTagName("main")[0].scrollTop = 0; }}>
+                          <Typography type="title" color="inherit" noWrap>
+                            Firehose
+                          </Typography>
+                        </Button>
+                      </Badge>
                     </div>
                     <TextField
                       id="search"
