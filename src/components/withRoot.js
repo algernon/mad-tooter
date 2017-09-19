@@ -26,16 +26,6 @@ const styles = theme => ({
         '.disabled': {
             color: '#888',
         },
-        '.toot-meta': {
-            color: '#888',
-            marginLeft: theme.spacing.unit,
-        },
-        '.boosted': {
-            //backgroundColor: green[50],
-        },
-        '.favourited': {
-            //backgroundColor: pink[50],
-        },
         '.default-account': {
             backgroundColor: `${theme.palette.primary['A100']} !important`,
         },
