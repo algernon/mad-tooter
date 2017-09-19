@@ -153,7 +153,7 @@ class SlideInInfo extends React.Component {
         return (
             <div>
               <Slide in={this.state.expanded} direction="right">
-                <Paper elevation="0" square className={classes.slideInInfo}>
+                <Paper elevation={0} square className={classes.slideInInfo}>
                   {children}
                 </Paper>
               </Slide>
@@ -273,7 +273,7 @@ class MediaGallery extends React.Component {
         return (
             <CardContent className={classes.media}>
               <Paper square>
-                <GridList cellHeight="110">
+                <GridList cellHeight={110}>
                   {props.media.map(medium => (
                       <GridListTile>
                         <a href={medium.url}>
