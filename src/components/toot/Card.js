@@ -173,7 +173,11 @@ SlideInInfo = withStyles(styles)(SlideInInfo);
 class BoostWidget extends React.Component {
     render () {
         const props = this.props;
-        if (!props.boostCount)
+
+        let reblog_count = props.reblogs_count;
+        if (props.toot.reblog)
+            reblog_count = props.toot.reblog.reblogs_count;
+        if (!reblog_count)
             return null;
 
         const avatar = (
@@ -184,7 +188,7 @@ class BoostWidget extends React.Component {
 
         return (
             <Chip classes={props.classes.boostActorChip}
-                  label={props.boostCount}
+                  label={reblog_count}
                   avatar={avatar}
                   className={props.classes.boostActorChip} />
         );
@@ -201,6 +205,12 @@ class FavWidget extends React.Component {
         if (!props.favCount)
             return null;
 
+        let fav_count = props.favourites_count;
+        if (props.toot.reblog)
+            fav_count = props.toot.reblog.favourites_count;
+        if (!fav_count)
+            return null;
+
         const avatar = (
             <Avatar className={props.classes.favActorChipAvatar}>
               <Icon className={props.classes.avatarIcon}>favorite</Icon>
@@ -209,7 +219,7 @@ class FavWidget extends React.Component {
 
         return (
             <Chip classes={props.classes.favActorChip}
-                  label={props.favCount}
+                  label={fav_count}
                   avatar={avatar}
                   className={props.classes.favActorChip} />
         );
@@ -268,12 +278,10 @@ class MediaGallery extends React.Component {
                           <img className={classes.galleryImage} alt=""
                                src={medium.preview_url} />
                         </a>
-                      </GridListTile>
-                  ))}
-            </GridList>
-                </Paper>
-                </CardContent>
-
+                      </GridListTile>))}
+                </GridList>
+              </Paper>
+            </CardContent>
         );
     }
 }
@@ -292,17 +300,24 @@ class TootCardHeader extends React.Component {
                     src={props.account.avatar} />
         );
 
+        let author = props.account;
+        if (props.reblog)
+            author = props.reblog.account;
+        let createdAt = props.created_at;
+        if (props.reblog)
+            createdAt = props.reblog.createdAt;
+
         const title = (
             <span>
               <span className={classes.cardAuthor}>
-                <span className="author">{props.account.display_name}</span>
-                <span className="disabled">{props.account.username}</span>
+                <span className="author">{author.display_name}</span>
+                <span className="disabled">{author.username}</span>
               </span>
               <div className={classes.actor}>
                 <SlideInInfo>
                   <MentionWidget mentions={props.mentions} />
-                  <BoostWidget boostCount={props.reblogs_count} />
-                  <FavWidget favCount={props.favourites_count} />
+                  <BoostWidget toot={props} />
+                  <FavWidget toot={props} />
                 </SlideInInfo>
               </div>
             </span>
@@ -315,7 +330,7 @@ class TootCardHeader extends React.Component {
               className={classes.header}
               avatar={avatar}
               title={title}
-              subheader={props.created_at} />
+              subheader={createdAt} />
         );
     }
 }
