@@ -17,6 +17,7 @@ import Paper from 'material-ui/Paper';
 import classnames from 'classnames';
 import Card, { CardHeader, CardContent, CardActions } from 'material-ui/Card';
 import Slide from 'material-ui/transitions/Slide';
+import Collapse from 'material-ui/transitions/Collapse';
 
 import moment from 'moment';
 
@@ -318,6 +319,16 @@ TootCardHeader.propTypes = {
 TootCardHeader = withStyles(styles)(TootCardHeader);
 
 class TootCard extends React.Component {
+    state = {
+        spoilerShown: false,
+    };
+
+    spoilerToggle = (e) => {
+        this.setState({ spoilerShown: !this.state.spoilerShown });
+        e.stopPropagation();
+        e.nativeEvent.stopImmediatePropagation();
+    };
+
     render() {
         if (!this.props.toot)
             return null;
@@ -336,6 +347,23 @@ class TootCard extends React.Component {
             );
         }
 
+        let spoiler = null;
+        if (this.props.toot.spoiler_text) {
+            let moreOrLess = "more";
+            if (this.state.spoilerShown)
+                moreOrLess = "less";
+
+            spoiler = (
+                <div>
+                  <Typography type="body1"
+                              dangerouslySetInnerHTML={{__html: this.props.toot.spoiler_text}} />
+                  <Button onClick={this.spoilerToggle} raised>
+                    Show {moreOrLess}
+                  </Button>
+                </div>
+            );
+        }
+
         return (
             <Card className={classes.card}>
               <TootCardHeader toot={this.props.toot}
@@ -343,8 +371,11 @@ class TootCard extends React.Component {
 
               <CardContent className={classes.content}
                            onClick={handleClick}>
-                <Typography type="body1"
-                            dangerouslySetInnerHTML={{__html: this.props.toot.content}} />
+                {spoiler}
+                <Collapse in={spoiler == null || this.state.spoilerShown} transitionDuration="auto" unmountOnExit>
+                  <Typography type="body1"
+                              dangerouslySetInnerHTML={{__html: this.props.toot.content}} />
+                </Collapse>
               </CardContent>
 
               <MediaGallery media={this.props.toot.media_attachments}
