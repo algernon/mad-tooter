@@ -25,6 +25,7 @@ const styles = theme => ({
         width: '100%',
         height: '100%',
         zIndex: 1,
+        overflowY: 'hidden',
     },
     appFrame: {
         position: 'relative',
@@ -33,7 +34,7 @@ const styles = theme => ({
         height: '100%',
     },
     appBar: {
-        position: 'fixed',
+        position: 'absolute',
         zIndex: theme.zIndex.navDrawer + 1,
         transition: theme.transitions.create(['width', 'margin'], {
             easing: theme.transitions.easing.sharp,
@@ -97,10 +98,13 @@ const styles = theme => ({
         flexGrow: 1,
         backgroundColor: theme.palette.background.default,
         padding: 24,
-        height: 'calc(100% - 48px)',
-        marginTop: 48,
+        height: 'calc(100% - 64px)',
+        maxHeight: 'calc(100vh - 128px)',
+        overflowY: 'auto',
+        marginTop: 64,
         [theme.breakpoints.up('sm')]: {
             height: 'calc(100% - 48px)',
+            maxHeight: 'calc(100vh - 96px)',
             marginTop: 48,
         },
     },

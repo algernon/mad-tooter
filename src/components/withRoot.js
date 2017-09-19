@@ -17,6 +17,7 @@ const styles = theme => ({
         body: {
             margin: 0,
             height: '100%',
+            overflowY: 'hidden',
         },
         '#root': {
             height: '100%',
