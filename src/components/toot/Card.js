@@ -304,8 +304,7 @@ class TootCardHeader extends React.Component {
 
         return (
             <CardHeader
-              classes={{subheader: classes.cardSubHeader,
-              title: classes.cardTitle}}
+              classes={{subheader: classes.cardSubHeader, title: classes.cardTitle}}
               className={classes.header}
               avatar={avatar}
               title={title}
