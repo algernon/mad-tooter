@@ -173,7 +173,7 @@ class TooterFrame extends React.Component {
                         classes={{
                             paper: classes.drawerPaper
                         }}
-                        open={this.state.open} >
+                        open={this.state.sidebarOpen} >
                   <div className={classes.drawerInner}>
                     <div className={classes.drawerHeader}>
                       <IconButton onClick={this.handleSidebarClose}>
