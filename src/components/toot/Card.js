@@ -167,10 +167,6 @@ class SlideInInfo extends React.Component {
         );
     }
 }
-SlideInInfo.propTypes = {
-    classes: PropTypes.object.isRequired,
-};
-SlideInInfo = withStyles(styles)(SlideInInfo);
 
 class BoostWidget extends React.Component {
     render () {
@@ -189,17 +185,12 @@ class BoostWidget extends React.Component {
         );
 
         return (
-            <Chip classes={props.classes.boostActorChip}
-                  label={reblog_count}
+            <Chip label={reblog_count}
                   avatar={avatar}
                   className={props.classes.boostActorChip} />
         );
     }
 }
-BoostWidget.propTypes = {
-    classes: PropTypes.object.isRequired,
-};
-BoostWidget = withStyles(styles)(BoostWidget);
 
 class FavWidget extends React.Component {
     render() {
@@ -227,10 +218,6 @@ class FavWidget extends React.Component {
         );
     }
 }
-FavWidget.propTypes = {
-    classes: PropTypes.object.isRequired,
-};
-FavWidget = withStyles(styles)(FavWidget);
 
 class MentionWidget extends React.Component {
     render () {
@@ -256,10 +243,6 @@ class MentionWidget extends React.Component {
         )
     }
 }
-MentionWidget.propTypes = {
-    classes: PropTypes.object.isRequired,
-};
-MentionWidget = withStyles(styles)(MentionWidget);
 
 class MediaGallery extends React.Component {
     render() {
@@ -287,10 +270,6 @@ class MediaGallery extends React.Component {
         );
     }
 }
-MediaGallery.propTypes = {
-    classes: PropTypes.object.isRequired,
-};
-MediaGallery = withStyles(styles)(MediaGallery);
 
 class TootCardHeader extends React.Component {
     render () {
@@ -316,10 +295,10 @@ class TootCardHeader extends React.Component {
                 <span className="disabled">{author.acct}</span>
               </span>
               <div className={classes.actor}>
-                <SlideInInfo>
-                  <MentionWidget mentions={props.mentions} />
-                  <BoostWidget toot={props} />
-                  <FavWidget toot={props} />
+                <SlideInInfo classes={classes}>
+                  <MentionWidget mentions={props.mentions} classes={classes} />
+                  <BoostWidget toot={props} classes={classes}/>
+                  <FavWidget toot={props} classes={classes} />
                 </SlideInInfo>
               </div>
             </span>
@@ -362,7 +341,8 @@ class TootCard extends React.Component {
                             dangerouslySetInnerHTML={{__html: this.props.toot.content}} />
               </CardContent>
 
-              <MediaGallery media={this.props.toot.media_attachments} />
+              <MediaGallery media={this.props.toot.media_attachments}
+                            classes={classes} />
 
               <Divider className={classes.divider} />
 
@@ -378,19 +358,15 @@ class TootCard extends React.Component {
                 </Button>
                 <div className={classes.flexGrow} />
                 <div className={classes.meta}>
-                  <SlideInInfo>
-                    <Chip classes={classes.chip}
-                          avatar={<Avatar className="default-account"><Icon className={classes.avatarIcon}>person</Icon></Avatar>}
+                  <SlideInInfo classes={classes}>
+                    <Chip avatar={<Avatar className="default-account"><Icon className={classes.avatarIcon}>person</Icon></Avatar>}
                           label="@algernon"
                           onClick={handleClick}
-                          className={`${classes.chip}`}
-                          />
-                    <Chip classes={classes.chip}
-                          avatar={<Avatar><Icon className={classes.avatarIcon}>person</Icon></Avatar>}
+                          className={classes.chip} />
+                    <Chip avatar={<Avatar><Icon className={classes.avatarIcon}>person</Icon></Avatar>}
                           label="@another"
                           onClick={handleClick}
-                          className={classes.chip}
-                          />
+                          className={classes.chip} />
                   </SlideInInfo>
                 </div>
               </CardActions>
