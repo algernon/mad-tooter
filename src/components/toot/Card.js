@@ -258,7 +258,7 @@ class MediaGallery extends React.Component {
               <Paper square>
                 <GridList cellHeight={110}>
                   {props.media.map(medium => (
-                      <GridListTile>
+                      <GridListTile key={`media-${medium.id}`}>
                         <a href={medium.url}>
                           <img className={classes.galleryImage} alt=""
                                src={medium.preview_url} />
