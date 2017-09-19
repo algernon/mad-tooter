@@ -10,6 +10,9 @@ import TextField from 'material-ui/TextField';
 import Chip from 'material-ui/Chip';
 import Avatar from 'material-ui/Avatar';
 
+import { AuthToken } from '../../config/authToken';
+import axios from 'axios';
+
 const styles = theme => ({
     button: {
         margin: theme.spacing.unit * 2,
@@ -40,9 +43,30 @@ const styles = theme => ({
 });
 
 class TootDialog extends React.Component {
+    state = {
+        tootText: "",
+        axios: axios.create({
+            baseURL: 'https://trunk.mad-scientist.club/api/v1',
+            headers: {"Authorization": "Bearer " + AuthToken},
+        }),
+    };
+
     handleRequestClose = () => {
         this.props.onRequestClose();
     };
+
+    postToot = () => {
+        this.state.axios.post("/statuses", {
+            status: this.state.tootText,
+        });
+        this.setState({tootText: ""});
+        this.handleRequestClose();
+    }
+
+    cancelToot = () => {
+        this.setState({tootText: ""});
+        this.handleRequestClose();
+    }
 
     render() {
         const { classes, onRequestClose, ...other } = this.props;
@@ -63,6 +87,8 @@ class TootDialog extends React.Component {
               <DialogContent>
                 <TextField autoFocus fullWidth multiline
                            rows="6"
+                           value={this.state.tootText}
+                           onChange={(e) => {this.setState({tootText: e.target.value});}}
                            placeholder="What is on your mind?"/>
               </DialogContent>
               <DialogActions>
@@ -76,10 +102,10 @@ class TootDialog extends React.Component {
                   <Icon>vignette</Icon>
                 </Button>
                 <div className={classes.divider} />
-                <Button dense>
+                <Button dense onClick={this.cancelToot}>
                   Cancel
                 </Button>
-                <Button color="primary" raised dense>
+                <Button color="primary" raised dense onClick={this.postToot}>
                   Toot!
                 </Button>
               </DialogActions>
