@@ -22,7 +22,6 @@
     "prop-types": "latest",
     "react": "latest",
     "react-dom": "latest",
-    "react-interval": "^2.0.1",
     "react-jss": "latest",
     "react-scripts": "latest",
     "recompose": "latest"

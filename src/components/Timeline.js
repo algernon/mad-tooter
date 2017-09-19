@@ -11,7 +11,6 @@ import TootCard from './toot/Card';
 import { AuthToken } from '../config/authToken';
 
 import axios from 'axios';
-import ReactInterval from 'react-interval';
 
 const styles = theme => ({
     list: {
@@ -38,26 +37,27 @@ class Timeline extends React.Component {
         streaming: new WebSocket('wss://trunk.mad-scientist.club/api/v1/streaming/?stream=user&access_token=' + AuthToken),
     };
 
-    updateTimeline = () => {
+    updateTimeline(timeline, status) {
+        let newTimeline = timeline.slice();
+        newTimeline.unshift(status);
+        return newTimeline;
+    }
+
+    componentDidMount () {
+        let c = this;
         this.setState({updating: true})
         this.state.axios.get("/timelines/home")
             .then((response) => {
                 this.setState({timeline: response.data,
                                updating: false});
             });
-    }
-
-    componentDidMount () {
-        let c = this;
-        this.updateTimeline();
         this.state.streaming.addEventListener('message', function (e) {
             let event = JSON.parse(e.data);
             if (event.event === "update") {
-                let newTL = c.state.timeline.slice();
                 let payload = JSON.parse(event.payload);
-                console.log(payload);
-                newTL.unshift(payload);
-                c.setState({timeline: newTL});
+                c.setState((prevState, props) => ({
+                    timeline: c.updateTimeline(prevState.timeline, payload)
+                }))
             }
         });
     }
@@ -81,7 +81,6 @@ class Timeline extends React.Component {
                         </ListItem>
                     );
                 })}
-                <ReactInterval timeout={10000} enabled={false} callback={this.updateTimeline}/>
               </List>
             </div>
         );
