@@ -221,7 +221,16 @@ FavWidget.propTypes = {
 FavWidget = withStyles(styles)(FavWidget);
 
 function MentionWidget (props) {
-    if (!props.mentioned)
+    if (!props.mentions || props.mentions.length == 0)
+        return null;
+
+    let mentioned = false;
+    props.mentions.forEach((mention) => {
+        if (mention.url == "https://trunk.mad-scientist.club/@algernon")
+            mentioned = true;
+    })
+
+    if (!mentioned)
         return null;
 
     return (
@@ -238,7 +247,7 @@ MentionWidget.propTypes = {
 MentionWidget = withStyles(styles)(MentionWidget);
 
 function MediaGallery(props) {
-    if (!props.withMedia)
+    if (!props.media)
         return null;
 
     const classes=props.classes;
@@ -247,16 +256,14 @@ function MediaGallery(props) {
         <CardContent className={classes.media}>
           <Paper square>
             <GridList>
-              <GridListTile>
-                <a href="#">
-                  <img className={classes.galleryImage}
-                       src="https://trunk.mad-scientist.club/system/media_attachments/files/000/278/684/small/4abe59b20006b5fe.png?1505735848" /></a>
-              </GridListTile>
-              <GridListTile>
-                <a href="#">
-                  <img className={classes.galleryImage}
-                       src="https://trunk.mad-scientist.club/system/media_attachments/files/000/278/685/small/1be520e07214a553.png?1505735881" /></a>
-              </GridListTile>
+              {props.media.map(medium => (
+                  <GridListTile>
+                    <a href={medium.url}>
+                      <img className={classes.galleryImage}
+                           src={medium.preview_url} />
+                    </a>
+                  </GridListTile>
+              ))}
             </GridList>
           </Paper>
         </CardContent>
@@ -271,22 +278,24 @@ MediaGallery = withStyles(styles)(MediaGallery);
 function TootCardHeader(props) {
     const classes = props.classes;
 
+    console.log(props);
+
     const avatar = (
         <Avatar className={classes.avatar}
-                src="https://trunk.mad-scientist.club/system/accounts/avatars/000/000/001/original/e54cf895c79a893c.jpg" />
+                src={props.account.avatar} />
     );
 
     const title = (
         <span>
           <span className={classes.cardAuthor}>
-            <span className="author">{props.authorName}</span>
-            <span className="disabled">{props.authorID}</span>
+            <span className="author">{props.account.display_name}</span>
+            <span className="disabled">{props.account.username}</span>
           </span>
           <div className={classes.actor}>
             <SlideInInfo>
-              <MentionWidget mentioned={props.mentioned} />
-              <BoostWidget boostCount={props.boostCount} />
-              <FavWidget favCount={props.favCount} />
+              <MentionWidget mentions={props.mentions} />
+              <BoostWidget boostCount={props.reblogs_count} />
+              <FavWidget favCount={props.favourites_count} />
             </SlideInInfo>
           </div>
         </span>
@@ -299,7 +308,7 @@ function TootCardHeader(props) {
           className={classes.header}
           avatar={avatar}
           title={title}
-          subheader={props.statusTime} />
+          subheader={props.created_at} />
     );
 }
 TootCardHeader.propTypes = {
@@ -318,16 +327,15 @@ class TootCard extends React.Component {
 
         return (
             <Card className={classes.card}>
-              <TootCardHeader {...this.props} />
+              <TootCardHeader {...this.props.toot} />
 
               <CardContent className={classes.content}
                            onClick={handleClick}>
-                <Typography type="body1">
-                  {children}
-                </Typography>
+                <Typography type="body1"
+                            dangerouslySetInnerHTML={{__html: this.props.toot.content}} />
               </CardContent>
 
-              <MediaGallery withMedia={this.props.withMedia} />
+              <MediaGallery media={this.props.toot.media_attachments} />
 
               <Divider className={classes.divider} />
 
