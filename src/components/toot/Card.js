@@ -176,9 +176,9 @@ class BoostWidget extends React.Component {
     render () {
         const props = this.props;
 
-        let reblog_count = props.reblogs_count;
-        if (props.toot.reblog)
-            reblog_count = props.toot.reblog.reblogs_count;
+        let reblog_count = props.toot.reblogs_count;
+        if (props.toot.reblogged)
+            reblog_count++;
         if (!reblog_count)
             return null;
 
@@ -199,12 +199,10 @@ class BoostWidget extends React.Component {
 class FavWidget extends React.Component {
     render() {
         const props = this.props;
-        if (!props.favCount)
-            return null;
 
-        let fav_count = props.favourites_count;
-        if (props.toot.reblog)
-            fav_count = props.toot.reblog.favourites_count;
+        let fav_count = props.toot.favourites_count;
+        if (props.toot.favourited)
+            fav_count++;
         if (!fav_count)
             return null;
 
