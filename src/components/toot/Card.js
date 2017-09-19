@@ -213,8 +213,7 @@ class FavWidget extends React.Component {
         );
 
         return (
-            <Chip classes={props.classes.favActorChip}
-                  label={fav_count}
+            <Chip label={fav_count}
                   avatar={avatar}
                   className={props.classes.favActorChip} />
         );
