@@ -2,20 +2,10 @@
 
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
-import Button from 'material-ui/Button';
-import Dialog, {
-    DialogTitle,
-    DialogContent,
-    DialogContentText,
-    DialogActions,
-} from 'material-ui/Dialog';
-import Typography from 'material-ui/Typography';
 import withStyles from 'material-ui/styles/withStyles';
-import withRoot from '../components/withRoot';
-import MiniDrawer from '../components/frame';
-import { blue } from 'material-ui/colors';
 
-const primary = blue[500];
+import withRoot from '../components/withRoot';
+import MadTooter from '../components/app';
 
 const styles = {
     root: {
@@ -24,15 +14,11 @@ const styles = {
 };
 
 class Index extends Component {
-    state = {
-        open: false,
-    };
-
     render() {
         return (
-                <div className={this.props.classes.root}>
-                  <MiniDrawer/>
-                </div>
+            <div className={this.props.classes.root}>
+              <MadTooter />
+            </div>
         );
     }
 }

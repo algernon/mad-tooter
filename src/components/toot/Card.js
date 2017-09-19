@@ -3,28 +3,20 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import { withStyles } from 'material-ui/styles';
-import classNames from 'classnames';
 import Chip from 'material-ui/Chip';
 import Avatar from 'material-ui/Avatar';
 import Button from 'material-ui/Button';
 import Typography from 'material-ui/Typography';
-import { red, lime, green, lightGreen, pink, yellow, orange, amber } from 'material-ui/colors';
+import { green, pink } from 'material-ui/colors';
 import Icon from 'material-ui/Icon';
 import IconButton from 'material-ui/IconButton';
-import Tooltip from 'material-ui/Tooltip';
 import Divider from 'material-ui/Divider';
 import GridList, { GridListTile } from 'material-ui/GridList';
 import Paper from 'material-ui/Paper';
 
 import classnames from 'classnames';
-import Card, { CardHeader, CardMedia, CardContent, CardActions } from 'material-ui/Card';
-import Collapse from 'material-ui/transitions/Collapse';
+import Card, { CardHeader, CardContent, CardActions } from 'material-ui/Card';
 import Slide from 'material-ui/transitions/Slide';
-
-import Popover from 'material-ui/Popover';
-import Drawer from 'material-ui/Drawer';
-
-import axios from 'axios';
 
 const styles = theme => ({
     divider: {
@@ -178,138 +170,154 @@ SlideInInfo.propTypes = {
 };
 SlideInInfo = withStyles(styles)(SlideInInfo);
 
-function BoostWidget(props) {
-    if (!props.boostCount)
-        return null;
+class BoostWidget extends React.Component {
+    render () {
+        const props = this.props;
+        if (!props.boostCount)
+            return null;
 
-    const avatar = (
-        <Avatar className={props.classes.boostActorChipAvatar}>
-          <Icon className={props.classes.avatarIcon}>share</Icon>
-        </Avatar>
-    );
+        const avatar = (
+            <Avatar className={props.classes.boostActorChipAvatar}>
+              <Icon className={props.classes.avatarIcon}>share</Icon>
+            </Avatar>
+        );
 
-    return (
-        <Chip classes={props.classes.boostActorChip}
-              label={props.boostCount}
-              avatar={avatar}
-              className={props.classes.boostActorChip} />
-    );
+        return (
+            <Chip classes={props.classes.boostActorChip}
+                  label={props.boostCount}
+                  avatar={avatar}
+                  className={props.classes.boostActorChip} />
+        );
+    }
 }
 BoostWidget.propTypes = {
     classes: PropTypes.object.isRequired,
 };
 BoostWidget = withStyles(styles)(BoostWidget);
 
-function FavWidget(props) {
-    if (!props.favCount)
-        return null;
+class FavWidget extends React.Component {
+    render() {
+        const props = this.props;
+        if (!props.favCount)
+            return null;
 
-    const avatar = (
-        <Avatar className={props.classes.favActorChipAvatar}>
-          <Icon className={props.classes.avatarIcon}>favorite</Icon>
-        </Avatar>
-    );
+        const avatar = (
+            <Avatar className={props.classes.favActorChipAvatar}>
+              <Icon className={props.classes.avatarIcon}>favorite</Icon>
+            </Avatar>
+        );
 
-    return (
-        <Chip classes={props.classes.favActorChip}
-              label={props.favCount}
-              avatar={avatar}
-              className={props.classes.favActorChip} />
-    );
+        return (
+            <Chip classes={props.classes.favActorChip}
+                  label={props.favCount}
+                  avatar={avatar}
+                  className={props.classes.favActorChip} />
+        );
+    }
 }
 FavWidget.propTypes = {
     classes: PropTypes.object.isRequired,
 };
 FavWidget = withStyles(styles)(FavWidget);
 
-function MentionWidget (props) {
-    if (!props.mentions || props.mentions.length == 0)
-        return null;
+class MentionWidget extends React.Component {
+    render () {
+        const props = this.props;
+        if (!props.mentions || props.mentions.length === 0)
+            return null;
 
-    let mentioned = false;
-    props.mentions.forEach((mention) => {
-        if (mention.url == "https://trunk.mad-scientist.club/@algernon")
-            mentioned = true;
-    })
+        let mentioned = false;
+        props.mentions.forEach((mention) => {
+            if (mention.url === "https://trunk.mad-scientist.club/@algernon")
+                mentioned = true;
+        })
 
-    if (!mentioned)
-        return null;
+        if (!mentioned)
+            return null;
 
-    return (
-        <div className={props.classes.mention}>
-          <Avatar className={props.classes.mentionAvatar}>
-            <Icon className={props.classes.avatarIcon}>notifications</Icon>
-          </Avatar>
-        </div>
-    )
+        return (
+            <div className={props.classes.mention}>
+              <Avatar className={props.classes.mentionAvatar}>
+                <Icon className={props.classes.avatarIcon}>notifications</Icon>
+              </Avatar>
+            </div>
+        )
+    }
 }
 MentionWidget.propTypes = {
     classes: PropTypes.object.isRequired,
 };
 MentionWidget = withStyles(styles)(MentionWidget);
 
-function MediaGallery(props) {
-    if (!props.media)
-        return null;
+class MediaGallery extends React.Component {
+    render() {
+        const props = this.props;
 
-    const classes=props.classes;
+        if (!props.media)
+            return null;
 
-    return (
-        <CardContent className={classes.media}>
-          <Paper square>
-            <GridList>
-              {props.media.map(medium => (
-                  <GridListTile>
-                    <a href={medium.url}>
-                      <img className={classes.galleryImage}
-                           src={medium.preview_url} />
-                    </a>
-                  </GridListTile>
-              ))}
+        const classes=props.classes;
+
+        return (
+            <CardContent className={classes.media}>
+              <Paper square>
+                <GridList>
+                  {props.media.map(medium => (
+                      <GridListTile>
+                        <a href={medium.url}>
+                          <img className={classes.galleryImage} alt=""
+                               src={medium.preview_url} />
+                        </a>
+                      </GridListTile>
+                  ))}
             </GridList>
-          </Paper>
-        </CardContent>
+                </Paper>
+                </CardContent>
 
-    );
+        );
+    }
 }
 MediaGallery.propTypes = {
     classes: PropTypes.object.isRequired,
 };
 MediaGallery = withStyles(styles)(MediaGallery);
 
-function TootCardHeader(props) {
-    const classes = props.classes;
+class TootCardHeader extends React.Component {
+    render () {
+        const props = this.props;
+        const classes = props.classes;
 
-    const avatar = (
-        <Avatar className={classes.avatar}
-                src={props.account.avatar} />
-    );
+        const avatar = (
+            <Avatar className={classes.avatar}
+                    src={props.account.avatar} />
+        );
 
-    const title = (
-        <span>
-          <span className={classes.cardAuthor}>
-            <span className="author">{props.account.display_name}</span>
-            <span className="disabled">{props.account.username}</span>
-          </span>
-          <div className={classes.actor}>
-            <SlideInInfo>
-              <MentionWidget mentions={props.mentions} />
-              <BoostWidget boostCount={props.reblogs_count} />
-              <FavWidget favCount={props.favourites_count} />
-            </SlideInInfo>
-          </div>
-        </span>
-    )
+        const title = (
+            <span>
+              <span className={classes.cardAuthor}>
+                <span className="author">{props.account.display_name}</span>
+                <span className="disabled">{props.account.username}</span>
+              </span>
+              <div className={classes.actor}>
+                <SlideInInfo>
+                  <MentionWidget mentions={props.mentions} />
+                  <BoostWidget boostCount={props.reblogs_count} />
+                  <FavWidget favCount={props.favourites_count} />
+                </SlideInInfo>
+              </div>
+            </span>
+        )
 
-    return (
-        <CardHeader
-          classes={{subheader: classes.cardSubHeader,
-          title: classes.cardTitle}}
-          className={classes.header}
-          avatar={avatar}
-          title={title}
-          subheader={props.created_at} />
-    );
+        return (
+            <CardHeader
+              classes={{subheader: classes.cardSubHeader,
+              title: classes.cardTitle}}
+              className={classes.header}
+              avatar={avatar}
+              title={title}
+              subheader={props.created_at} />
+        );
+    }
 }
 TootCardHeader.propTypes = {
     classes: PropTypes.object.isRequired,
@@ -322,7 +330,6 @@ class TootCard extends React.Component {
             return null;
 
         const classes = this.props.classes;
-        const children = React.Children.toArray(this.props.children);
 
         function handleClick () {
             alert("Clicked");

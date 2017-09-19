@@ -5,7 +5,6 @@ import JssProvider from 'react-jss/lib/JssProvider';
 import { withStyles, MuiThemeProvider } from 'material-ui/styles';
 import wrapDisplayName from 'recompose/wrapDisplayName';
 import createContext from '../styles/createContext';
-import { green, red, pink } from 'material-ui/colors';
 
 // Apply some reset
 const styles = theme => ({
