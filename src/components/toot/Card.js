@@ -178,7 +178,7 @@ class BoostWidget extends React.Component {
         let reblog_count = props.toot.reblogs_count;
         if (props.toot.reblogged)
             reblog_count++;
-        if (reblog_count > 0)
+        if (reblog_count <= 0)
             return null;
 
         const avatar = (
@@ -202,7 +202,7 @@ class FavWidget extends React.Component {
         let fav_count = props.toot.favourites_count;
         if (props.toot.favourited)
             fav_count++;
-        if (fav_count > 0)
+        if (fav_count <= 0)
             return null;
 
         const avatar = (
