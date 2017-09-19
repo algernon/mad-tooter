@@ -138,12 +138,12 @@ const styles = theme => ({
     avatar: {
         cursor: 'pointer',
     },
-    tootCardMeta: {
+    slideInInfo: {
         display: 'inline-flex',
     },
 });
 
-class TootCardMeta extends React.Component {
+class SlideInInfo extends React.Component {
     state = { expanded: false };
 
     handleExpandClick = () => {
@@ -157,7 +157,7 @@ class TootCardMeta extends React.Component {
         return (
             <div>
               <Slide in={this.state.expanded} direction="right">
-                <Paper elevation="0" square className={classes.tootCardMeta}>
+                <Paper elevation="0" square className={classes.slideInInfo}>
                   {children}
                 </Paper>
               </Slide>
@@ -171,103 +171,166 @@ class TootCardMeta extends React.Component {
         );
     }
 }
+SlideInInfo.propTypes = {
+    classes: PropTypes.object.isRequired,
+};
+SlideInInfo = withStyles(styles)(SlideInInfo);
+
+function BoostWidget(props) {
+    if (!props.boostCount)
+        return null;
+
+    const avatar = (
+        <Avatar className={props.classes.boostActorChipAvatar}>
+          <Icon className={props.classes.avatarIcon}>share</Icon>
+        </Avatar>
+    );
+
+    return (
+        <Chip classes={props.classes.boostActorChip}
+              label={props.boostCount}
+              avatar={avatar}
+              className={props.classes.boostActorChip} />
+    );
+}
+BoostWidget.propTypes = {
+    classes: PropTypes.object.isRequired,
+};
+BoostWidget = withStyles(styles)(BoostWidget);
+
+function FavWidget(props) {
+    if (!props.favCount)
+        return null;
+
+    const avatar = (
+        <Avatar className={props.classes.favActorChipAvatar}>
+          <Icon className={props.classes.avatarIcon}>favorite</Icon>
+        </Avatar>
+    );
+
+    return (
+        <Chip classes={props.classes.favActorChip}
+              label={props.favCount}
+              avatar={avatar}
+              className={props.classes.favActorChip} />
+    );
+}
+FavWidget.propTypes = {
+    classes: PropTypes.object.isRequired,
+};
+FavWidget = withStyles(styles)(FavWidget);
+
+function MentionWidget (props) {
+    if (!props.mentioned)
+        return null;
+
+    return (
+        <div className={props.classes.mention}>
+          <Avatar className={props.classes.mentionAvatar}>
+            <Icon className={props.classes.avatarIcon}>notifications</Icon>
+          </Avatar>
+        </div>
+    )
+}
+MentionWidget.propTypes = {
+    classes: PropTypes.object.isRequired,
+};
+MentionWidget = withStyles(styles)(MentionWidget);
+
+function MediaGallery(props) {
+    if (!props.withMedia)
+        return null;
+
+    const classes=props.classes;
+
+    return (
+        <CardContent className={classes.media}>
+          <Paper square>
+            <GridList>
+              <GridListTile>
+                <a href="#">
+                  <img className={classes.galleryImage}
+                       src="https://trunk.mad-scientist.club/system/media_attachments/files/000/278/684/small/4abe59b20006b5fe.png?1505735848" /></a>
+              </GridListTile>
+              <GridListTile>
+                <a href="#">
+                  <img className={classes.galleryImage}
+                       src="https://trunk.mad-scientist.club/system/media_attachments/files/000/278/685/small/1be520e07214a553.png?1505735881" /></a>
+              </GridListTile>
+            </GridList>
+          </Paper>
+        </CardContent>
+
+    );
+}
+MediaGallery.propTypes = {
+    classes: PropTypes.object.isRequired,
+};
+MediaGallery = withStyles(styles)(MediaGallery);
+
+function TootCardHeader(props) {
+    const classes = props.classes;
+
+    const avatar = (
+        <Avatar className={classes.avatar}
+                src="https://trunk.mad-scientist.club/system/accounts/avatars/000/000/001/original/e54cf895c79a893c.jpg" />
+    );
+
+    const title = (
+        <span>
+          <span className={classes.cardAuthor}>
+            <span className="author">{props.authorName}</span>
+            <span className="disabled">{props.authorID}</span>
+          </span>
+          <div className={classes.actor}>
+            <SlideInInfo>
+              <MentionWidget mentioned={props.mentioned} />
+              <BoostWidget boostCount={props.boostCount} />
+              <FavWidget favCount={props.favCount} />
+            </SlideInInfo>
+          </div>
+        </span>
+    )
+
+    return (
+        <CardHeader
+          classes={{subheader: classes.cardSubHeader,
+          title: classes.cardTitle}}
+          className={classes.header}
+          avatar={avatar}
+          title={title}
+          subheader={props.statusTime} />
+    );
+}
+TootCardHeader.propTypes = {
+    classes: PropTypes.object.isRequired,
+};
+TootCardHeader = withStyles(styles)(TootCardHeader);
 
 class TootCard extends React.Component {
     render() {
         const classes = this.props.classes;
         const children = React.Children.toArray(this.props.children);
 
-        function handleClick() {
+        function handleClick () {
             alert("Clicked");
         }
 
-        let cardClasses = `${classes.card}`;
-
-        let boostWidget = null;
-        if (this.props.boostCount) {
-            boostWidget = (
-                <Chip classes={classes.boostActorChip}
-                      label={this.props.boostCount}
-                      avatar={<Avatar className={classes.boostActorChipAvatar}><Icon className={classes.avatarIcon}>share</Icon></Avatar>}
-                      className={classes.boostActorChip} />
-            )
-            cardClasses += " boosted";
-        }
-
-        let favWidget = null;
-        if (this.props.favCount) {
-            favWidget = (
-                <Chip classes={classes.favActorChip}
-                      label={this.props.favCount}
-                      avatar={<Avatar className={classes.favActorChipAvatar}><Icon className={classes.avatarIcon}>favorite</Icon></Avatar>}
-                      className={classes.favActorChip} />
-            )
-            cardClasses += " favourited";
-        }
-
-        let mentionWidget = null;
-        if (this.props.mentioned) {
-            mentionWidget = (
-                <div className={classes.mention}>
-                  <Avatar className={classes.mentionAvatar}>
-                    <Icon className={classes.avatarIcon}>notifications</Icon>
-                  </Avatar>
-                </div>
-            )
-        }
-
-        let mediaWidget = null;
-        if (this.props.withMedia) {
-            mediaWidget = (
-                <CardContent className={classes.media}>
-                  <Paper square>
-                    <GridList>
-                      <GridListTile>
-                        <a href="#">
-                          <img className={classes.galleryImage}
-                               src="https://trunk.mad-scientist.club/system/media_attachments/files/000/278/684/small/4abe59b20006b5fe.png?1505735848" /></a>
-                      </GridListTile>
-                      <GridListTile>
-                        <a href="#">
-                          <img className={classes.galleryImage}
-                            src="https://trunk.mad-scientist.club/system/media_attachments/files/000/278/685/small/1be520e07214a553.png?1505735881" /></a>
-                      </GridListTile>
-                    </GridList>
-                  </Paper>
-                </CardContent>
-            );
-        }
-
         return (
-            <Card className={cardClasses}>
-              <CardHeader
-                classes={{subheader: classes.cardSubHeader,
-                          title: classes.cardTitle}}
-                className={classes.header}
-                avatar={<Avatar className={classes.avatar}
-                                    onClick={handleClick}
-                                src="https://trunk.mad-scientist.club/system/accounts/avatars/000/000/001/original/e54cf895c79a893c.jpg" />}
-                title={<span>
-                       <span onClick={handleClick} className={classes.cardAuthor}>
-                             <span className="author">{this.props.authorName}</span>
-                             <span className="disabled">{this.props.authorID}</span>
-                       </span>
-                           <div className={classes.actor}>
-                                 <TootCardMeta classes={classes}>
-                                       {mentionWidget} {boostWidget} {favWidget}
-                                 </TootCardMeta>
-                               </div>
-              </span>}
-                subheader={this.props.statusTime}
-                />
+            <Card className={classes.card}>
+              <TootCardHeader {...this.props} />
+
               <CardContent className={classes.content}
                            onClick={handleClick}>
-                  <Typography type="body1">
-                    {children}
-                  </Typography>
+                <Typography type="body1">
+                  {children}
+                </Typography>
               </CardContent>
-              {mediaWidget}
+
+              <MediaGallery withMedia={this.props.withMedia} />
+
               <Divider className={classes.divider} />
+
               <CardActions disableActionSpacing>
                 <Button dense className={classes.actionButton}>
                   <Icon>reply</Icon>
@@ -280,7 +343,7 @@ class TootCard extends React.Component {
                 </Button>
                 <div className={classes.flexGrow} />
                 <div className={classes.meta}>
-                  <TootCardMeta classes={classes}>
+                  <SlideInInfo>
                     <Chip classes={classes.chip}
                           avatar={<Avatar className="default-account"><Icon className={classes.avatarIcon}>person</Icon></Avatar>}
                           label="@algernon"
@@ -293,14 +356,13 @@ class TootCard extends React.Component {
                           onClick={handleClick}
                           className={classes.chip}
                           />
-                    </TootCardMeta>
-                  </div>
-                </CardActions>
-              </Card>
+                  </SlideInInfo>
+                </div>
+              </CardActions>
+            </Card>
         );
     }
 }
-
 TootCard.propTypes = {
     classes: PropTypes.object.isRequired,
 };
