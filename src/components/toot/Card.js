@@ -271,6 +271,35 @@ class MediaGallery extends React.Component {
     }
 }
 
+class TootAge extends React.Component {
+    constructor(props) {
+        super(props);
+        this.state = {time: props.time,
+                      age: moment(props.time).fromNow()};
+    }
+
+    componentDidMount() {
+        this.timerID = setInterval(
+            () => this.tick(),
+            10000
+        );
+    }
+
+    componentWillUnmount() {
+        clearInterval(this.timerID);
+    }
+
+    tick() {
+        this.setState({age: moment(this.props.time).fromNow()});
+    }
+
+    render() {
+        return (
+            <span>{this.state.age}</span>
+        );
+    }
+}
+
 class TootCardHeader extends React.Component {
     render () {
         const props = this.props;
@@ -301,7 +330,7 @@ class TootCardHeader extends React.Component {
 
         const subheader = (
             <div>
-              {moment(props.toot.created_at).fromNow()}
+              <TootAge time={props.toot.created_at} />
               {via}
             </div>
         );
