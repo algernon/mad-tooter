@@ -7,7 +7,6 @@ import Chip from 'material-ui/Chip';
 import Avatar from 'material-ui/Avatar';
 import Button from 'material-ui/Button';
 import Typography from 'material-ui/Typography';
-import { green, pink } from 'material-ui/colors';
 import Icon from 'material-ui/Icon';
 import IconButton from 'material-ui/IconButton';
 import GridList, { GridListTile } from 'material-ui/GridList';
