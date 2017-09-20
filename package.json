@@ -22,9 +22,9 @@
     "prop-types": "latest",
     "react": "latest",
     "react-dom": "latest",
+    "react-image-gallery": "^0.8.3",
     "react-jss": "latest",
     "react-scripts": "latest",
-    "react-viewer": "^2.2.6",
     "recompose": "latest"
   },
   "scripts": {
