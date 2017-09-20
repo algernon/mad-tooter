@@ -2,6 +2,7 @@
   "name": "mad-tooter",
   "version": "0.0.1",
   "description": "Mastodon UI with a hint of Material Design",
+  "homepage": "https://algernon.github.io/mad-tooter",
   "repository": {
     "type": "git",
     "url": "https://github.com/algernon/mad-tooter.git"
@@ -31,6 +32,11 @@
     "start": "react-scripts start",
     "build": "react-scripts build",
     "test": "react-scripts test --env=jsdom",
-    "eject": "react-scripts eject"
+    "eject": "react-scripts eject",
+    "predeploy": "npm run build",
+    "deploy": "gh-pages -d build"
+  },
+  "devDependencies": {
+    "gh-pages": "^1.0.0"
   }
 }
