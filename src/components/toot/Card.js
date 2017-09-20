@@ -219,7 +219,7 @@ class TootCardHeader extends React.Component {
         if (props.via) {
             via = (
                 <span className={classnames(classes.cardAuthor, classes.cardVia)}>
-                  &nbsp; via {props.via.account.display_name}
+                  &nbsp; via {props.via.account.display_name || props.via.account.username}
                 </span>
             );
         }
@@ -227,7 +227,7 @@ class TootCardHeader extends React.Component {
         const title = (
             <span>
               <span className={classes.cardAuthor}>
-                <span className="author">{props.toot.account.display_name}</span>
+                <span className="author">{props.toot.account.display_name || props.toot.account.username}</span>
                 <span className="disabled">{props.toot.account.acct}</span>
               </span>
             </span>
