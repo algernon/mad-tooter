@@ -10,6 +10,8 @@ import TextField from 'material-ui/TextField';
 import Chip from 'material-ui/Chip';
 import Avatar from 'material-ui/Avatar';
 
+import { config } from '../../config/config';
+
 const styles = theme => ({
     button: {
         margin: theme.spacing.unit * 2,
@@ -53,7 +55,7 @@ class TootDialog extends React.Component {
     };
 
     postToot = () => {
-        this.props.config.api.post(this.state.tootText);
+        config.api.post(this.state.tootText);
         this.setState({tootText: ""});
         this.handleRequestClose();
     }
@@ -64,7 +66,7 @@ class TootDialog extends React.Component {
     }
 
     render() {
-        const { classes, onRequestClose, config, ...other } = this.props;
+        const { classes, onRequestClose, ...other } = this.props;
 
         return (
             <Dialog onRequestClose={this.handleRequestClose} {...other}
@@ -74,7 +76,7 @@ class TootDialog extends React.Component {
               <DialogTitle>
                 Toot
                 <div className={classes.tootingAs}>
-                  <Chip label={this.props.config.api.key}
+                  <Chip label={config.api.key}
                         avatar={<Avatar><Icon className={classes.avatarIcon}>person</Icon></Avatar>} />
                 </div>
               </DialogTitle>
@@ -133,7 +135,6 @@ class TootComposeButton extends React.Component {
                 <Icon color="contrast">add</Icon>
               </Button>
               <TootDialog
-                config={this.props.config}
                 open={this.state.open}
                 onRequestClose={this.handleRequestClose} />
             </div>

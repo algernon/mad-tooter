@@ -7,6 +7,7 @@ import List, { ListItem } from 'material-ui/List';
 import { LinearProgress } from 'material-ui/Progress';
 
 import TootCard from './toot/Card';
+import { config } from '../config/config';
 
 const styles = theme => ({
     list: {
@@ -40,13 +41,12 @@ class Timeline extends React.Component {
     componentDidMount () {
         let c = this;
         this.setState({updating: true});
-        console.log(this.props.config);
-        this.props.config.api.timelines("home")
+        config.api.timelines("home")
             .then((response) => {
                 this.setState({timeline: response.data,
                                updating: false});
             });
-        this.props.config.api.streaming("user").addEventListener('message', function (e) {
+        config.api.streaming("user").addEventListener('message', function (e) {
             let event = JSON.parse(e.data);
             if (event.event === "update") {
                 let payload = JSON.parse(event.payload);
@@ -72,7 +72,7 @@ class Timeline extends React.Component {
                 {this.state.timeline.map(toot => {
                     return (
                         <ListItem key={`toot-${toot.id}`}>
-                          <TootCard toot={toot} config={this.props.config}/>
+                          <TootCard toot={toot} />
                         </ListItem>
                     );
                 })}

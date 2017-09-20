@@ -1,10 +1,16 @@
-import initConfig from './settings';
+// @flow
+
 import { MastodonAPI } from '../mastodon/API';
 
-initConfig();
+class Config {
+    state = {
+        mastodon: JSON.parse(window.localStorage.getItem("mastodon")),
+    }
 
-let mastodonConfig = JSON.parse(window.localStorage.getItem("mastodon"));
+    run () {
+        this.api = new MastodonAPI(Object.keys(this.state.mastodon)[0],
+                                   Object.values(this.state.mastodon)[0]);
+    }
+};
 
-export const config = {mastodon: mastodonConfig,
-                       api: new MastodonAPI(Object.keys(mastodonConfig)[0],
-                                            Object.values(mastodonConfig)[0])};
+export let config = new Config();

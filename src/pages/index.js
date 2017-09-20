@@ -6,6 +6,8 @@ import withStyles from 'material-ui/styles/withStyles';
 
 import withRoot from '../components/withRoot';
 import MadTooter from '../components/app';
+import RegisterWizard from '../components/app/RegisterWizard'
+import { config } from '../config/config';
 
 const styles = {
     root: {
@@ -14,12 +16,33 @@ const styles = {
 };
 
 class Index extends Component {
+    state = {
+        configured: !!window.localStorage.mastodon,
+    };
+
+    componentWillMount () {
+        if (this.state.configured) {
+            config.run();
+        }
+    }
+
     render() {
-        return (
-            <div className={this.props.classes.root}>
-              <MadTooter />
-            </div>
-        );
+        if (this.state.configured) {
+            return (
+                <div className={this.props.classes.root}>
+                  <MadTooter />
+                </div>
+            );
+        } else {
+            return (
+                <div className={this.props.classes.root}>
+                  <RegisterWizard onSuccess={() => {
+                        config.run();
+                        this.setState({configured: true});
+                    }} />
+                </div>
+            );
+        }
     }
 }
 

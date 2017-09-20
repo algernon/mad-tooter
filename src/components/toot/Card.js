@@ -25,6 +25,8 @@ import "react-image-gallery/styles/css/image-gallery.css";
 
 import moment from 'moment';
 
+import { config } from '../../config/config';
+
 const styles = theme => ({
     flex: {
         flex: 1,
@@ -319,7 +321,6 @@ class TootCard extends React.Component {
             return (
                 <TootCard toot={this.props.toot.reblog}
                           via={this.props.toot}
-                          config={this.props.config}
                           classes={classes} />
             );
         }
@@ -377,7 +378,7 @@ class TootCard extends React.Component {
                 <div className={classes.flexGrow} />
                 <div className={classes.meta}>
                   <Chip avatar={<Avatar><Icon className={classes.avatarIcon}>person</Icon></Avatar>}
-                        label={this.props.config.api.key}
+                        label={config.api.key}
                         className={classes.chip} />
                 </div>
               </CardActions>
