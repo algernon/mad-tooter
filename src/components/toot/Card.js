@@ -170,7 +170,7 @@ class MediaGallery extends React.Component {
 
     openMediaView = e => {
         this.setState({mediaViewOpen: true,
-                       mediaViewIndex: parseInt(e.target.attributes["data-index"].value)});
+                       mediaViewIndex: parseInt(e.target.attributes["data-index"].value, 10)});
     }
 
     closeMediaView = () => {
