@@ -155,6 +155,7 @@ class MediaGallery extends React.Component {
                       onMaskClick={this.closeMediaView}
                       activeIndex={this.state.mediaViewIndex}
                       attribute={false}
+                      zIndex={2000}
                       images={images} />
 
               <CardContent className={classes.media}>
