@@ -137,8 +137,7 @@ class MediaViewer extends React.Component {
         const { src, classes, startIndex, onRequestClose, config, images, ...other } = this.props;
 
         return (
-            <Dialog fullScreen={true}
-                    transition={<Slide direction="up" />}
+            <Dialog transition={<Slide direction="up" />}
                     onRequestClose={this.handleRequestClose} {...other}>
               <AppBar className={classes.appBar}>
                 <Toolbar>
