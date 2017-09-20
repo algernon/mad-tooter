@@ -134,7 +134,7 @@ class MediaViewer extends React.Component {
     };
 
     render() {
-        const { src, classes, onRequestClose, config, images, ...other } = this.props;
+        const { src, classes, startIndex, onRequestClose, config, images, ...other } = this.props;
 
         return (
             <Dialog fullScreen={true}
@@ -155,7 +155,7 @@ class MediaViewer extends React.Component {
                   items={images}
                   showThumbnails={false}
                   showPlayButton={false}
-                  />
+                  startIndex={startIndex} />
               </div>
             </Dialog>
         );
@@ -170,7 +170,7 @@ class MediaGallery extends React.Component {
 
     openMediaView = e => {
         this.setState({mediaViewOpen: true,
-                       mediaViewIndex: e.target.attributes["data-index"].value});
+                       mediaViewIndex: parseInt(e.target.attributes["data-index"].value)});
     }
 
     closeMediaView = () => {
@@ -196,15 +196,16 @@ class MediaGallery extends React.Component {
                            open={this.state.mediaViewOpen}
                            images={images}
                            onRequestClose={this.closeMediaView}
-                           classes={classes} />
+                           classes={classes}
+                           startIndex={this.state.mediaViewIndex} />
 
               <CardContent className={classes.media}>
                 <Paper square>
                   <GridList cellHeight={110}>
-                    {props.media.map(medium => (
+                    {props.media.map((medium, idx) => (
                         <GridListTile key={`media-${medium.id}`}>
                           <img className={classes.galleryImage} alt=""
-                               data-index={0}
+                               data-index={idx}
                                onClick={this.openMediaView}
                                src={medium.preview_url} />
                         </GridListTile>))}

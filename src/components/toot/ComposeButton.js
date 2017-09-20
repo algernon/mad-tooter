@@ -5,7 +5,7 @@ import PropTypes from 'prop-types';
 import { withStyles } from 'material-ui/styles';
 import Button from 'material-ui/Button';
 import Icon from 'material-ui/Icon';
-import Dialog, { DialogTitle, DialogContent, DialogActions } from 'material-ui/Dialog';
+import Dialog, { DialogTitle, DialogContent, DialogActions, withResponsiveFullScreen } from 'material-ui/Dialog';
 import TextField from 'material-ui/TextField';
 import Chip from 'material-ui/Chip';
 import Avatar from 'material-ui/Avatar';
@@ -111,8 +111,8 @@ TootDialog.propTypes = {
     classes: PropTypes.object.isRequired,
     onRequestClose: PropTypes.func,
 };
-
 TootDialog = withStyles(styles)(TootDialog);
+TootDialog = withResponsiveFullScreen()(TootDialog);
 
 class TootComposeButton extends React.Component {
     static defaultProps: {};
