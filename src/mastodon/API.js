@@ -9,7 +9,7 @@ export class MastodonAPI {
             http: axios.create({baseURL: props.api.baseURL,
                                 headers: {"Authorization": "Bearer " + props.auth.token}}),
             streaming: {
-                user: new WebSocket(props.api.wsBaseURL + "/streaming/?stream=user&access_token="
+                user: new WebSocket(props.api.wsBaseURL + "/api/v1/streaming/?stream=user&access_token="
                                     + props.auth.token),
             },
         }
@@ -17,7 +17,7 @@ export class MastodonAPI {
     }
 
     timelines(timeline) {
-        return this.state.http.get("/timelines/" + timeline);
+        return this.state.http.get("/api/v1/timelines/" + timeline);
     }
 
     streaming(stream) {
@@ -25,7 +25,7 @@ export class MastodonAPI {
     }
 
     post(text) {
-        return this.state.http.post("/statuses", {
+        return this.state.http.post("/api/v1/statuses", {
             status: text,
         });
     }
