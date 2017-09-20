@@ -124,7 +124,6 @@ const styles = theme => ({
         display: 'inline-flex',
     },
     gallery: {
-        marginTop: 64,
     },
 });
 
