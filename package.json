@@ -24,6 +24,7 @@
     "react-dom": "latest",
     "react-jss": "latest",
     "react-scripts": "latest",
+    "react-viewer": "^2.2.6",
     "recompose": "latest"
   },
   "scripts": {

@@ -8,17 +8,15 @@ import Avatar from 'material-ui/Avatar';
 import Button from 'material-ui/Button';
 import Typography from 'material-ui/Typography';
 import Icon from 'material-ui/Icon';
-import IconButton from 'material-ui/IconButton';
 import GridList, { GridListTile } from 'material-ui/GridList';
 import Paper from 'material-ui/Paper';
-import AppBar from 'material-ui/AppBar';
-import Toolbar from 'material-ui/Toolbar';
-import Dialog from 'material-ui/Dialog';
 
 import classnames from 'classnames';
 import Card, { CardHeader, CardContent, CardActions } from 'material-ui/Card';
-import Slide from 'material-ui/transitions/Slide';
 import Collapse from 'material-ui/transitions/Collapse';
+
+import Viewer from 'react-viewer';
+import 'react-viewer/dist/index.css';
 
 import moment from 'moment';
 
@@ -122,50 +120,20 @@ const styles = theme => ({
     },
 });
 
-class MediaViewer extends React.Component {
-    handleRequestClose = () => {
-        this.props.onRequestClose();
-    };
-
-    render() {
-        const { src, classes, onRequestClose, config, ...other } = this.props;
-
-        return (
-            <Dialog fullScreen
-                    transition={<Slide direction="up" />}
-                    onRequestClose={this.handleRequestClose} {...other}>
-              <AppBar className={classes.appBar}>
-                <Toolbar>
-                  <IconButton color="contrast" onClick={this.handleRequestClose} aria-label="Close">
-                    <Icon>close</Icon>
-                  </IconButton>
-                  <Typography type="title" color="inherit" className={classes.flex}>
-                    Image viewer
-                  </Typography>
-               </Toolbar>
-              </AppBar>
-              <div>
-                <img src={src} alt="" />
-              </div>
-            </Dialog>
-        );
-    }
-}
-
 class MediaGallery extends React.Component {
     state = {
         mediaViewOpen: false,
-        mediaViewURL: "#",
+        mediaViewIndex: 0,
     }
 
     openMediaView = e => {
         this.setState({mediaViewOpen: true,
-                       mediaViewURL: e.target.attributes["data-url"].value});
+                       mediaViewIndex: e.target.attributes["data-index"].value});
     }
 
     closeMediaView = () => {
         this.setState({mediaViewOpen: false,
-                       mediaViewURL: "#"});
+                       mediaViewIndex: 0});
     }
 
     render() {
@@ -176,12 +144,18 @@ class MediaGallery extends React.Component {
 
         const classes=props.classes;
 
+        const images = props.media.map(medium => {
+            return {src: medium.url, alt: ""}
+        });
+
         return (
             <div>
-              <MediaViewer src={this.state.mediaViewURL}
-                           open={this.state.mediaViewOpen}
-                           onRequestClose={this.closeMediaView}
-                           classes={classes} />
+              <Viewer visible={this.state.mediaViewOpen}
+                      onClose={this.closeMediaView}
+                      onMaskClick={this.closeMediaView}
+                      activeIndex={this.state.mediaViewIndex}
+                      attribute={false}
+                      images={images} />
 
               <CardContent className={classes.media}>
                 <Paper square>
@@ -189,7 +163,7 @@ class MediaGallery extends React.Component {
                     {props.media.map(medium => (
                         <GridListTile key={`media-${medium.id}`}>
                           <img className={classes.galleryImage} alt=""
-                               data-url={medium.url}
+                               data-index={0}
                                onClick={this.openMediaView}
                                src={medium.preview_url} />
                         </GridListTile>))}
