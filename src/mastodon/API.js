@@ -128,7 +128,6 @@ export class MastodonMultiAPI {
     }
 
     startStreaming(stream, handlers) {
-        console.log("MAPI: startStreaming");
         let self = this;
         return Object.keys(this.state).map(key => {
             return self.state[key].startStreaming(stream, handlers);
