@@ -61,6 +61,16 @@ export class MastodonAPI {
         return this.state.streaming[stream];
     }
 
+    startStreaming(stream, handlers) {
+        return this.streaming(stream).addEventListener('message', (e) => {
+            let event = JSON.parse(e.data);
+            if (event.event === "update") {
+                let payload = JSON.parse(event.payload);
+                handlers.update(payload);
+            }
+        });
+    }
+
     post(text) {
         return this.state.http.post("/api/v1/statuses", {
             status: text,

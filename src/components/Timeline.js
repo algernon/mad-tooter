@@ -61,12 +61,6 @@ class Timeline extends React.Component {
         };
     }
 
-    updateTimeline(timeline, status) {
-        let newTimeline = timeline.slice();
-        newTimeline.unshift(status);
-        return newTimeline;
-    }
-
     fetchTimeline() {
         this.setState({updating: true});
         if (this.state.timelineNextId === "last") {
@@ -89,17 +83,15 @@ class Timeline extends React.Component {
     }
 
     componentDidMount () {
-        let c = this;
+        let self = this;
         this.fetchTimeline();
-        AppState.api.streaming("user").addEventListener('message', function (e) {
-            let event = JSON.parse(e.data);
-            if (event.event === "update") {
-                let payload = JSON.parse(event.payload);
-                c.setState((prevState, props) => ({
-                    timeline: c.updateTimeline(prevState.timeline, payload)
-                }))
-            }
-        });
+        AppState.api.startStreaming("user", {update: (payload) => {
+            self.setState((prevState, props) => {
+                let t = prevState.timeline;
+                t.unshift(payload);
+                return {timeline: t};
+            });
+        }});
     }
 
     handleScroll = self => e => {
