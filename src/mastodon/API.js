@@ -43,6 +43,13 @@ export class MastodonAPI {
                                    {params: {max_id: max_id}});
     }
 
+    favourite(id) {
+        return this.state.http.post("/api/v1/statuses/" + id + "/favourite");
+    }
+    unfavourite(id) {
+        return this.state.http.post("/api/v1/statuses/" + id + "/unfavourite");
+    }
+
     streaming(stream) {
         return this.state.streaming[stream];
     }

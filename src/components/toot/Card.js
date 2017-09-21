@@ -357,6 +357,23 @@ class TootCard extends React.Component {
         e.nativeEvent.stopImmediatePropagation();
     };
 
+    favouriteToggle = self => e => {
+        e.stopPropagation();
+        e.nativeEvent.stopImmediatePropagation();
+
+        if (self.state.toot.favourited) {
+            AppState.api.unfavourite(self.state.toot.id);
+        } else {
+            AppState.api.favourite(self.state.toot.id);
+        }
+        self.setState((prevState, props) => {
+            let toot = prevState.toot;
+            toot.favourited = !toot.favourited;
+
+            return { toot: toot };
+        });
+    }
+
     render() {
         if (!this.state.toot)
             return null;
@@ -419,7 +436,8 @@ class TootCard extends React.Component {
                         })} disabled>
                   <Icon>repeat</Icon>
                 </Button>
-                <Button dense disabled
+                <Button dense
+                        onClick={this.favouriteToggle(this)}
                         className={classnames(classes.actionButton, {
                             [classes.onButton]: this.state.toot.favourited,
                         })}>
