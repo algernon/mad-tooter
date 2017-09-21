@@ -18,15 +18,15 @@
 
 import { MastodonAPI } from '../mastodon/API';
 
-class Config {
+class ApplicationState {
     state = {
         mastodon: JSON.parse(window.localStorage.getItem("mastodon")),
     }
 
-    run () {
+    init () {
         this.api = new MastodonAPI(Object.keys(this.state.mastodon)[0],
                                    Object.values(this.state.mastodon)[0]);
     }
 };
 
-export let config = new Config();
+export let AppState = new ApplicationState();

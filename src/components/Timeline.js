@@ -23,7 +23,7 @@ import List, { ListItem } from 'material-ui/List';
 import { LinearProgress } from 'material-ui/Progress';
 
 import TootCard from './toot/Card';
-import { config } from '../config/config';
+import { AppState } from '../app/State';
 
 import parseLink from 'parse-link-header';
 
@@ -73,7 +73,7 @@ class Timeline extends React.Component {
             this.setState({updating: false});
             return;
         }
-        config.api.timelines("home", this.state.timelineNextId)
+        AppState.api.timelines("home", this.state.timelineNextId)
             .then((response) => {
                 let nextId = null;
                 if (response.headers.link)
@@ -91,7 +91,7 @@ class Timeline extends React.Component {
     componentDidMount () {
         let c = this;
         this.fetchTimeline();
-        config.api.streaming("user").addEventListener('message', function (e) {
+        AppState.api.streaming("user").addEventListener('message', function (e) {
             let event = JSON.parse(e.data);
             if (event.event === "update") {
                 let payload = JSON.parse(event.payload);

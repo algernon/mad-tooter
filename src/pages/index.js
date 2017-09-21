@@ -23,7 +23,7 @@ import withStyles from 'material-ui/styles/withStyles';
 import withRoot from '../components/withRoot';
 import MadTooter from '../components/app';
 import RegisterWizard from '../components/app/RegisterWizard'
-import { config } from '../config/config';
+import { AppState } from '../app/State';
 
 const styles = {
     root: {
@@ -38,7 +38,7 @@ class Index extends Component {
 
     componentWillMount () {
         if (this.state.configured) {
-            config.run();
+            AppState.init();
         }
     }
 
@@ -53,7 +53,7 @@ class Index extends Component {
             return (
                 <div className={this.props.classes.root}>
                   <RegisterWizard onSuccess={() => {
-                        config.run();
+                        AppState.init();
                         this.setState({configured: true});
                     }} />
                 </div>

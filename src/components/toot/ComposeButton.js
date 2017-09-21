@@ -26,7 +26,7 @@ import TextField from 'material-ui/TextField';
 import Chip from 'material-ui/Chip';
 import Avatar from 'material-ui/Avatar';
 
-import { config } from '../../config/config';
+import { AppState } from '../../app/State';
 
 const styles = theme => ({
     button: {
@@ -71,7 +71,7 @@ class TootDialog extends React.Component {
     };
 
     postToot = () => {
-        config.api.post(this.state.tootText);
+        AppState.api.post(this.state.tootText);
         this.setState({tootText: ""});
         this.handleRequestClose();
     }
@@ -92,7 +92,7 @@ class TootDialog extends React.Component {
               <DialogTitle>
                 Toot
                 <div className={classes.tootingAs}>
-                  <Chip label={config.api.key}
+                  <Chip label={AppState.api.key}
                         avatar={<Avatar><Icon className={classes.avatarIcon}>person</Icon></Avatar>} />
                 </div>
               </DialogTitle>
