@@ -123,7 +123,7 @@ class Timeline extends React.Component {
         let progressBar = null;
         if (this.state.updating) {
             progressBar = (
-                <LinearProgress color="primary" mode="indeterminate" className={this.props.classes.progress} />
+                <LinearProgress color="accent" mode="indeterminate" className={this.props.classes.progress} />
             );
         }
 
