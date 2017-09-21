@@ -16,7 +16,7 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-import { MastodonAPI } from '../mastodon/API';
+import { MastodonMultiAPI } from '../mastodon/API';
 
 class ApplicationState {
     state = {
@@ -24,8 +24,7 @@ class ApplicationState {
     }
 
     init () {
-        this.api = new MastodonAPI(Object.keys(this.state.mastodon)[0],
-                                   Object.values(this.state.mastodon)[0]);
+        this.api = new MastodonMultiAPI(this.state.mastodon);
     }
 };
 

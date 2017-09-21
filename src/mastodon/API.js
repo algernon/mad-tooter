@@ -17,6 +17,7 @@
  */
 
 import axios from 'axios';
+import parseLink from 'parse-link-header';
 
 export class MastodonAPI {
     constructor(key, props) {
@@ -36,11 +37,32 @@ export class MastodonAPI {
                 http: axios.create({baseURL: props.api.baseURL}),
             }
         }
+        this.state.timelineMaxIds = {};
     }
 
-    timelines(timeline, max_id) {
-        return this.state.http.get("/api/v1/timelines/" + timeline,
-                                   {params: {max_id: max_id}});
+    timelines(timeline, processor) {
+        const maxIds = this.state.timelineMaxIds;
+        if (maxIds && maxIds[timeline] === "last")
+            return;
+
+        let self = this;
+        this.state.http.get("/api/v1/timelines/" + timeline,
+                            {params: {max_id: this.state.timelineMaxIds[timeline]}})
+            .then((response) => {
+                let nextId = null;
+                if (response.headers.link)
+                    nextId = parseLink(response.headers.link).next.max_id;
+                else
+                    nextId = "last";
+
+                let timelineFragment = response.data.map(item => {
+                    item.__mad_tooter = {source: this.key};
+                    return item;
+                });
+
+                self.state.timelineMaxIds[timeline] = nextId;
+                processor(timelineFragment);
+            });
     }
 
     favourite(id) {
@@ -57,15 +79,15 @@ export class MastodonAPI {
         return this.state.http.post("/api/v1/statuses/" + id + "/unreblog");
     }
 
-    streaming(stream) {
-        return this.state.streaming[stream];
-    }
-
     startStreaming(stream, handlers) {
-        return this.streaming(stream).addEventListener('message', (e) => {
+        let self = this;
+        return this.state.streaming[stream].addEventListener('message', (e) => {
             let event = JSON.parse(e.data);
             if (event.event === "update") {
                 let payload = JSON.parse(event.payload);
+                payload.__mad_tooter = {
+                    source: self.key,
+                };
                 handlers.update(payload);
             }
         });
@@ -95,5 +117,51 @@ export class MastodonAPI {
             username: username,
             password: password
         })
+    }
+};
+
+export class MastodonMultiAPI {
+    constructor(props) {
+        this.state = Object.keys(props).map(key => {
+            return new MastodonAPI(key, props[key]);
+        });
+    }
+
+    startStreaming(stream, handlers) {
+        console.log("MAPI: startStreaming");
+        let self = this;
+        return Object.keys(this.state).map(key => {
+            return self.state[key].startStreaming(stream, handlers);
+        });
+    }
+
+    timelines(timeline, processor) {
+        return this.state[0].timelines(timeline, processor);
+    }
+
+    register() {
+        return this.state[0].register();
+    }
+
+    getAuthToken(client_id, client_secret, username, password) {
+        return this.state[0].getAuthToken(client_id, client_secret, username, password);
+    }
+
+    favourite(id) {
+        return this.state[0].favourite(id);
+    }
+    unfavourite(id) {
+        return this.state[0].unfavourite(id);
+    }
+
+    reblog(id) {
+        return this.state[0].reblog(id);
+    }
+    unreblog(id) {
+        return this.state[0].unreblog(id);
+    }
+
+    post(text) {
+        return this.state[0].post(text);
     }
 };

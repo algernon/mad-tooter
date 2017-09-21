@@ -25,8 +25,6 @@ import { LinearProgress } from 'material-ui/Progress';
 import TootCard from './toot/Card';
 import { AppState } from '../app/State';
 
-import parseLink from 'parse-link-header';
-
 const styles = theme => ({
     list: {
         flex: "none",
@@ -56,30 +54,20 @@ class Timeline extends React.Component {
         super(props);
         this.state = {
             timeline: [],
-            timelineNextId: null,
             updating: false,
         };
     }
 
     fetchTimeline() {
         this.setState({updating: true});
-        if (this.state.timelineNextId === "last") {
-            this.setState({updating: false});
-            return;
-        }
-        AppState.api.timelines("home", this.state.timelineNextId)
-            .then((response) => {
-                let nextId = null;
-                if (response.headers.link)
-                    nextId = parseLink(response.headers.link).next.max_id;
-                else
-                    nextId = "last";
-                this.setState((prevState, props) => ({
-                    timeline: prevState.timeline.concat(response.data),
-                    timelineNextId: nextId,
-                    updating: false,
-                }));
-            })
+
+        let self = this;
+        AppState.api.timelines("home", (timeline) => {
+            self.setState((prevState, props) => ({
+                timeline: prevState.timeline.concat(timeline),
+                updating: false,
+            }))
+        })
     }
 
     componentDidMount () {
@@ -121,7 +109,7 @@ class Timeline extends React.Component {
               <List className={this.props.classes.list} width="100%" dense>
                 {this.state.timeline.map(toot => {
                     return (
-                        <ListItem key={`toot-${toot.id}`}>
+                        <ListItem key={`toot-${toot.id}-${toot.__mad_tooter && toot.__mad_tooter.source}`}>
                           <TootCard toot={toot} />
                         </ListItem>
                     );

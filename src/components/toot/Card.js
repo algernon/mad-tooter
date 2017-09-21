@@ -345,10 +345,16 @@ TootCardHeader = withStyles(styles)(TootCardHeader);
 class TootCard extends React.Component {
     constructor(props) {
         super(props);
+
+        let toot = props.toot;
+        if (toot.reblog) {
+            toot.reblog.__mad_tooter = toot.__mad_tooter;
+        }
+
         this.state = {
             spoilerShown: false,
-            toot: props.toot,
-        }
+            toot: toot,
+        };
     }
 
     spoilerToggle = (e) => {
@@ -468,7 +474,7 @@ class TootCard extends React.Component {
                 <div className={classes.flexGrow} />
                 <div className={classes.meta}>
                   <Chip avatar={<Avatar><Icon className={classes.avatarIcon}>person</Icon></Avatar>}
-                        label={AppState.api.key}
+                        label={this.state.toot.__mad_tooter && this.state.toot.__mad_tooter.source}
                         className={classes.chip} />
                 </div>
               </CardActions>
