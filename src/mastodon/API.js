@@ -38,8 +38,9 @@ export class MastodonAPI {
         }
     }
 
-    timelines(timeline) {
-        return this.state.http.get("/api/v1/timelines/" + timeline);
+    timelines(timeline, max_id) {
+        return this.state.http.get("/api/v1/timelines/" + timeline,
+                                   {params: {max_id: max_id}});
     }
 
     streaming(stream) {
