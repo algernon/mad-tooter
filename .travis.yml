@@ -1,4 +1,17 @@
 language: node_js
 node_js:
-  - "node"
+  - node
+before_install:
+  - openssl aes-256-cbc -K $encrypted_1a05e440c959_key -iv $encrypted_1a05e440c959_iv
+    -in data/travis-key.enc -out data/travis-key -d
 script: npm run build
+after_sucess:
+  - npm run gh-pages-travis
+env:
+  global:
+    - DEPLOY_BRANCH="proof-of-concept"
+    - SOURCE_DIR="build"
+    - TARGET_BRANCH="gh-pages"
+    - SSH_KEY="data/travis-key"
+    - GIT_NAME="Travis CI depoly bot"
+    - GIT_EMAIL="travis@gergo.csillger.hu"
