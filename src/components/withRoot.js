@@ -47,6 +47,9 @@ const styles = theme => ({
         },
         '::-webkit-scrollbar': {
             width: theme.spacing.unit,
+            [theme.breakpoints.up('md')]: {
+                width: theme.spacing.unit * 2,
+            },
         },
         '::-webkit-scrollbar-track': {
             backgroundColor: "transparent",
