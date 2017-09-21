@@ -153,7 +153,7 @@ const styles = theme => ({
     tootAge: {
         textDecoration: 'none',
         color: theme.palette.text.secondary,
-        '&:hover': {
+        'a&:hover': {
             textDecoration: 'underline',
         },
     }
@@ -274,10 +274,16 @@ class TootAge extends React.Component {
     }
 
     render() {
-        return (
-            <a href={this.props.href} className={this.props.classes.tootAge}
-               target="_blank">{this.state.age}</a>
-        );
+        if (this.props.href !== null) {
+            return (
+                <a href={this.props.href} className={this.props.classes.tootAge}
+                   target="_blank">{this.state.age}</a>
+            );
+        } else {
+            return (
+                <span className={this.props.classes.tootAge}>{this.state.age}</span>
+            );
+        }
     }
 }
 TootAge = withStyles(styles)(TootAge);
@@ -309,6 +315,8 @@ class TootCardHeader extends React.Component {
                      className={classnames(classes.cardAuthor, classes.cardVia)}
                      onClick={this.showAccount(props.via.account)}
                      dangerouslySetInnerHTML={{__html:twemoji.parse(props.via.account.display_name) || props.via.account.username}} />
+                  ,&nbsp;
+                  <TootAge time={props.via.created_at} href={props.via.url} />
                 </span>
             );
         }
