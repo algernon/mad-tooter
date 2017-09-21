@@ -25,6 +25,8 @@ import { LinearProgress } from 'material-ui/Progress';
 import TootCard from './toot/Card';
 import { config } from '../config/config';
 
+import parseLink from 'parse-link-header';
+
 const styles = theme => ({
     list: {
         flex: "none",
@@ -59,6 +61,7 @@ class Timeline extends React.Component {
         super(props);
         this.state = {
             timeline: [],
+            timelineNextId: null,
             updating: false,
         };
     }
@@ -69,14 +72,22 @@ class Timeline extends React.Component {
         return newTimeline;
     }
 
+    fetchTimeline() {
+        this.setState({updating: true});
+        config.api.timelines("home", this.state.timelineNextId)
+            .then((response) => {
+                const nextId = parseLink(response.headers.link).next.max_id;
+                this.setState((prevState, props) => ({
+                    timeline: prevState.timeline.concat(response.data),
+                    timelineNextId: nextId,
+                    updating: false,
+                }));
+            })
+    }
+
     componentDidMount () {
         let c = this;
-        this.setState({updating: true});
-        config.api.timelines("home")
-            .then((response) => {
-                this.setState({timeline: response.data,
-                               updating: false});
-            });
+        this.fetchTimeline();
         config.api.streaming("user").addEventListener('message', function (e) {
             let event = JSON.parse(e.data);
             if (event.event === "update") {
@@ -88,6 +99,18 @@ class Timeline extends React.Component {
         });
     }
 
+    handleScroll = self => e => {
+        const m = e.target;
+        const buffer = 40;
+
+        if (this.state.updating)
+            return;
+
+        if ((m.scrollHeight - m.scrollTop) <= (m.clientHeight + buffer)) {
+            self.fetchTimeline();
+        }
+    }
+
     render () {
         let progressBar = null;
         if (this.state.updating) {
@@ -97,7 +120,8 @@ class Timeline extends React.Component {
         }
 
         return (
-            <main className={this.props.classes.content}>
+            <main className={this.props.classes.content}
+                  onScroll={this.handleScroll(this)}>
               {progressBar}
               <List className={this.props.classes.list} width="100%" dense>
                 {this.state.timeline.map(toot => {
