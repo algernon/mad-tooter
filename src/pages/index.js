@@ -43,22 +43,26 @@ class Index extends Component {
     }
 
     render() {
+        let contents = null;
+
         if (this.state.configured) {
-            return (
-                <div className={this.props.classes.root}>
-                  <MadTooter />
-                </div>
+            contents = (
+                <MadTooter />
             );
         } else {
-            return (
-                <div className={this.props.classes.root}>
-                  <RegisterWizard onSuccess={() => {
-                        AppState.init();
-                        this.setState({configured: true});
-                    }} />
-                </div>
+            contents = (
+                <RegisterWizard onSuccess={() => {
+                      AppState.init();
+                      this.setState({configured: true});
+                  }} />
             );
         }
+
+        return (
+            <div className={this.props.classes.root}>
+              {contents}
+            </div>
+        );
     }
 }
 
