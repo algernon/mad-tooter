@@ -4,8 +4,8 @@ node_js:
 before_install:
   - openssl aes-256-cbc -K $encrypted_1a05e440c959_key -iv $encrypted_1a05e440c959_iv
     -in data/travis-key.enc -out data/travis-key -d
-script: npm run build
-after_sucess:
+script:
+  - npm run build
   - npm run gh-pages-travis
 env:
   global:
