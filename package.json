@@ -35,6 +35,7 @@
     "eject": "react-scripts eject",
     "predeploy": "npm run build",
     "deploy": "gh-pages -d build"
+    "gh-pages-travis": "gh-pages-travis"
   },
   "devDependencies": {
     "gh-pages": "^1.0.0",
