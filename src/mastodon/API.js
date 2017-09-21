@@ -50,6 +50,13 @@ export class MastodonAPI {
         return this.state.http.post("/api/v1/statuses/" + id + "/unfavourite");
     }
 
+    reblog(id) {
+        return this.state.http.post("/api/v1/statuses/" + id + "/reblog");
+    }
+    unreblog(id) {
+        return this.state.http.post("/api/v1/statuses/" + id + "/unreblog");
+    }
+
     streaming(stream) {
         return this.state.streaming[stream];
     }

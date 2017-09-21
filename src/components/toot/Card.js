@@ -357,21 +357,42 @@ class TootCard extends React.Component {
         e.nativeEvent.stopImmediatePropagation();
     };
 
+    toggleTootProperty = prop => response => {
+        if (response.status !== 200)
+            return;
+
+        this.setState((prevState, props) => {
+            let toot = prevState.toot;
+            toot[prop] = !toot[prop];
+
+            return { toot: toot };
+        });
+    };
+
     favouriteToggle = self => e => {
         e.stopPropagation();
         e.nativeEvent.stopImmediatePropagation();
 
         if (self.state.toot.favourited) {
-            AppState.api.unfavourite(self.state.toot.id);
+            AppState.api.unfavourite(self.state.toot.id)
+                .then(self.toggleTootProperty("favourited"));
         } else {
-            AppState.api.favourite(self.state.toot.id);
+            AppState.api.favourite(self.state.toot.id)
+                .then(self.toggleTootProperty("favourited"));
         }
-        self.setState((prevState, props) => {
-            let toot = prevState.toot;
-            toot.favourited = !toot.favourited;
+    }
 
-            return { toot: toot };
-        });
+    boostToggle = self => e => {
+        e.stopPropagation();
+        e.nativeEvent.stopImmediatePropagation();
+
+        if (self.state.toot.reblogged) {
+            AppState.api.unreblog(self.state.toot.id)
+                .then(self.toggleTootProperty("reblogged"));
+        } else {
+            AppState.api.reblog(self.state.toot.id)
+                .then(self.toggleTootProperty("reblogged"));
+        }
     }
 
     render() {
@@ -431,9 +452,10 @@ class TootCard extends React.Component {
                   <Icon>reply</Icon>
                 </Button>
                 <Button dense
+                        onClick={this.boostToggle(this)}
                         className={classnames(classes.actionButton, {
                             [classes.onButton]: this.state.toot.reblogged,
-                        })} disabled>
+                        })}>
                   <Icon>repeat</Icon>
                 </Button>
                 <Button dense
