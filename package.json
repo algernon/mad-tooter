@@ -27,7 +27,8 @@
     "react-image-gallery": "^0.8.3",
     "react-jss": "latest",
     "react-scripts": "latest",
-    "recompose": "latest"
+    "recompose": "latest",
+    "twemoji": "^2.5.0"
   },
   "scripts": {
     "start": "react-scripts start",

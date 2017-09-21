@@ -41,6 +41,8 @@ import "react-image-gallery/styles/css/image-gallery.css";
 
 import moment from 'moment';
 
+import twemoji from 'twemoji';
+
 import { AppState } from '../../app/State';
 
 const styles = theme => ({
@@ -305,9 +307,8 @@ class TootCardHeader extends React.Component {
                   &nbsp;via&nbsp;
                   <a href={props.via.account.url}
                      className={classnames(classes.cardAuthor, classes.cardVia)}
-                     onClick={this.showAccount(props.via.account)}>
-                    {props.via.account.display_name || props.via.account.username}
-                  </a>
+                     onClick={this.showAccount(props.via.account)}
+                     dangerouslySetInnerHTML={{__html:twemoji.parse(props.via.account.display_name) || props.via.account.username}} />
                 </span>
             );
         }
@@ -315,7 +316,8 @@ class TootCardHeader extends React.Component {
         const title = (
             <a href={props.toot.account.url} className={classes.cardAuthor}
                onClick={this.showAccount(props.toot.account)}>
-              <span className="author">{props.toot.account.display_name || props.toot.account.username}</span>
+              <span className="author"
+                    dangerouslySetInnerHTML={{__html:twemoji.parse(props.toot.account.display_name) || props.toot.account.username}} />
               <span className="disabled">{props.toot.account.acct}</span>
             </a>
         );
@@ -428,7 +430,7 @@ class TootCard extends React.Component {
             spoiler = (
                 <div>
                   <Typography type="body1"
-                              dangerouslySetInnerHTML={{__html: this.state.toot.spoiler_text}} />
+                              dangerouslySetInnerHTML={{__html: twemoji.parse(this.state.toot.spoiler_text)}} />
                   <Button onClick={this.spoilerToggle} raised>
                     Show {moreOrLess}
                   </Button>
@@ -446,7 +448,7 @@ class TootCard extends React.Component {
                 {spoiler}
                 <Collapse in={spoiler == null || this.state.spoilerShown} transitionDuration="auto" unmountOnExit>
                   <Typography type="body1"
-                              dangerouslySetInnerHTML={{__html: this.state.toot.content}} />
+                              dangerouslySetInnerHTML={{__html: twemoji.parse(this.state.toot.content)}} />
                 </Collapse>
               </CardContent>
 

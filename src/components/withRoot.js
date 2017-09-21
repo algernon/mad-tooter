@@ -30,6 +30,12 @@ const styles = theme => ({
             WebkitFontSmoothing: 'antialiased', // Antialiasing.
             MozOsxFontSmoothing: 'grayscale', // Antialiasing.
         },
+        'img.emoji': {
+            height: '1em',
+            width: '1em',
+            margin: '0 .05em 0 .1em',
+            verticalAlign: '-0.1em',
+        },
         body: {
             margin: 0,
             height: '100%',
