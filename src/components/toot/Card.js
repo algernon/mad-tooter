@@ -292,7 +292,9 @@ class TootCardHeader extends React.Component {
 
         const avatar = (
             <Avatar className={classes.avatar}
+                    component="a"
                     onClick={this.showAccount(props.toot.account)}
+                    href={props.toot.account.url}
                     src={props.toot.account.avatar} />
         );
 
