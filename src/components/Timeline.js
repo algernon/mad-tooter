@@ -48,10 +48,6 @@ const styles = theme => ({
         overflowY: 'auto',
         marginTop: 64,
         position: 'relative',
-        [theme.breakpoints.up('sm')]: {
-            maxHeight: 'calc(100vh - 96px)',
-            marginTop: 48,
-        },
     },
 });
 
