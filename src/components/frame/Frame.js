@@ -114,21 +114,6 @@ const styles = theme => ({
         padding: '0 8px',
         ...theme.mixins.toolbar,
     },
-    content: {
-        width: '100%',
-        flexGrow: 1,
-        backgroundColor: theme.palette.background.default,
-        padding: 24,
-        height: 'calc(100% - 64px)',
-        maxHeight: 'calc(100vh - 128px)',
-        overflowY: 'auto',
-        marginTop: 64,
-        [theme.breakpoints.up('sm')]: {
-            height: 'calc(100% - 48px)',
-            maxHeight: 'calc(100vh - 96px)',
-            marginTop: 48,
-        },
-    },
     flex: {
         flex: 1,
     },
@@ -250,10 +235,8 @@ class TooterFrame extends React.Component {
                     </ListItem>
                   </List>
                 </Drawer>
-                <main className={classes.content}>
-                  {children}
-                  <TootComposeButton config={this.props.config} />
-                </main>
+                {children}
+                <TootComposeButton config={this.props.config} />
               </div>
             </div>
         );

@@ -37,6 +37,21 @@ const styles = theme => ({
         width: '100%',
         opacity: 0.5,
     },
+    content: {
+        width: '100%',
+        flexGrow: 1,
+        backgroundColor: theme.palette.background.default,
+        padding: 24,
+        height: 'calc(100% - 64px)',
+        maxHeight: 'calc(100vh - 128px)',
+        overflowY: 'auto',
+        marginTop: 64,
+        [theme.breakpoints.up('sm')]: {
+            height: 'calc(100% - 48px)',
+            maxHeight: 'calc(100vh - 96px)',
+            marginTop: 48,
+        },
+    },
 });
 
 class Timeline extends React.Component {
@@ -82,7 +97,7 @@ class Timeline extends React.Component {
         }
 
         return (
-            <div>
+            <main className={this.props.classes.content}>
               {progressBar}
               <List className={this.props.classes.list} width="100%" dense>
                 {this.state.timeline.map(toot => {
@@ -93,7 +108,7 @@ class Timeline extends React.Component {
                     );
                 })}
               </List>
-            </div>
+            </main>
         );
     }
 }
