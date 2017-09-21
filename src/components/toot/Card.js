@@ -125,6 +125,8 @@ const styles = theme => ({
         cursor: 'pointer',
     },
     cardAuthor: {
+        textDecoration: 'none',
+        color: theme.palette.text.primary,
         '&:hover .author': {
             textDecoration: 'underline',
         },
@@ -279,12 +281,18 @@ class TootAge extends React.Component {
 TootAge = withStyles(styles)(TootAge);
 
 class TootCardHeader extends React.Component {
+    showAccount = account => e => {
+        e.preventDefault();
+        console.log("showAccount", account);
+    }
+
     render () {
         const props = this.props;
         const classes = props.classes;
 
         const avatar = (
             <Avatar className={classes.avatar}
+                    onClick={this.showAccount(props.toot.account)}
                     src={props.toot.account.avatar} />
         );
 
@@ -292,18 +300,22 @@ class TootCardHeader extends React.Component {
         if (props.via) {
             via = (
                 <span className={classnames(classes.cardAuthor, classes.cardVia)}>
-                  &nbsp; via {props.via.account.display_name || props.via.account.username}
+                  &nbsp;via&nbsp;
+                  <a href={props.via.account.url}
+                     className={classnames(classes.cardAuthor, classes.cardVia)}
+                     onClick={this.showAccount(props.via.account)}>
+                    {props.via.account.display_name || props.via.account.username}
+                  </a>
                 </span>
             );
         }
 
         const title = (
-            <span>
-              <span className={classes.cardAuthor}>
-                <span className="author">{props.toot.account.display_name || props.toot.account.username}</span>
-                <span className="disabled">{props.toot.account.acct}</span>
-              </span>
-            </span>
+            <a href={props.toot.account.url} className={classes.cardAuthor}
+               onClick={this.showAccount(props.toot.account)}>
+              <span className="author">{props.toot.account.display_name || props.toot.account.username}</span>
+              <span className="disabled">{props.toot.account.acct}</span>
+            </a>
         );
 
         const subheader = (
