@@ -74,9 +74,17 @@ class Timeline extends React.Component {
 
     fetchTimeline() {
         this.setState({updating: true});
+        if (this.state.timelineNextId === "last") {
+            this.setState({updating: false});
+            return;
+        }
         config.api.timelines("home", this.state.timelineNextId)
             .then((response) => {
-                const nextId = parseLink(response.headers.link).next.max_id;
+                let nextId = null;
+                if (response.headers.link)
+                    nextId = parseLink(response.headers.link).next.max_id;
+                else
+                    nextId = "last";
                 this.setState((prevState, props) => ({
                     timeline: prevState.timeline.concat(response.data),
                     timelineNextId: nextId,
