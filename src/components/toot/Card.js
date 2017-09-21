@@ -145,6 +145,13 @@ const styles = theme => ({
     },
     dialogContent: {
         marginTop: 64 + theme.spacing.unit,
+    },
+    tootAge: {
+        textDecoration: 'none',
+        color: theme.palette.text.secondary,
+        '&:hover': {
+            textDecoration: 'underline',
+        },
     }
 });
 
@@ -264,10 +271,12 @@ class TootAge extends React.Component {
 
     render() {
         return (
-            <span>{this.state.age}</span>
+            <a href={this.props.href} className={this.props.classes.tootAge}
+               target="_blank">{this.state.age}</a>
         );
     }
 }
+TootAge = withStyles(styles)(TootAge);
 
 class TootCardHeader extends React.Component {
     render () {
@@ -299,7 +308,7 @@ class TootCardHeader extends React.Component {
 
         const subheader = (
             <div>
-              <TootAge time={props.toot.created_at} />
+              <TootAge time={props.toot.created_at} href={props.toot.url} />
               {via}
             </div>
         );
