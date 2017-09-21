@@ -433,7 +433,7 @@ class TootCard extends React.Component {
         return (
             <Card className={classes.card}>
               <TootCardHeader toot={this.state.toot}
-                              via={this.state.via} />
+                              via={this.props.via} />
 
               <CardContent className={classes.content}
                            onClick={handleClick}>
