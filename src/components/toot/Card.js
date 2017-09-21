@@ -26,7 +26,7 @@ import Typography from 'material-ui/Typography';
 import Icon from 'material-ui/Icon';
 import GridList, { GridListTile } from 'material-ui/GridList';
 import Paper from 'material-ui/Paper';
-import Dialog from 'material-ui/Dialog';
+import Dialog, { DialogContent } from 'material-ui/Dialog';
 import AppBar from 'material-ui/AppBar';
 import Toolbar from 'material-ui/Toolbar';
 import IconButton from 'material-ui/IconButton';
@@ -143,6 +143,9 @@ const styles = theme => ({
     },
     gallery: {
     },
+    dialogContent: {
+        marginTop: 64 + theme.spacing.unit,
+    }
 });
 
 class MediaViewer extends React.Component {
@@ -151,10 +154,12 @@ class MediaViewer extends React.Component {
     };
 
     render() {
-        const { src, classes, startIndex, onRequestClose, config, images, ...other } = this.props;
+        const { src, classes, open, startIndex, onRequestClose, images, ...other } = this.props;
 
         return (
-            <Dialog transition={<Slide direction="up" />}
+            <Dialog fullScreen
+                    transition={<Slide direction="up" />}
+                    open={open}
                     onRequestClose={this.handleRequestClose} {...other}>
               <AppBar className={classes.appBar}>
                 <Toolbar>
@@ -166,13 +171,15 @@ class MediaViewer extends React.Component {
                   </Typography>
                </Toolbar>
               </AppBar>
-              <div className={classes.gallery}>
+              <DialogContent className={classes.dialogContent}>
                 <ImageGallery
+                  className={classes.gallery}
                   items={images}
                   showThumbnails={false}
                   showPlayButton={false}
-                  startIndex={startIndex} />
-              </div>
+                  startIndex={startIndex}
+                  {...other} />
+              </DialogContent>
             </Dialog>
         );
     }

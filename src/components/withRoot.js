@@ -59,6 +59,10 @@ const styles = theme => ({
             textDecoration: 'none',
             borderBottom: `1px dotted ${theme.palette.primary[500]}`,
         },
+        '.image-gallery': {
+            marginTop: theme.spacing.unit * 2,
+            marginBottom: theme.spacing.unit * 2,
+        }
     },
 });
 
