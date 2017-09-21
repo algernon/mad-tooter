@@ -67,6 +67,7 @@ export class MastodonAPI {
             client_id: client_id,
             client_secret: client_secret,
             grant_type: "password",
+            scope: "read write follow",
             username: username,
             password: password
         })
