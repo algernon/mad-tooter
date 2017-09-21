@@ -44,12 +44,11 @@ const styles = theme => ({
         flexGrow: 1,
         backgroundColor: theme.palette.background.default,
         padding: 24,
-        height: 'calc(100% - 64px)',
         maxHeight: 'calc(100vh - 128px)',
         overflowY: 'auto',
         marginTop: 64,
+        position: 'relative',
         [theme.breakpoints.up('sm')]: {
-            height: 'calc(100% - 48px)',
             maxHeight: 'calc(100vh - 96px)',
             marginTop: 48,
         },
