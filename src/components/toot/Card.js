@@ -343,9 +343,13 @@ TootCardHeader.propTypes = {
 TootCardHeader = withStyles(styles)(TootCardHeader);
 
 class TootCard extends React.Component {
-    state = {
-        spoilerShown: false,
-    };
+    constructor(props) {
+        super(props);
+        this.state = {
+            spoilerShown: false,
+            toot: props.toot,
+        }
+    }
 
     spoilerToggle = (e) => {
         this.setState({ spoilerShown: !this.state.spoilerShown });
@@ -354,7 +358,7 @@ class TootCard extends React.Component {
     };
 
     render() {
-        if (!this.props.toot)
+        if (!this.state.toot)
             return null;
 
         const classes = this.props.classes;
@@ -363,16 +367,16 @@ class TootCard extends React.Component {
             alert("Clicked");
         }
 
-        if (this.props.toot.reblog) {
+        if (this.state.toot.reblog) {
             return (
-                <TootCard toot={this.props.toot.reblog}
-                          via={this.props.toot}
+                <TootCard toot={this.state.toot.reblog}
+                          via={this.state.toot}
                           classes={classes} />
             );
         }
 
         let spoiler = null;
-        if (this.props.toot.spoiler_text) {
+        if (this.state.toot.spoiler_text) {
             let moreOrLess = "more";
             if (this.state.spoilerShown)
                 moreOrLess = "less";
@@ -380,7 +384,7 @@ class TootCard extends React.Component {
             spoiler = (
                 <div>
                   <Typography type="body1"
-                              dangerouslySetInnerHTML={{__html: this.props.toot.spoiler_text}} />
+                              dangerouslySetInnerHTML={{__html: this.state.toot.spoiler_text}} />
                   <Button onClick={this.spoilerToggle} raised>
                     Show {moreOrLess}
                   </Button>
@@ -390,19 +394,19 @@ class TootCard extends React.Component {
 
         return (
             <Card className={classes.card}>
-              <TootCardHeader toot={this.props.toot}
-                              via={this.props.via} />
+              <TootCardHeader toot={this.state.toot}
+                              via={this.state.via} />
 
               <CardContent className={classes.content}
                            onClick={handleClick}>
                 {spoiler}
                 <Collapse in={spoiler == null || this.state.spoilerShown} transitionDuration="auto" unmountOnExit>
                   <Typography type="body1"
-                              dangerouslySetInnerHTML={{__html: this.props.toot.content}} />
+                              dangerouslySetInnerHTML={{__html: this.state.toot.content}} />
                 </Collapse>
               </CardContent>
 
-              <MediaGallery media={this.props.toot.media_attachments}
+              <MediaGallery media={this.state.toot.media_attachments}
                             classes={classes} />
 
               <CardActions disableActionSpacing>
@@ -411,13 +415,13 @@ class TootCard extends React.Component {
                 </Button>
                 <Button dense
                         className={classnames(classes.actionButton, {
-                            [classes.onButton]: this.props.toot.reblogged,
+                            [classes.onButton]: this.state.toot.reblogged,
                         })} disabled>
                   <Icon>repeat</Icon>
                 </Button>
                 <Button dense disabled
                         className={classnames(classes.actionButton, {
-                            [classes.onButton]: this.props.toot.favourited,
+                            [classes.onButton]: this.state.toot.favourited,
                         })}>
                   <Icon>star</Icon>
                 </Button>
