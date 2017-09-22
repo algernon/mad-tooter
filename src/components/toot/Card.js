@@ -67,6 +67,8 @@ const styles = theme => ({
     galleryImage: {
         cursor: 'zoom-in',
         padding: theme.spacing.unit / 2,
+        margin: theme.spacing.unit / 2,
+        height: 'fit-content',
     },
     card: {
         width: '100%',
@@ -96,6 +98,8 @@ const styles = theme => ({
     mediaGallery: {
         display: 'flex',
         flexWrap: 'wrap',
+        marginTop: theme.spacing.unit,
+        justifyContent: 'center',
     },
     header: {
         paddingLeft: theme.spacing.unit * 2,
@@ -196,10 +200,23 @@ class MediaViewer extends React.Component {
 
 class MediaGalleryItem extends React.Component {
     render () {
+        const maxWidth = 300;
+
+        let width = this.props.image.meta.small.width;
+        let height = this.props.image.meta.small.height;
+
+        if (width > maxWidth) {
+            height = Math.round((maxWidth / width) * height);
+            width = maxWidth;
+        }
+
         return (
-            <img className={this.props.classes.galleryImage} alt=""
-                 onClick={this.props.onClick}
-                 src={this.props.image.preview_url} />
+            <Paper square className={this.props.classes.galleryImage}>
+              <img alt=""
+                   onClick={this.props.onClick}
+                   width={width} height={height}
+                   src={this.props.image.preview_url} />
+            </Paper>
         )
     }
 }
@@ -244,12 +261,12 @@ class MediaGallery extends React.Component {
 
               <CardContent>
                 <Divider />
-                <Paper square className={classes.mediaGallery} elevation={0}>
+                <div className={classes.mediaGallery}>
                   {props.media.map((medium, idx) => (
                       <MediaGalleryItem onClick={this.openMediaView(idx)}
                                         image={medium}
                                         key={`media-${medium.id}`} />))}
-                </Paper>
+                </div>
               </CardContent>
             </div>
         );
