@@ -202,12 +202,17 @@ class MediaGalleryItem extends React.Component {
     render () {
         const maxWidth = 300;
 
-        let width = this.props.image.meta.small.width;
-        let height = this.props.image.meta.small.height;
+        let width = null;
+        let height = null;
 
-        if (width > maxWidth) {
-            height = Math.round((maxWidth / width) * height);
-            width = maxWidth;
+        if (this.props.image.meta) {
+            width = this.props.image.meta.small.width;
+            height =  this.props.image.meta.small.height;
+
+            if (width > maxWidth) {
+                height = Math.round((maxWidth / width) * height);
+                width = maxWidth;
+            }
         }
 
         return (
