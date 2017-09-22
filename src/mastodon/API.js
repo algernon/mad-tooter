@@ -125,6 +125,7 @@ export class MastodonMultiAPI {
         this.state = Object.keys(props).map(key => {
             return new MastodonAPI(key, props[key]);
         });
+        this.key = this.state[0].key;
     }
 
     startStreaming(stream, handlers) {
