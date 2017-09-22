@@ -24,12 +24,12 @@ import Avatar from 'material-ui/Avatar';
 import Button from 'material-ui/Button';
 import Typography from 'material-ui/Typography';
 import Icon from 'material-ui/Icon';
-import GridList, { GridListTile } from 'material-ui/GridList';
 import Paper from 'material-ui/Paper';
 import Dialog, { DialogContent } from 'material-ui/Dialog';
 import AppBar from 'material-ui/AppBar';
 import Toolbar from 'material-ui/Toolbar';
 import IconButton from 'material-ui/IconButton';
+import Divider from 'material-ui/Divider';
 
 import classnames from 'classnames';
 import Card, { CardHeader, CardContent, CardActions } from 'material-ui/Card';
@@ -66,6 +66,7 @@ const styles = theme => ({
     },
     galleryImage: {
         cursor: 'zoom-in',
+        padding: theme.spacing.unit / 2,
     },
     card: {
         width: '100%',
@@ -92,12 +93,9 @@ const styles = theme => ({
         paddingBottom: 0,
         cursor: 'pointer',
     },
-    media: {
-        paddingLeft: theme.spacing.unit * 2,
-        paddingRight: theme.spacing.unit * 2,
-        paddingTop: theme.spacing.unit,
-        paddingBottom: 0,
-        cursor: 'zoom',
+    mediaGallery: {
+        display: 'flex',
+        flexWrap: 'wrap',
     },
     header: {
         paddingLeft: theme.spacing.unit * 2,
@@ -196,15 +194,26 @@ class MediaViewer extends React.Component {
     }
 }
 
+class MediaGalleryItem extends React.Component {
+    render () {
+        return (
+            <img className={this.props.classes.galleryImage} alt=""
+                 onClick={this.props.onClick}
+                 src={this.props.image.preview_url} />
+        )
+    }
+}
+MediaGalleryItem = withStyles(styles)(MediaGalleryItem);
+
 class MediaGallery extends React.Component {
     state = {
         mediaViewOpen: false,
         mediaViewIndex: 0,
     }
 
-    openMediaView = e => {
+    openMediaView = index => e => {
         this.setState({mediaViewOpen: true,
-                       mediaViewIndex: parseInt(e.target.attributes["data-index"].value, 10)});
+                       mediaViewIndex: index});
     }
 
     closeMediaView = () => {
@@ -215,7 +224,7 @@ class MediaGallery extends React.Component {
     render() {
         const props = this.props;
 
-        if (!props.media)
+        if (!props.media || !props.media.length)
             return null;
 
         const classes=props.classes;
@@ -233,17 +242,13 @@ class MediaGallery extends React.Component {
                            classes={classes}
                            startIndex={this.state.mediaViewIndex} />
 
-              <CardContent className={classes.media}>
-                <Paper square>
-                  <GridList cellHeight={110}>
-                    {props.media.map((medium, idx) => (
-                        <GridListTile key={`media-${medium.id}`}>
-                          <img className={classes.galleryImage} alt=""
-                               data-index={idx}
-                               onClick={this.openMediaView}
-                               src={medium.preview_url} />
-                        </GridListTile>))}
-                  </GridList>
+              <CardContent>
+                <Divider />
+                <Paper square className={classes.mediaGallery} elevation={0}>
+                  {props.media.map((medium, idx) => (
+                      <MediaGalleryItem onClick={this.openMediaView(idx)}
+                                        image={medium}
+                                        key={`media-${medium.id}`} />))}
                 </Paper>
               </CardContent>
             </div>
