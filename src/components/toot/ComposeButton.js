@@ -25,6 +25,9 @@ import Dialog, { DialogTitle, DialogContent, DialogActions, withResponsiveFullSc
 import TextField from 'material-ui/TextField';
 import Chip from 'material-ui/Chip';
 import Avatar from 'material-ui/Avatar';
+import AppBar from 'material-ui/AppBar';
+import Toolbar from 'material-ui/Toolbar';
+import Typography from 'material-ui/Typography';
 
 import { AppState } from '../../app/State';
 
@@ -36,7 +39,8 @@ const styles = theme => ({
         bottom: 0,
     },
     dialog: {
-        width: '100%',
+        //width: '100%',
+        marginTop: 48,
     },
     tootIconButton: {
         minWidth: '100%',
@@ -58,6 +62,9 @@ const styles = theme => ({
     avatarIcon: {
         width: 'auto',
         height: 'auto',
+    },
+    flex: {
+        flex: 1
     },
 });
 
@@ -85,20 +92,23 @@ class TootDialog extends React.Component {
         const { classes, onRequestClose, ...other } = this.props;
 
         return (
-            <Dialog onRequestClose={this.handleRequestClose} {...other}
-                    classes={{
-                        paper: classes.dialog
-                    }}>
+            <Dialog onRequestClose={this.handleRequestClose} {...other}>
               <DialogTitle>
-                Toot
-                <div className={classes.tootingAs}>
-                  <Chip label={AppState.api.key}
-                        avatar={<Avatar><Icon className={classes.avatarIcon}>person</Icon></Avatar>} />
-                </div>
+                <AppBar>
+                  <Toolbar>
+                    <Typography type="title" color="inherit" className={classes.flex}>
+                      Toot
+                    </Typography>
+                    <div className={classes.tootingAs}>
+                      <Chip label={AppState.api.key}
+                            avatar={<Avatar><Icon className={classes.avatarIcon}>person</Icon></Avatar>} />
+                    </div>
+                  </Toolbar>
+                </AppBar>
               </DialogTitle>
-              <DialogContent>
+              <DialogContent className={classes.dialog}>
                 <TextField autoFocus fullWidth multiline
-                           rows="6"
+                           rows={6}
                            value={this.state.tootText}
                            onChange={(e) => {this.setState({tootText: e.target.value});}}
                            placeholder="What is on your mind?"/>
