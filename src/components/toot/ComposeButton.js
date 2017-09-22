@@ -19,6 +19,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import { withStyles } from 'material-ui/styles';
+import classNames from 'classnames';
 import Button from 'material-ui/Button';
 import Icon from 'material-ui/Icon';
 import IconButton from 'material-ui/IconButton';
@@ -29,6 +30,7 @@ import Avatar from 'material-ui/Avatar';
 import AppBar from 'material-ui/AppBar';
 import Toolbar from 'material-ui/Toolbar';
 import Typography from 'material-ui/Typography';
+import { FormControl } from 'material-ui/Form';
 
 import Slide from 'material-ui/transitions/Slide';
 
@@ -42,20 +44,10 @@ const styles = theme => ({
         bottom: 0,
     },
     dialog: {
-        //width: '100%',
         marginTop: 48,
     },
     tootIconButton: {
         minWidth: '100%',
-    },
-    flexGrow: {
-        flex: '1 1 auto',
-    },
-    divider: {
-        height: 24,
-        marginRight: theme.spacing.unit * 2,
-        minWidth: theme.spacing.unit * 3,
-        borderRight: "1px solid rgba(0, 0, 0, 0.87)",
     },
     tootingAs: {
         display: 'flex',
@@ -68,6 +60,19 @@ const styles = theme => ({
     },
     flex: {
         flex: 1
+    },
+    container: {
+        display: 'flex',
+        flexWrap: 'wrap',
+    },
+    formControl: {
+        margin: theme.spacing.unit,
+    },
+    tootText: {
+        minWidth: 'calc(100% - 64px)',
+    },
+    tootActions: {
+        display: 'flex',
     },
 });
 
@@ -116,23 +121,29 @@ class TootDialog extends React.Component {
                 </AppBar>
               </DialogTitle>
               <DialogContent className={classes.dialog}>
-                <TextField autoFocus fullWidth multiline
-                           rows={6}
-                           value={this.state.tootText}
-                           onChange={(e) => {this.setState({tootText: e.target.value});}}
-                           placeholder="What is on your mind?"/>
+                <form className={classes.container} autoComplete="off">
+                  <FormControl className={classNames(classes.formControl, classes.tootText)}>
+                    <TextField autoFocus multiline
+                               rows={6}
+                               value={this.state.tootText}
+                               onChange={(e) => {this.setState({tootText: e.target.value});}}
+                      placeholder="What is on your mind?"/>
+                  </FormControl>
+                  <FormControl className={classes.tootActions}>
+                    <Button dense className={classes.tootIconButton} disabled>
+                      <Icon>camera_alt</Icon>
+                    </Button>
+                    <Button dense className={classes.tootIconButton} disabled>
+                      <Icon>public</Icon>
+                    </Button>
+                    <Button dense className={classes.tootIconButton} disabled>
+                      <Icon>vignette</Icon>
+                    </Button>
+                  </FormControl>
+                </form>
+
               </DialogContent>
               <DialogActions>
-                <Button dense className={classes.tootIconButton} disabled>
-                  <Icon>camera_alt</Icon>
-                </Button>
-                <Button dense className={classes.tootIconButton} disabled>
-                  <Icon>public</Icon>
-                </Button>
-                <Button dense className={classes.tootIconButton} disabled>
-                  <Icon>vignette</Icon>
-                </Button>
-                <div className={classes.divider} />
                 <Button dense onClick={this.cancelToot}>
                   Cancel
                 </Button>
