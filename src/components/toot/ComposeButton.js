@@ -29,6 +29,8 @@ import AppBar from 'material-ui/AppBar';
 import Toolbar from 'material-ui/Toolbar';
 import Typography from 'material-ui/Typography';
 
+import Slide from 'material-ui/transitions/Slide';
+
 import { AppState } from '../../app/State';
 
 const styles = theme => ({
@@ -92,7 +94,9 @@ class TootDialog extends React.Component {
         const { classes, onRequestClose, ...other } = this.props;
 
         return (
-            <Dialog onRequestClose={this.handleRequestClose} {...other}>
+            <Dialog onRequestClose={this.handleRequestClose}
+                    transition={<Slide direction="up" />}
+                    {...other}>
               <DialogTitle>
                 <AppBar>
                   <Toolbar>
