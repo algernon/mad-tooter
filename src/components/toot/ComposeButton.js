@@ -178,7 +178,7 @@ class TootComposeButton extends React.Component {
             <div>
               <Button fab color="accent" aria-label="add" className={classes.button}
                       onClick={() => this.setState({ open: true })} >
-                <Icon color="contrast">add</Icon>
+                <Icon color="contrast">create</Icon>
               </Button>
               <TootDialog
                 open={this.state.open}
