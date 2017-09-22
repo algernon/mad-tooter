@@ -21,6 +21,7 @@ import PropTypes from 'prop-types';
 import { withStyles } from 'material-ui/styles';
 import Button from 'material-ui/Button';
 import Icon from 'material-ui/Icon';
+import IconButton from 'material-ui/IconButton';
 import Dialog, { DialogTitle, DialogContent, DialogActions, withResponsiveFullScreen } from 'material-ui/Dialog';
 import TextField from 'material-ui/TextField';
 import Chip from 'material-ui/Chip';
@@ -100,6 +101,10 @@ class TootDialog extends React.Component {
               <DialogTitle>
                 <AppBar>
                   <Toolbar>
+                    <IconButton className={classes.menuButton} color="contrast" aria-label="Close"
+                                onClick={this.handleRequestClose}>
+                      <Icon>close</Icon>
+                    </IconButton>
                     <Typography type="title" color="inherit" className={classes.flex}>
                       Toot
                     </Typography>
