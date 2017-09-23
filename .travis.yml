@@ -10,7 +10,7 @@ after_success:
   - npm run gh-pages-travis
 env:
   global:
-    - DEPLOY_BRANCH="proof-of-concept"
+    - DEPLOY_BRANCH="master"
     - SOURCE_DIR="build"
     - TARGET_BRANCH="gh-pages"
     - SSH_KEY="data/travis-key"
