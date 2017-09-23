@@ -29,6 +29,7 @@ const styles = theme => ({
         padding: theme.spacing.unit / 2,
         margin: theme.spacing.unit / 2,
         height: 'fit-content',
+        display: 'flex',
     },
     gallery: {
         display: 'flex',
