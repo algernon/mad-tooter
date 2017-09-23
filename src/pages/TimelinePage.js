@@ -145,6 +145,8 @@ class TimelinePage extends React.Component {
 
         mastodonInit({config: this.props.mastodonConfig,
                       timelineName: this.props.match.params.timeline});
+
+        this.main.focus();
     }
 
     handleScroll = self => e => {
@@ -167,6 +169,8 @@ class TimelinePage extends React.Component {
               <ComposeButton />
 
               <main className={this.props.classes.content}
+                    tabIndex={0}
+                    ref={(main) => {this.main = main;}}
                     id="timeline"
                     onScroll={this.handleScroll(this)}>
                 <div id="top" />
