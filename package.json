@@ -1,0 +1,49 @@
+{
+  "name": "mad-tooter",
+  "version": "0.0.1",
+  "description": "Mastodon UI with a hint of Material Design",
+  "homepage": "https://algernon.github.io/mad-tooter",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/algernon/mad-tooter.git"
+  },
+  "author": {
+    "name": "Gergely Nagy",
+    "email": "<mastodon@gergo.csillger.hu>",
+    "url": "https://asylum.madhouse-project.org"
+  },
+  "license": "AGPL-3.0+",
+  "dependencies": {
+    "axios": "^0.16.2",
+    "jss": "latest",
+    "jss-preset-default": "latest",
+    "material-ui": "next",
+    "material-ui-icons": "latest",
+    "moment": "^2.18.1",
+    "parse-link-header": "^1.0.1",
+    "prop-types": "latest",
+    "react": "latest",
+    "react-dom": "latest",
+    "react-image-gallery": "^0.8.3",
+    "react-jss": "latest",
+    "react-redux": "^5.0.6",
+    "react-router-dom": "^4.2.2",
+    "react-scripts": "latest",
+    "recompose": "latest",
+    "redux": "^3.7.2",
+    "twemoji": "^2.5.0"
+  },
+  "scripts": {
+    "start": "react-scripts start",
+    "build": "react-scripts build",
+    "test": "react-scripts test --env=jsdom",
+    "eject": "react-scripts eject",
+    "predeploy": "npm run build",
+    "deploy": "gh-pages -d build",
+    "gh-pages-travis": "gh-pages-travis"
+  },
+  "devDependencies": {
+    "gh-pages": "^1.0.0",
+    "gh-pages-travis": "^1.0.4"
+  }
+}
