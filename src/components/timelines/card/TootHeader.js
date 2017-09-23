@@ -26,7 +26,6 @@ import { withStyles } from 'material-ui/styles';
 
 import TootAge from './TootAge';
 import { showAccount } from '../../../actions/toot';
-import { showError } from '../../../utils';
 
 const styles = theme => ({
     header: {
