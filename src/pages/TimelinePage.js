@@ -24,7 +24,7 @@ import Button from 'material-ui/Button';
 import Divider from 'material-ui/Divider';
 import List, {ListItem, ListItemIcon, ListItemText } from 'material-ui/List';
 import Typography from 'material-ui/Typography';
-import { withStyles } from 'material-ui/styles'
+import { withStyles } from 'material-ui/styles';
 
 import DomainIcon from 'material-ui-icons/Domain';
 import MenuIcon from 'material-ui-icons/Menu';
@@ -35,6 +35,7 @@ import WhatshotIcon from 'material-ui-icons/Whatshot';
 import AppBar from '../components/AppBar';
 import ComposeButton from '../components/timelines/ComposeButton';
 import ErrorMessage from '../components/ErrorMessage';
+import GalleryViewer from '../components/GalleryViewer';
 import Timeline from '../components/timelines/Timeline';
 
 import { appBarInit } from '../actions/AppBar';
@@ -161,6 +162,7 @@ class TimelinePage extends React.Component {
         return (
             <div>
               <ErrorMessage />
+              <GalleryViewer />
               <AppBar />
               <ComposeButton />
 

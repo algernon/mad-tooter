@@ -16,8 +16,12 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-import { showError } from '../utils';
+import store from '../store';
 
 export const showMediaInGallery = (idx, media) => () => {
-    showError ("Media viewer is not implemented yet", true);
+    store.dispatch({
+        type: 'GALLERY_SHOW',
+        images: media,
+        startIndex: idx,
+    });
 };

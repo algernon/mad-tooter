@@ -16,25 +16,28 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-import { createStore, combineReducers } from 'redux';
+const initialState = {
+    show: false,
+    images: null,
+    startIndex: 0,
+};
 
-import appBarReducer from './reducers/appBarReducer';
-import configurationReducer from './reducers/configurationReducer';
-import errorReducer from './reducers/errorReducer';
-import galleryReducer from './reducers/galleryReducer';
-import timelineReducer from './reducers/timelineReducer';
+const galleryReducer = (state = initialState, action) => {
+    if (action.type === 'GALLERY_HIDE') {
+        return Object.assign({}, state, {
+            show: false,
+        });
+    }
 
-const reducers = combineReducers({
-    appBar: appBarReducer,
-    configuration: configurationReducer,
-    error: errorReducer,
-    gallery: galleryReducer,
-    timeline: timelineReducer,
-});
+    if (action.type === 'GALLERY_SHOW') {
+        return Object.assign({}, state, {
+            show: true,
+            images: action.images,
+            startIndex: action.startIndex,
+        });
+    }
 
-const store = createStore(
-    reducers,
-    window.__REDUX_DEVTOOLS_EXTENSION__ && window.__REDUX_DEVTOOLS_EXTENSION__()
-);
+    return state;
+};
 
-export default store;
+export default galleryReducer;
