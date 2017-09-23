@@ -120,7 +120,7 @@ class TootCard extends React.Component {
                              onClick={this.spoilerToggle} />
                 <Collapse in={this.state.spoilerShown} transitionDuration="auto" unmountOnExit>
                   <Gallery media={toot.media_attachments} />
-                  <Typography type="body1"
+                  <Typography type="body1" className="toot"
                               onClick={showContext(toot)}
                               dangerouslySetInnerHTML={{__html: twemoji.parse(toot.content)}} />
                 </Collapse>

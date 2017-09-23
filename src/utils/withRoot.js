@@ -55,6 +55,43 @@ const styles = theme => ({
         '::-webkit-scrollbar-thumb': {
             backgroundColor: theme.palette.action.disabled,
         },
+        '.toot a': {
+            color: theme.palette.primary[500],
+            textDecoration: 'none',
+            transition: theme.transitions.create(['color'], {
+                easing: theme.transitions.easing.sharp,
+                duration: theme.transitions.duration.enteringScreen,
+            }),
+            '&:hover': {
+                color: theme.palette.primary.A200,
+            },
+        },
+        '.toot .group': {
+            color: theme.palette.primary[900],
+            '&:hover': {
+                color: theme.palette.primary.A700,
+            },
+        },
+        '.toot .mention': {
+            color: theme.palette.secondary[900],
+            '&:hover': {
+                color: theme.palette.secondary.A700,
+            },
+        },
+        '.toot .hashtag': {
+            color: theme.palette.secondary[500],
+            '&:hover': {
+                color: theme.palette.secondary.A200,
+            },
+        },
+        '.toot .invisible': {
+            display: 'none',
+        },
+        '.toot .ellipsis': {
+            '&::after': {
+                content: '"…"',
+            },
+        },
     },
 });
 
