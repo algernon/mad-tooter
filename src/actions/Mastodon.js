@@ -43,9 +43,9 @@ export const mastodonInit = (props) => {
     api.timeline("home").latest((timeline) => {
         addTimelineItems(props.timelineName, timeline);
     });
-    api.startStreaming("user", {update: (item) => {
+    api.startStreaming("user", (item) => {
         prependTimelineItem(props.timelineName, item);
-    }});
+    });
 };
 
 export const loadNextTimelineBatch = (props) => {
