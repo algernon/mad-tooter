@@ -46,7 +46,8 @@ class Timeline extends React.Component {
             <List dense width="100%">
               {this.props.items.map(toot => {
                   return (
-                      <ListItem key={`toot-${toot.id}-${toot.__mad_tooter && toot.__mad_tooter.source}`}>
+                      <ListItem key={`toot-${toot.id}-${toot.__mad_tooter && toot.__mad_tooter.source}`}
+                                id={`toot-${toot.id}-${toot.__mad_tooter && toot.__mad_tooter.source}`}>
                         <TootCard toot={toot} />
                       </ListItem>
                   );
