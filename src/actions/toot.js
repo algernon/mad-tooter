@@ -22,7 +22,7 @@ import store from '../store';
 const showComposeDialog = (replyTo) => {
     store.dispatch({
         type: 'COMPOSE_SHOW',
-        title: "Replying to...",
+        title: replyTo ? "Replying to..." : "Toot",
         replyTo: replyTo,
     });
 }
