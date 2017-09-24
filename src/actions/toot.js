@@ -19,12 +19,20 @@
 import { showError } from '../utils';
 import store from '../store';
 
+const showComposeDialog = (replyTo) => {
+    store.dispatch({
+        type: 'COMPOSE_SHOW',
+        title: "Replying to...",
+        replyTo: replyTo,
+    });
+}
+
 export const updateToot = (id, field, transform) => () => {
     showError ("Updating toots (fav/boost) is not implemented yet.", true);
 };
 
-export const replyToToot = (toot) => () => {
-    showError ("Replying to toots not implemented yet.", true);
+export const replyToToot = (replyTo) => () => {
+    showComposeDialog(replyTo);
 };
 
 export const showAccount = (account) => (e) => {
@@ -36,13 +44,6 @@ export const showAccount = (account) => (e) => {
 export const showContext = (toot) => () => {
     showError ("Toot context view not implemented yet.", true);
 };
-
-const showComposeDialog = (replyTo) => {
-    store.dispatch({
-        type: 'COMPOSE_SHOW',
-        replyTo: replyTo,
-    });
-}
 
 export const composeNewToot = () => {
     showComposeDialog();

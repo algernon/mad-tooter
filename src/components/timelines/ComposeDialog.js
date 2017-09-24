@@ -18,7 +18,7 @@
 
 import React from 'react';
 import classNames from 'classnames';
-import { connect } from 'react-redux'
+import { connect } from 'react-redux';
 
 import AppBar from 'material-ui/AppBar';
 import Avatar from 'material-ui/Avatar';
@@ -41,6 +41,7 @@ import VignetteIcon from 'material-ui-icons/Vignette';
 
 import { postToot } from '../../actions/Mastodon';
 import store from '../../store';
+import TootReplyCard from './TootReplyCard';
 
 const maxTootLength = 500;
 
@@ -50,6 +51,10 @@ const styles = theme => ({
     },
     content: {
         marginTop: 48,
+    },
+    replyTo: {
+        marginTop: 48,
+        flex: 'none',
     },
     form: {
         display: 'flex',
@@ -70,6 +75,15 @@ const styles = theme => ({
     error: {
         color: theme.palette.error[500],
     },
+    replyContent: {
+        paddingLeft: theme.spacing.unit * 2,
+        paddingRight: theme.spacing.unit * 2,
+        paddingTop: 0,
+        paddingBottom: 0,
+    },
+    toot: {
+        backgroundColor: theme.palette.background.contentFrame,
+    },
 });
 
 class ComposeDialog extends React.Component {
@@ -82,7 +96,10 @@ class ComposeDialog extends React.Component {
     };
 
     postToot = () => {
-        postToot({status: this.state.tootText});
+        postToot({
+            status: this.state.tootText,
+            in_reply_to_id: this.props.replyTo && this.props.replyTo.id,
+        });
 
         this.setState({tootText: ""});
         this.handleRequestClose();
@@ -98,7 +115,7 @@ class ComposeDialog extends React.Component {
     }
 
     render() {
-        const { classes, defaultAccount, dispatch, show, title, ...other } = this.props;
+        const { classes, defaultAccount, dispatch, show, title, replyTo, ...other } = this.props;
 
         return (
             <Dialog onRequestClose={this.handleRequestClose}
@@ -120,7 +137,8 @@ class ComposeDialog extends React.Component {
                   </Toolbar>
                 </AppBar>
               </DialogTitle>
-              <DialogContent className={classes.content}>
+              <TootReplyCard toot={replyTo} />
+              <DialogContent className={replyTo ? null : classes.content}>
                 <form className={classes.form} autoComplete="none">
                   <FormControl className={classNames(classes.formControl, classes.tootText)}>
                     <TextField autoFocus multiline
@@ -144,7 +162,6 @@ class ComposeDialog extends React.Component {
                     </Button>
                   </FormControl>
                 </form>
-
               </DialogContent>
               <DialogActions>
                 <Button dense onClick={this.cancelToot}>
@@ -168,6 +185,7 @@ const stateToProps = ({ configuration, compose }) => ({
     defaultAccount: Object.keys(configuration.mastodon)[0],
     show: compose.show,
     title: compose.title,
+    replyTo: compose.replyTo,
 });
 
 export default connect(stateToProps)(ComposeDialog);

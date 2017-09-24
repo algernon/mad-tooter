@@ -19,6 +19,7 @@
 const initialState = {
     show: false,
     title: "Toot",
+    replyTo: null,
 };
 
 const composeReducer = (state = initialState, action) => {
@@ -32,6 +33,7 @@ const composeReducer = (state = initialState, action) => {
         return Object.assign({}, state, {
             show: true,
             title: action.title || "Toot",
+            replyTo: action.replyTo,
         });
     }
 
