@@ -51,6 +51,7 @@ const styles = theme => ({
         },
         '& .disabled': {
             marginLeft: theme.spacing.unit,
+            color: theme.palette.text.disabled,
         },
     },
     via: {
