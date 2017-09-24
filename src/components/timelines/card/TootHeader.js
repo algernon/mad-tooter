@@ -56,7 +56,6 @@ const styles = theme => ({
     via: {
         opacity: '0.5',
     },
-
 });
 
 class Via extends React.Component {

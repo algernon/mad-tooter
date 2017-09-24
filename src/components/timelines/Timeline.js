@@ -22,6 +22,7 @@ import List, { ListItem } from 'material-ui/List';
 import { withStyles } from 'material-ui/styles';
 
 import TootCard from './TootCard';
+import TootCardEmpty from './TootCardEmpty';
 
 const styles = theme => ({
 });
@@ -29,7 +30,17 @@ const styles = theme => ({
 class Timeline extends React.Component {
     render () {
         if (!this.props.items)
-            return null;
+            return (
+                <List dense width="100%">
+                  {[1, 2, 3, 4].map(index => {
+                      return (
+                          <ListItem key={`toot-placeholder-${index}`}>
+                            <TootCardEmpty />
+                          </ListItem>
+                      );
+                  })}
+                </List>
+            );
 
         return (
             <List dense width="100%">
