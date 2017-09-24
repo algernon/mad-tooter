@@ -52,30 +52,40 @@ const styles = theme => ({
 });
 
 class NotificationCard extends React.Component {
-    render () {
-        const { classes, notification } = this.props;
+    constructor(props) {
+        super(props);
 
-        if (!notification)
-            return null;
-
-        let notificationType = null;
-        switch (notification.type) {
+        let notificationAction = null;
+        switch (props.notification.type) {
         case "favourite":
-            notificationType = "favourited";
+            notificationAction = "favourited";
             break;
         case "reblog":
-            notificationType = "boosted";
+            notificationAction = "boosted";
             break;
         case "mention":
-            notificationType = "mentioned you";
+            notificationAction = "mentioned you";
             break;
         default:
+            console.log("Notification: unsupported type",
+                        props.notification);
             break;
         }
 
+        this.state = {
+            notificationAction: notificationAction,
+        };
+    }
+
+    render () {
+        const { classes, notification } = this.props;
+
+        if (!notification || !this.state.notificationAction)
+            return null;
+
         return (
             <Card className={classes.notification}>
-              <TootHeader toot={notification} action={notificationType} />
+              <TootHeader toot={notification} action={this.state.notificationAction} />
               <TootReplyCard toot={notification.status} className={classes.targetToot} />
 
               <CardActions disableActionSpacing>
