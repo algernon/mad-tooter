@@ -55,5 +55,5 @@ export const loadNextTimelineBatch = (props) => {
 };
 
 export const postToot = (props) => {
-    api.post(props.text);
+    api.post(props);
 };

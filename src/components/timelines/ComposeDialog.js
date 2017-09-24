@@ -82,7 +82,7 @@ class ComposeDialog extends React.Component {
     };
 
     postToot = () => {
-        postToot({text: this.state.tootText});
+        postToot({status: this.state.tootText});
 
         this.setState({tootText: ""});
         this.handleRequestClose();

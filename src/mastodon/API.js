@@ -138,10 +138,8 @@ export class MastodonAPI {
         });
     }
 
-    post(text) {
-        return this.state.http.post("/api/v1/statuses", {
-            status: text,
-        });
+    post(data) {
+        return this.state.http.post("/api/v1/statuses", data);
     }
 
     register() {
@@ -206,7 +204,7 @@ export class MastodonMultiAPI {
         return this.connections[0].unreblog(id);
     }
 
-    post(text) {
-        return this.connections[0].post(text);
+    post(data) {
+        return this.connections[0].post(data);
     }
 };
