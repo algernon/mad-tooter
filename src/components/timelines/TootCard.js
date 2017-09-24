@@ -96,7 +96,7 @@ class TootCard extends React.Component {
     };
 
     render () {
-        const { classes, toot, via } = this.props;
+        const { classes, toot, via, action } = this.props;
 
         if (!toot)
             return null;
@@ -105,14 +105,16 @@ class TootCard extends React.Component {
             return (
                 <TootCard toot={toot.reblog}
                           via={toot}
-                          classes={classes} />
+                          classes={classes}
+                          action={action} />
             );
         }
 
         return (
             <Card className={classes.toot}>
               <TootHeader toot={toot}
-                          via={via} />
+                          via={via}
+                          action={action} />
 
               <CardContent className={classes.content}>
                 <SpoilerText spoiler_text={toot.spoiler_text}

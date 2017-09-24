@@ -24,6 +24,7 @@ import Paper from 'material-ui/Paper';
 import Typography from 'material-ui/Typography';
 import { withStyles } from 'material-ui/styles';
 
+import TootCard from './TootCard';
 import TootHeader from './card/TootHeader';
 import { showError } from '../../utils';
 
@@ -109,6 +110,15 @@ class NotificationCard extends React.Component {
 
         if (!notification || !this.state.notificationAction)
             return null;
+
+        if (notification.type === "mention") {
+            notification.status.__mad_tooter = notification.__mad_tooter;
+
+            return (
+                <TootCard toot={notification.status}
+                          action={this.state.notificationAction}/>
+            );
+        }
 
         const action = (
             <span>
