@@ -26,7 +26,7 @@ import { withStyles } from 'material-ui/styles';
 import PersonIcon from 'material-ui-icons/Person';
 
 import TootHeader from './card/TootHeader';
-import TootReplyCard from './TootReplyCard';
+import QuotedTootCard from './QuotedTootCard';
 
 const styles = theme => ({
     notification: {
@@ -86,7 +86,7 @@ class NotificationCard extends React.Component {
         return (
             <Card className={classes.notification}>
               <TootHeader toot={notification} action={this.state.notificationAction} />
-              <TootReplyCard toot={notification.status} className={classes.targetToot} />
+              <QuotedTootCard toot={notification.status} className={classes.targetToot} />
 
               <CardActions disableActionSpacing>
                 <div className={classes.flex} />

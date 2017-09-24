@@ -106,7 +106,7 @@ const TootHeaderEmpty = withStyles(headerStyles)((props) => {
     );
 });
 
-class TootCardEmpty extends React.Component {
+class PlaceholderTootCard extends React.Component {
     render () {
         const { classes } = this.props;
 
@@ -141,4 +141,4 @@ class TootCardEmpty extends React.Component {
     }
 }
 
-export default withStyles(styles)(TootCardEmpty);
+export default withStyles(styles)(PlaceholderTootCard);

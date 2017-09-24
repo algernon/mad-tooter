@@ -42,7 +42,7 @@ const styles = theme => ({
     },
 });
 
-const TootReplyCard = withStyles(styles)((props) => {
+const QuotedTootCard = withStyles(styles)((props) => {
     const { classes, toot } = props;
 
     if (!toot)
@@ -64,4 +64,4 @@ const TootReplyCard = withStyles(styles)((props) => {
     );
 });
 
-export default TootReplyCard;
+export default QuotedTootCard;

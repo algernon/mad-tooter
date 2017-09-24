@@ -41,7 +41,7 @@ import VignetteIcon from 'material-ui-icons/Vignette';
 
 import { postToot } from '../../actions/Mastodon';
 import store from '../../store';
-import TootReplyCard from './TootReplyCard';
+import QuotedTootCard from './QuotedTootCard';
 
 const maxTootLength = 500;
 
@@ -131,7 +131,7 @@ class ComposeDialog extends React.Component {
                   </Toolbar>
                 </AppBar>
               </DialogTitle>
-              <TootReplyCard toot={replyTo} />
+              <QuotedTootCard toot={replyTo} />
               <DialogContent className={replyTo ? null : classes.content}>
                 <form className={classes.form} autoComplete="none">
                   <FormControl className={classNames(classes.formControl, classes.tootText)}>

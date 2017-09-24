@@ -36,7 +36,7 @@ import AppBar from '../components/AppBar';
 import ComposeButton from '../components/timelines/ComposeButton';
 import ComposeDialog from '../components/timelines/ComposeDialog';
 import ErrorMessage from '../components/ErrorMessage';
-import GalleryViewer from '../components/GalleryViewer';
+import GalleryViewer from '../components/timelines/GalleryViewer';
 import Timeline from '../components/timelines/Timeline';
 
 import { appBarInit } from '../actions/AppBar';

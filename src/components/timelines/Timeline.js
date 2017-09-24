@@ -22,7 +22,7 @@ import List, { ListItem } from 'material-ui/List';
 
 import NotificationCard from './NotificationCard';
 import TootCard from './TootCard';
-import TootCardEmpty from './TootCardEmpty';
+import PlaceholderTootCard from './PlaceholderTootCard';
 
 class TimelineItem extends React.Component {
     render() {
@@ -50,7 +50,7 @@ class Timeline extends React.Component {
                   {[1, 2, 3, 4].map(index => {
                       return (
                           <ListItem key={`toot-placeholder-${index}`}>
-                            <TootCardEmpty />
+                            <PlaceholderTootCard />
                           </ListItem>
                       );
                   })}

@@ -21,7 +21,7 @@ import { connect } from 'react-redux';
 
 import Lightbox from 'react-image-lightbox';
 
-import store from '../store';
+import store from '../../store';
 
 class GalleryViewer extends React.Component {
     constructor(props) {
