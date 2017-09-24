@@ -20,26 +20,21 @@ import React from 'react';
 
 import List, { ListItem } from 'material-ui/List';
 
-import { showError } from '../../utils';
+import NotificationCard from './NotificationCard';
 import TootCard from './TootCard';
 import TootCardEmpty from './TootCardEmpty';
 
 class TimelineItem extends React.Component {
-    componentWillMount() {
-        if (this.props.item.__type !== "toot") {
-            showError("Unsupported event type: " + this.props.item.__type);
-
-            console.log(this.props.item);
-        }
-    }
-
     render() {
         const { item } = this.props;
 
         switch (item.__type) {
         case "toot":
             return (<TootCard toot={item} />);
+        case "notification":
+            return (<NotificationCard notification={item} />);
         default:
+            console.log("TimelineItem: unsupported item type.", this.props.item);
             break;
         }
 

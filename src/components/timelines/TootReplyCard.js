@@ -49,7 +49,7 @@ const TootReplyCard = withStyles(styles)((props) => {
         return null;
 
     return (
-        <DialogContent className={props.classes.replyTo}>
+        <DialogContent className={props.className || props.classes.replyTo}>
           <Card className={classes.toot}>
             <TootHeader toot={toot} />
 

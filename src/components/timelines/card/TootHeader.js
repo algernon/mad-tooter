@@ -83,7 +83,7 @@ Via = withStyles(styles)(Via);
 
 class TootHeader extends React.Component {
     render () {
-        const { toot, classes, via } = this.props;
+        const { toot, classes, via, action } = this.props;
 
         const avatar = (
             <Avatar component="a"
@@ -103,7 +103,7 @@ class TootHeader extends React.Component {
 
         const subheader = (
             <div>
-              <TootAge time={toot.created_at} href={toot.url} />
+              {action} <TootAge time={toot.created_at} href={toot.url} />
               <Via via={via} onClick={showAccount} />
             </div>
         );
