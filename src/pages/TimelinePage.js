@@ -34,6 +34,7 @@ import WhatshotIcon from 'material-ui-icons/Whatshot';
 
 import AppBar from '../components/AppBar';
 import ComposeButton from '../components/timelines/ComposeButton';
+import ComposeDialog from '../components/timelines/ComposeDialog';
 import ErrorMessage from '../components/ErrorMessage';
 import GalleryViewer from '../components/GalleryViewer';
 import Timeline from '../components/timelines/Timeline';
@@ -165,8 +166,9 @@ class TimelinePage extends React.Component {
             <div>
               <ErrorMessage />
               <GalleryViewer />
-              <AppBar />
+              <ComposeDialog />
               <ComposeButton />
+              <AppBar />
 
               <main className={this.props.classes.content}
                     tabIndex={0}

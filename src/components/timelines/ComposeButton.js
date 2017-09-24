@@ -23,7 +23,7 @@ import { withStyles } from 'material-ui/styles';
 
 import CreateIcon from 'material-ui-icons/Create';
 
-import ComposeDialog from './ComposeDialog';
+import { composeNewToot } from '../../actions/toot';
 
 const styles = theme => ({
     button: {
@@ -36,26 +36,14 @@ const styles = theme => ({
 });
 
 class ComposeButton extends React.Component {
-    state = {
-        composeOpen: false,
-    };
-
-    handleRequestClose = value => {
-        this.setState({ composeOpen: false });
-    };
-
     render () {
         const classes = this.props.classes;
 
         return (
             <div>
-              <ComposeDialog
-                open={this.state.composeOpen}
-                onRequestClose={this.handleRequestClose} />
-
               <Button fab color="accent" aria-label="compose"
                       className={classes.button}
-                      onClick={() => this.setState({ composeOpen: true })} >
+                      onClick={composeNewToot} >
                 <CreateIcon />
               </Button>
             </div>

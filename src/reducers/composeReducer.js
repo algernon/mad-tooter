@@ -16,34 +16,26 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-import { showError } from '../utils';
-import store from '../store';
-
-export const updateToot = (id, field, transform) => () => {
-    showError ("Updating toots (fav/boost) is not implemented yet.", true);
+const initialState = {
+    show: false,
+    title: "Toot",
 };
 
-export const replyToToot = (toot) => () => {
-    showError ("Replying to toots not implemented yet.", true);
+const composeReducer = (state = initialState, action) => {
+    if (action.type === 'COMPOSE_HIDE') {
+        return Object.assign({}, state, {
+            show: false,
+        });
+    }
+
+    if (action.type === 'COMPOSE_SHOW') {
+        return Object.assign({}, state, {
+            show: true,
+            title: action.title || "Toot",
+        });
+    }
+
+    return state;
 };
 
-export const showAccount = (account) => (e) => {
-    e.preventDefault ();
-
-    showError ("Account view not implemented yet.", true);
-};
-
-export const showContext = (toot) => () => {
-    showError ("Toot context view not implemented yet.", true);
-};
-
-const showComposeDialog = (replyTo) => {
-    store.dispatch({
-        type: 'COMPOSE_SHOW',
-        replyTo: replyTo,
-    });
-}
-
-export const composeNewToot = () => {
-    showComposeDialog();
-}
+export default composeReducer;

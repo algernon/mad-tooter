@@ -19,6 +19,7 @@
 import { createStore, combineReducers } from 'redux';
 
 import appBarReducer from './reducers/appBarReducer';
+import composeReducer from './reducers/composeReducer';
 import configurationReducer from './reducers/configurationReducer';
 import errorReducer from './reducers/errorReducer';
 import galleryReducer from './reducers/galleryReducer';
@@ -26,6 +27,7 @@ import timelineReducer from './reducers/timelineReducer';
 
 const reducers = combineReducers({
     appBar: appBarReducer,
+    compose: composeReducer,
     configuration: configurationReducer,
     error: errorReducer,
     gallery: galleryReducer,

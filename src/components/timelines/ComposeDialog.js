@@ -40,6 +40,7 @@ import PublicIcon from 'material-ui-icons/Public';
 import VignetteIcon from 'material-ui-icons/Vignette';
 
 import { postToot } from '../../actions/Mastodon';
+import store from '../../store';
 
 const maxTootLength = 500;
 
@@ -77,7 +78,7 @@ class ComposeDialog extends React.Component {
     };
 
     handleRequestClose = () => {
-        this.props.onRequestClose();
+        store.dispatch({type: 'COMPOSE_HIDE'})
     };
 
     postToot = () => {
@@ -97,11 +98,11 @@ class ComposeDialog extends React.Component {
     }
 
     render() {
-        const { classes, defaultAccount, dispatch, title, ...other } = this.props;
+        const { classes, defaultAccount, dispatch, show, title, ...other } = this.props;
 
         return (
             <Dialog onRequestClose={this.handleRequestClose}
-                    open={this.props.open}
+                    open={show}
                     transition={<Slide direction="up" />}
                     {...other} >
               <DialogTitle>
@@ -163,8 +164,10 @@ class ComposeDialog extends React.Component {
 
 ComposeDialog = withStyles(styles)(withResponsiveFullScreen()(ComposeDialog));
 
-const stateToProps = ({ configuration }) => ({
+const stateToProps = ({ configuration, compose }) => ({
     defaultAccount: Object.keys(configuration.mastodon)[0],
+    show: compose.show,
+    title: compose.title,
 });
 
 export default connect(stateToProps)(ComposeDialog);
