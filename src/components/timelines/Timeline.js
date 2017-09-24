@@ -21,11 +21,35 @@ import React from 'react';
 import List, { ListItem } from 'material-ui/List';
 import { withStyles } from 'material-ui/styles';
 
+import { showError } from '../../utils';
 import TootCard from './TootCard';
 import TootCardEmpty from './TootCardEmpty';
 
 const styles = theme => ({
 });
+
+class TimelineItem extends React.Component {
+    componentWillMount() {
+        if (this.props.item.__type !== "toot") {
+            showError("Unsupported event type: " + this.props.item.__type);
+
+            console.log(this.props.item);
+        }
+    }
+
+    render() {
+        const { item } = this.props;
+
+        switch (item.__type) {
+        case "toot":
+            return (<TootCard toot={item} />);
+        default:
+            break;
+        }
+
+        return null;
+    }
+}
 
 class Timeline extends React.Component {
     render () {
@@ -44,11 +68,11 @@ class Timeline extends React.Component {
 
         return (
             <List dense width="100%">
-              {this.props.items.map(toot => {
+              {this.props.items.map(item => {
                   return (
-                      <ListItem key={`toot-${toot.id}-${toot.__mad_tooter && toot.__mad_tooter.source}`}
-                                id={`toot-${toot.id}-${toot.__mad_tooter && toot.__mad_tooter.source}`}>
-                        <TootCard toot={toot} />
+                      <ListItem key={`item-${item.id}-${item.__mad_tooter && item.__mad_tooter.source}`}
+                                id={`item-${item.id}-${item.__mad_tooter && item.__mad_tooter.source}`}>
+                        <TimelineItem item={item} />
                       </ListItem>
                   );
               })}

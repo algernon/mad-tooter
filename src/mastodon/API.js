@@ -20,10 +20,11 @@ import axios from 'axios';
 import parseLink from 'parse-link-header';
 
 class TimelineAPI {
-    constructor(main, timeline) {
+    constructor(main, timeline, type) {
         this.state = {updating: false};
         this.main = main;
         this.timeline = timeline;
+        this.type = type;
     }
 
     __request(params) {
@@ -35,6 +36,7 @@ class TimelineAPI {
     __annotate(data) {
         return data.map(item => {
             item.__mad_tooter = {source: this.main.key};
+            item.__type = this.type;
             return item;
         });
     }
@@ -105,7 +107,7 @@ export class MastodonAPI {
 
     timeline(timeline) {
         if (!this.timelines[timeline]) {
-            this.timelines[timeline] = new TimelineAPI(this, timeline);
+            this.timelines[timeline] = new TimelineAPI(this, timeline, "toot");
         }
         return this.timelines[timeline];
     }
@@ -124,17 +126,27 @@ export class MastodonAPI {
         return this.state.http.post("/api/v1/statuses/" + id + "/unreblog");
     }
 
-    startStreaming(stream, handlers) {
+    startStreaming(stream, handler) {
         let self = this;
         return this.state.streaming[stream].addEventListener('message', (e) => {
             let event = JSON.parse(e.data);
+            let payload = null;
             if (event.event === "update") {
-                let payload = JSON.parse(event.payload);
-                payload.__mad_tooter = {
-                    source: self.key,
-                };
-                handlers.update(payload);
+                payload = JSON.parse(event.payload);
+                payload.__type = "toot";
+            } else if (event.event === "notification") {
+                payload = JSON.parse(event.payload);
+                payload.__type = "notification";
+            } else {
+                console.log("unhandled event: ", event);
+                return;
             }
+
+            payload.__mad_tooter = {
+                source: self.key,
+            };
+
+            handler(payload);
         });
     }
 
