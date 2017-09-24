@@ -74,6 +74,9 @@ class NotificationCard extends React.Component {
         case "mention":
             notificationAction = "mentioned " + props.notification.__mad_tooter.source;
             break;
+        case "follow":
+            notificationAction = "followed " + props.notification.__mad_tooter.source;
+            break;
         default:
             console.log("Notification: unsupported type",
                         props.notification);
@@ -127,6 +130,14 @@ class NotificationCard extends React.Component {
               <span className={classes.expander} onClick={this.toggleExpand(this)}>toot</span>
             </span>
         );
+
+        if (notification.type === "follow") {
+            return (
+                <div className={classes.notification}>
+                  <TootHeader toot={notification} action={this.state.notificationAction} />
+                </div>
+            );
+        }
 
         return (
             <div className={classes.notification}>
