@@ -22,14 +22,12 @@ const initialState = {
 
 const loadingIndicatorReducer = (state = initialState, action) => {
     if (action.type === 'LOADING_INDICATOR_SHOW') {
-        console.log("Indicator show");
         return Object.assign({}, state, {
             show: true,
         });
     }
 
     if (action.type === 'LOADING_INDICATOR_HIDE') {
-        console.log("Indicator hide");
         return Object.assign({}, state, {
             show: false,
         });
