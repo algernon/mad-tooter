@@ -44,11 +44,18 @@ const composeReducer = (state = initialState, action) => {
         if (state.replyTo && !action.replyTo)
             newText = "";
 
+        if (action.replyTo) {
+            let mentions = [{acct: action.replyTo.account.acct}];
+            mentions = mentions.concat(action.replyTo.mentions)
+
+            newText = mentions.map(item => "@" + item.acct).join(" ") + " ";
+        }
+
         return Object.assign({}, state, {
             show: true,
             title: action.title || "Toot",
             replyTo: action.replyTo,
-            text: action.replyTo ? "@" + action.replyTo.account.acct + " " : newText,
+            text: newText,
         });
     }
 
