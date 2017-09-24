@@ -40,8 +40,15 @@ const prependTimelineItem = (timelineName, item) => {
 export const mastodonInit = (props) => {
     api = new MastodonMultiAPI(props.config);
 
+    store.dispatch({
+        type: "LOADING_INDICATOR_SHOW",
+    });
+
     api.timeline("home").latest((timeline) => {
         addTimelineItems(props.timelineName, timeline);
+        store.dispatch({
+            type: "LOADING_INDICATOR_HIDE",
+        });
     });
     api.startStreaming("user", (item) => {
         prependTimelineItem(props.timelineName, item);
@@ -49,8 +56,15 @@ export const mastodonInit = (props) => {
 };
 
 export const loadNextTimelineBatch = (props) => {
+    store.dispatch({
+        type: "LOADING_INDICATOR_SHOW",
+    });
+
     api.timeline("home").next((timeline) => {
         addTimelineItems(props.timelineName, timeline);
+        store.dispatch({
+            type: "LOADING_INDICATOR_HIDE",
+        });
     });
 };
 

@@ -37,6 +37,7 @@ import ComposeButton from '../components/timelines/ComposeButton';
 import ComposeDialog from '../components/timelines/ComposeDialog';
 import ErrorMessage from '../components/ErrorMessage';
 import GalleryViewer from '../components/timelines/GalleryViewer';
+import LoadingIndicator from '../components/LoadingIndicator';
 import Timeline from '../components/timelines/Timeline';
 
 import { appBarInit } from '../actions/AppBar';
@@ -169,6 +170,7 @@ class TimelinePage extends React.Component {
               <ComposeDialog />
               <ComposeButton />
               <AppBar />
+              <LoadingIndicator />
 
               <main className={this.props.classes.content}
                     tabIndex={0}

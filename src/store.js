@@ -23,6 +23,7 @@ import composeReducer from './reducers/composeReducer';
 import configurationReducer from './reducers/configurationReducer';
 import errorReducer from './reducers/errorReducer';
 import galleryReducer from './reducers/galleryReducer';
+import loadingIndicatorReducer from './reducers/loadingIndicatorReducer';
 import timelineReducer from './reducers/timelineReducer';
 
 const reducers = combineReducers({
@@ -31,6 +32,7 @@ const reducers = combineReducers({
     configuration: configurationReducer,
     error: errorReducer,
     gallery: galleryReducer,
+    loadingIndicator: loadingIndicatorReducer,
     timeline: timelineReducer,
 });
 
