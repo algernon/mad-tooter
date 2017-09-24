@@ -97,7 +97,7 @@ class ComposeDialog extends React.Component {
     }
 
     render() {
-        const { classes, defaultAccount, dispatch, ...other } = this.props;
+        const { classes, defaultAccount, dispatch, title, ...other } = this.props;
 
         return (
             <Dialog onRequestClose={this.handleRequestClose}
@@ -112,7 +112,7 @@ class ComposeDialog extends React.Component {
                       <CloseIcon />
                     </IconButton>
                     <Typography type="title" color="inherit" className={classes.flex}>
-                      Toot
+                      {title || "Toot"}
                     </Typography>
                     <Chip label={defaultAccount}
                           avatar={<Avatar><PersonIcon /></Avatar>} />
