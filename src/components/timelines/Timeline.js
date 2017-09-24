@@ -19,14 +19,10 @@
 import React from 'react';
 
 import List, { ListItem } from 'material-ui/List';
-import { withStyles } from 'material-ui/styles';
 
 import { showError } from '../../utils';
 import TootCard from './TootCard';
 import TootCardEmpty from './TootCardEmpty';
-
-const styles = theme => ({
-});
 
 class TimelineItem extends React.Component {
     componentWillMount() {
@@ -81,4 +77,4 @@ class Timeline extends React.Component {
     }
 }
 
-export default withStyles(styles)(Timeline);
+export default Timeline;
