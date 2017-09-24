@@ -93,11 +93,11 @@ class ComposeDialog extends React.Component {
 
     postToot = () => {
         postToot({
-            status: this.state.tootText,
+            status: this.props.text,
             in_reply_to_id: this.props.replyTo && this.props.replyTo.id,
         });
 
-        this.handleRequestClose();
+        this.cancelToot();
     }
 
     cancelToot = () => {
