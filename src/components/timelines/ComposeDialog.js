@@ -87,10 +87,6 @@ const styles = theme => ({
 });
 
 class ComposeDialog extends React.Component {
-    state = {
-        tootText: "",
-    };
-
     handleRequestClose = () => {
         store.dispatch({type: 'COMPOSE_HIDE'})
     };
@@ -101,21 +97,19 @@ class ComposeDialog extends React.Component {
             in_reply_to_id: this.props.replyTo && this.props.replyTo.id,
         });
 
-        this.setState({tootText: ""});
         this.handleRequestClose();
     }
 
     cancelToot = () => {
-        this.setState({tootText: ""});
-        this.handleRequestClose();
+        store.dispatch({type: 'COMPOSE_CANCEL'});
     }
 
     tootLength = () => {
-        return this.state.tootText.length;
+        return this.props.text.length;
     }
 
     render() {
-        const { classes, defaultAccount, dispatch, show, title, replyTo, ...other } = this.props;
+        const { classes, defaultAccount, dispatch, show, title, replyTo, text, ...other } = this.props;
 
         return (
             <Dialog onRequestClose={this.handleRequestClose}
@@ -143,8 +137,8 @@ class ComposeDialog extends React.Component {
                   <FormControl className={classNames(classes.formControl, classes.tootText)}>
                     <TextField autoFocus multiline
                                rows={10}
-                               value={this.state.tootText}
-                               onChange={(e) => {this.setState({tootText: e.target.value});}}
+                               value={this.props.text}
+                               onChange={(e) => {store.dispatch({type: 'COMPOSE_SET_TEXT', text: e.target.value});}}
                       placeholder="What is on your mind?"/>
                   </FormControl>
                   <FormControl className={classes.actions}>
@@ -186,6 +180,7 @@ const stateToProps = ({ configuration, compose }) => ({
     show: compose.show,
     title: compose.title,
     replyTo: compose.replyTo,
+    text: compose.text,
 });
 
 export default connect(stateToProps)(ComposeDialog);

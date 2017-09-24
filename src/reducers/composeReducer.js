@@ -20,20 +20,41 @@ const initialState = {
     show: false,
     title: "Toot",
     replyTo: null,
+    text: "",
 };
 
 const composeReducer = (state = initialState, action) => {
     if (action.type === 'COMPOSE_HIDE') {
         return Object.assign({}, state, {
             show: false,
+            text: state.text,
+        });
+    }
+
+    if (action.type === 'COMPOSE_CANCEL') {
+        return Object.assign({}, state, {
+            show: false,
+            text: "",
         });
     }
 
     if (action.type === 'COMPOSE_SHOW') {
+        let newText = state.text;
+
+        if (state.replyTo && !action.replyTo)
+            newText = "";
+
         return Object.assign({}, state, {
             show: true,
             title: action.title || "Toot",
             replyTo: action.replyTo,
+            text: action.replyTo ? "@" + action.replyTo.account.acct + " " : newText,
+        });
+    }
+
+    if (action.type === 'COMPOSE_SET_TEXT') {
+        return Object.assign({}, state, {
+            text: action.text,
         });
     }
 
