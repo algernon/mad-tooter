@@ -72,7 +72,7 @@ class NotificationCard extends React.Component {
             notificationAction = "boosted";
             break;
         case "mention":
-            notificationAction = "mentioned you";
+            notificationAction = "mentioned " + props.notification.__mad_tooter.source;
             break;
         default:
             console.log("Notification: unsupported type",
