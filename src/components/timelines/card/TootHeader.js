@@ -42,16 +42,20 @@ const styles = theme => ({
         lineHeight: "16px",
         cursor: 'pointer',
     },
-
     author: {
         textDecoration: 'none',
         color: theme.palette.text.primary,
         '&:hover .author': {
             textDecoration: 'underline',
         },
-        '& .disabled': {
-            marginLeft: theme.spacing.unit,
+        '& .fullAccount': {
             color: theme.palette.text.disabled,
+            display: 'block',
+            marginLeft: 0,
+            [theme.breakpoints.up('sm')]: {
+                display: 'list-item',
+                marginLeft: theme.spacing.unit,
+            },
         },
     },
     via: {
@@ -95,9 +99,8 @@ class TootHeader extends React.Component {
         const title = (
             <a href={toot.account.url} className={classes.author}
                onClick={showAccount(toot.account)}>
-              <span className="author"
-                    dangerouslySetInnerHTML={{__html:twemoji.parse(toot.account.display_name) || toot.account.username}} />
-              <span className="disabled">{toot.account.acct}</span>
+              <span className="author" dangerouslySetInnerHTML={{__html:twemoji.parse(toot.account.display_name) || toot.account.username}} />
+              <span className="fullAccount">{toot.account.acct}</span>
             </a>
         );
 
