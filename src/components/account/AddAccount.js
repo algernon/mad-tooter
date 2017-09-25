@@ -20,8 +20,9 @@ import React from 'react';
 
 import { withStyles } from 'material-ui/styles';
 import Button from 'material-ui/Button';
-import { DialogContent, DialogActions, DialogContentText } from 'material-ui/Dialog';
+import Card, { CardContent, CardActions } from 'material-ui/Card';
 import TextField from 'material-ui/TextField';
+import Typography from 'material-ui/Typography';
 
 import { showError } from '../../utils';
 
@@ -99,8 +100,8 @@ class AddAccount extends React.Component {
         const { classes } = this.props;
 
         return (
-            <div>
-              <DialogContent>
+            <Card style={{margin: '16px'}}>
+              <CardContent>
                 <form autoComplete="none" onSubmit={this.handleRegister(this)}>
                   <TextField required fullWidth autoFocus
                              error={!this.isValid('key')}
@@ -142,21 +143,21 @@ class AddAccount extends React.Component {
                                onChange={this.handleChange('password')} />
                   </div>
                 </form>
-              </DialogContent>
-              <DialogContent>
-                <DialogContentText>
+              </CardContent>
+              <CardContent>
+                <Typography type="body1">
                   {`Credentials entered above are only used to obtain an authorization token. They
                     are not saved, or sent anywhere else but to the instance
                     provided above.`}
-                </DialogContentText>
-              </DialogContent>
-              <DialogActions>
+                </Typography>
+              </CardContent>
+              <CardActions>
                 <Button onClick={this.handleRegister(this)} color="primary"
                         disabled={!this.isAllValid({force: true})}>
                   Authorize
                 </Button>
-              </DialogActions>
-            </div>
+              </CardActions>
+            </Card>
       );
     }
 };

@@ -21,7 +21,6 @@ import { connect } from 'react-redux';
 import { Redirect } from 'react-router-dom'
 
 import AppBar from 'material-ui/AppBar';
-import Dialog from 'material-ui/Dialog';
 import Toolbar from 'material-ui/Toolbar';
 import Typography from 'material-ui/Typography';
 
@@ -41,18 +40,16 @@ class ClientAuthorizationPage extends React.Component {
 
         return (
             <div>
-              <Dialog open>
-                <AppBar color="primary" position="static">
-                  <Toolbar>
-                    <div>
-                      <Typography type="title" color="inherit" noWrap>
-                        Mad Tooter Setup Wizard
-                      </Typography>
-                    </div>
-                  </Toolbar>
-                </AppBar>
-                <AddAccount onSubmit={authorizeClient} />
-              </Dialog>
+              <AppBar color="primary" position="static">
+                <Toolbar>
+                  <div>
+                    <Typography type="title" color="inherit" noWrap>
+                      Mad Tooter Setup Wizard
+                    </Typography>
+                  </div>
+                </Toolbar>
+              </AppBar>
+              <AddAccount onSubmit={authorizeClient} />
               <ErrorMessage />
             </div>
         );
