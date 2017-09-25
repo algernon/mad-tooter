@@ -23,7 +23,6 @@ import twemoji from 'twemoji';
 import Avatar from 'material-ui/Avatar';
 import Button from 'material-ui/Button';
 import Card, { CardContent, CardActions } from 'material-ui/Card';
-import Chip from 'material-ui/Chip';
 import Collapse from 'material-ui/transitions/Collapse';
 import Typography from 'material-ui/Typography';
 import { withStyles } from 'material-ui/styles';
@@ -149,9 +148,7 @@ class TootCard extends React.Component {
                 </Button>
                 <div className={classes.flex} />
                 <div className={classes.meta}>
-                  <Chip avatar={<Avatar><PersonIcon /></Avatar>}
-                        label={this.state.toot.__mad_tooter && this.state.toot.__mad_tooter.source}
-                        className={classes.chip} />
+                  <Avatar><PersonIcon /></Avatar>
                 </div>
               </CardActions>
             </Card>
