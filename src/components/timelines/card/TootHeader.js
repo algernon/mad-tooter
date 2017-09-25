@@ -53,7 +53,7 @@ const styles = theme => ({
             display: 'block',
             marginLeft: 0,
             [theme.breakpoints.up('sm')]: {
-                display: 'list-item',
+                display: 'inline',
                 marginLeft: theme.spacing.unit,
             },
         },
