@@ -69,11 +69,19 @@ const styles = theme => ({
 
     content: {
         position: 'fixed',
-        top: 64,
         width: '100%',
         height: '100%',
         overflowY: 'auto',
-        maxHeight: 'calc(100vh - 64px)',
+        maxHeight: 'calc(100vh - 56px)',
+        top: 56,
+        [`${theme.breakpoints.up('xs')} and (orientation: landscape)`]: {
+            top: 48,
+            maxHeight: 'calc(100vh - 48px)',
+        },
+        [theme.breakpoints.up('sm')]: {
+            top: 64,
+            maxHeight: 'calc(100vh - 64px)',
+        },
     },
 });
 
