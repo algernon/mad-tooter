@@ -25,9 +25,15 @@ import { withStyles } from 'material-ui/styles';
 const styles = theme => ({
     indicator: {
         position: 'absolute',
-        top: 64,
         zIndex: 2000,
         width: '100%',
+        top: 56,
+        [`${theme.breakpoints.up('xs')} and (orientation: landscape)`]: {
+            top: 48,
+        },
+        [theme.breakpoints.up('sm')]: {
+            top: 64,
+        },
     }
 });
 
