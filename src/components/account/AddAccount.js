@@ -20,7 +20,7 @@ import React from 'react';
 
 import { withStyles } from 'material-ui/styles';
 import Button from 'material-ui/Button';
-import Card, { CardContent, CardActions, CardHeader } from 'material-ui/Card';
+import Card, { CardContent, CardActions } from 'material-ui/Card';
 import Divider from 'material-ui/Divider';
 import { FormControlLabel } from 'material-ui/Form';
 import Switch from 'material-ui/Switch';
