@@ -20,7 +20,10 @@ import React from 'react';
 
 import { withStyles } from 'material-ui/styles';
 import Button from 'material-ui/Button';
-import Card, { CardContent, CardActions } from 'material-ui/Card';
+import Card, { CardContent, CardActions, CardHeader } from 'material-ui/Card';
+import Divider from 'material-ui/Divider';
+import { FormControlLabel } from 'material-ui/Form';
+import Switch from 'material-ui/Switch';
 import TextField from 'material-ui/TextField';
 import Typography from 'material-ui/Typography';
 
@@ -41,7 +44,9 @@ class AddAccount extends React.Component {
         baseURI: "",
         username: "",
         password: "",
+        accessToken: "",
 
+        useToken: false,
         submitted: false,
     }
 
@@ -54,7 +59,7 @@ class AddAccount extends React.Component {
     };
 
     isAllValid = (props) => {
-        const settings = ['key', 'baseURI', 'username', 'password'];
+        const settings = ['key', 'baseURI', 'username', 'password', 'accessToken'];
 
         return settings.reduce((result, key) => { return result && this.isValid(key, props); });
     }
@@ -75,8 +80,21 @@ class AddAccount extends React.Component {
     isValid = (key, props = {force: false}) => {
         switch (key) {
         case 'key':
+            if (!this.submitted && !props.force)
+                return true;
+            return this.state[key] !== "";
+
         case 'username':
         case 'password':
+            if (this.state.useToken)
+                return true;
+            if (!this.submitted && !props.force)
+                return true;
+            return this.state[key] !== "";
+
+        case 'accessToken':
+            if (!this.state.useToken)
+                return true;
             if (!this.submitted && !props.force)
                 return true;
             return this.state[key] !== "";
@@ -99,10 +117,54 @@ class AddAccount extends React.Component {
     render() {
         const { classes } = this.props;
 
+        let Credentials = (
+            <div>
+                    <TextField error={!this.isValid('username')}
+                               className={classes.textField}
+                               id="mad-tooter-username"
+                               type="email"
+                               label="E-mail address"
+                               value={this.state.username}
+                               placeholder="tooter@example.social"
+                               helperText="The e-mail address you use to log in."
+                               onChange={this.handleChange('username')} />
+                    <TextField error={!this.isValid('password')}
+                               className={classes.textField}
+                               type="password"
+                               id="mad-tooter-password"
+                               label="Password"
+                               value={this.state.password}
+                               placeholder="12345"
+                               helperText="The password you use to log in."
+                               onChange={this.handleChange('password')} />
+                    <Typography>
+                      {`Credentials entered above are only used to obtain an authorization token. They
+                        are not saved, or sent anywhere else but to the instance
+                        provided above.`}
+                    </Typography>
+
+            </div>
+        );
+        if (this.state.useToken) {
+            Credentials = (
+                <div>
+                  <TextField error={!this.isValid('accessToken')}
+                             className={classes.textField}
+                             type="password"
+                             id="mad-tooter-auth-token"
+                             label="Authorization token"
+                             value={this.state.accessToken}
+                             placeholder="1234-abcd-foobar"
+                             helperText="If you registered the application beforehand, you can enter the authorization token here."
+                             onChange={this.handleChange('accessToken')} />
+                </div>
+            );
+        }
+
         return (
-            <Card style={{margin: '16px'}}>
-              <CardContent>
-                <form autoComplete="none" onSubmit={this.handleRegister(this)}>
+            <form autoComplete="none" onSubmit={this.handleRegister(this)}>
+              <Card style={{margin: '16px'}}>
+                <CardContent style={{paddingTop: 0}}>
                   <TextField required fullWidth autoFocus
                              error={!this.isValid('key')}
                              className={classes.textField}
@@ -121,43 +183,29 @@ class AddAccount extends React.Component {
                              placeholder="Eg: mastodon.social"
                              helperText="Your instance, without the protocol."
                              onChange={this.handleChange('baseURI')} />
-                  <div>
-                    <TextField required
-                               error={!this.isValid('username')}
-                               className={classes.textField}
-                               id="mad-tooter-username"
-                               label="E-mail address"
-                               value={this.state.username}
-                               placeholder="tooter@example.social"
-                               helperText="The e-mail address you use to log in."
-                               onChange={this.handleChange('username')} />
-                    <TextField required
-                               error={!this.isValid('password')}
-                               className={classes.textField}
-                               type="password"
-                               id="mad-tooter-password"
-                               label="Password"
-                               value={this.state.password}
-                               placeholder="12345"
-                               helperText="The password you use to log in."
-                               onChange={this.handleChange('password')} />
-                  </div>
-                </form>
-              </CardContent>
-              <CardContent>
-                <Typography type="body1">
-                  {`Credentials entered above are only used to obtain an authorization token. They
-                    are not saved, or sent anywhere else but to the instance
-                    provided above.`}
-                </Typography>
-              </CardContent>
-              <CardActions>
-                <Button onClick={this.handleRegister(this)} color="primary"
-                        disabled={!this.isAllValid({force: true})}>
-                  Authorize
-                </Button>
-              </CardActions>
-            </Card>
+                </CardContent>
+                <Divider />
+                <CardContent>
+                  <Typography>
+                    {`You can log in either by using a username and password combination, or by supplying an authorization token.`}
+                  </Typography>
+
+                  <FormControlLabel
+                    label="Use an authorization token"
+                    control={<Switch checked={this.state.useToken}
+                                     onChange={(event, checked) => this.setState({ useToken: checked })} />} />
+
+                  {Credentials}
+                </CardContent>
+                <CardActions>
+                  <Button onClick={this.handleRegister(this)} color="primary"
+                          disabled={!this.isAllValid({force: true})}>
+                    Authorize
+                  </Button>
+                </CardActions>
+              </Card>
+
+            </form>
       );
     }
 };

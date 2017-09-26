@@ -21,30 +21,43 @@ import { MastodonAPI } from '../mastodon/API';
 import { showError } from '../utils';
 
 export const authorizeClient = (config) => {
-    let api = new MastodonAPI(config.key, {api: {baseURL: 'https://' + config.baseURI}});
-    api.register()
-        .then((response) => {
-            api.getAuthToken(response.data.client_id,
-                             response.data.client_secret,
-                             config.username,
-                             config.password)
-                .then((response) => {
-                    let newConfig = {};
-                    newConfig[config.key] = {
-                        api: {baseURL: 'https://' + config.baseURI,
-                              wsBaseURL: 'wss://' + config.baseURI},
-                        auth: {token: response.data.access_token}
-                    }
-                    store.dispatch({
-                        type: 'STORE_CONFIGURATION',
-                        config: newConfig,
+    if (config.accessToken === "") {
+        let api = new MastodonAPI(config.key, {api: {baseURL: 'https://' + config.baseURI}});
+        api.register()
+            .then((response) => {
+                api.getAuthToken(response.data.client_id,
+                                 response.data.client_secret,
+                                 config.username,
+                                 config.password)
+                    .then((response) => {
+                        let newConfig = {};
+                        newConfig[config.key] = {
+                            api: {baseURL: 'https://' + config.baseURI,
+                                  wsBaseURL: 'wss://' + config.baseURI},
+                            auth: {token: response.data.access_token}
+                        }
+                        store.dispatch({
+                            type: 'STORE_CONFIGURATION',
+                            config: newConfig,
+                        });
+                    })
+                    .catch((error) => {
+                        showError("Error obtaining the authorization token. Please verify that the e-mail and the password are correct.");
                     });
-                })
-                .catch((error) => {
-                    showError("Error obtaining the authorization token. Please verify that the e-mail and the password are correct.");
-                });
-        })
-        .catch((error) => {
-            showError("Error registering the application with the instance. Please verify that the instance is correctly specified.");
+            })
+            .catch((error) => {
+                showError("Error registering the application with the instance. Please verify that the instance is correctly specified.");
+            });
+    } else {
+        let newConfig = {};
+        newConfig[config.key] = {
+            api: {baseURL: 'https://' + config.baseURI,
+                  wsBaseURL: 'wss://' + config.baseURI},
+            auth: {token: config.accessToken}
+        }
+        store.dispatch({
+            type: 'STORE_CONFIGURATION',
+            config: newConfig,
         });
+    }
 };
