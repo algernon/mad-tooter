@@ -24,7 +24,7 @@ import AppBar from 'material-ui/AppBar';
 import Avatar from 'material-ui/Avatar';
 import Button from 'material-ui/Button';
 import Chip from 'material-ui/Chip';
-import Dialog, { DialogTitle, DialogContent, DialogActions, withResponsiveFullScreen } from 'material-ui/Dialog';
+import Dialog, { DialogTitle, DialogContent, DialogActions } from 'material-ui/Dialog';
 import { FormControl } from 'material-ui/Form';
 import IconButton from 'material-ui/IconButton';
 import Slide from 'material-ui/transitions/Slide';
@@ -113,6 +113,7 @@ class ComposeDialog extends React.Component {
 
         return (
             <Dialog onRequestClose={this.handleRequestClose}
+                    fullScreen
                     open={show}
                     transition={<Slide direction="up" />}
                     {...other} >
@@ -173,7 +174,7 @@ class ComposeDialog extends React.Component {
     }
 }
 
-ComposeDialog = withStyles(styles)(withResponsiveFullScreen()(ComposeDialog));
+ComposeDialog = withStyles(styles)(ComposeDialog);
 
 const stateToProps = ({ configuration, compose }) => ({
     defaultAccount: Object.keys(configuration.mastodon)[0],
