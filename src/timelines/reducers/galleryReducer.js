@@ -31,8 +31,8 @@ const galleryReducer = (state = initialState, action) => {
 
     if (action.type === 'GALLERY_SHOW') {
         return state.merge({show: true,
-                            images: action.images,
-                            startIndex: action.startIndex});
+                            images: action.payload.images,
+                            startIndex: action.payload.startIndex});
     }
 
     return state;

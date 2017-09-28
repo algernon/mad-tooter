@@ -30,9 +30,11 @@ export const mastodonInit = (props) => {
 
     store.dispatch({
         type: "TIMELINE_START",
-        api: api,
-        dispatch: store.dispatch,
-        timelineName: props.timelineName,
+        payload: {
+            api: api,
+            dispatch: store.dispatch,
+            timelineName: props.timelineName,
+        },
     });
 };
 
@@ -44,8 +46,10 @@ export const loadNextTimelineBatch = (props) => {
     api.timeline("home").next((timeline) => {
         store.dispatch({
             type: 'TIMELINE_ADD',
-            name: props.timelineName,
-            timeline: timeline,
+            payload: {
+                name: props.timelineName,
+                timeline: timeline,
+            },
         });
         store.dispatch({
             type: "LOADING_INDICATOR_HIDE",

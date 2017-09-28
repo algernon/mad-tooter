@@ -143,7 +143,7 @@ class ComposeDialog extends React.Component {
                     <TextField autoFocus multiline
                                rows={10}
                                value={this.props.text}
-                               onChange={(e) => {dispatch({type: 'COMPOSE_SET_TEXT', text: e.target.value});}}
+                               onChange={(e) => {dispatch({type: 'COMPOSE_SET_TEXT', payload: {text: e.target.value}});}}
                       placeholder="What is on your mind?"/>
                   </FormControl>
                   <FormControl className={classes.actions}>

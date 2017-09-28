@@ -24,28 +24,33 @@ const initialState = Immutable.fromJS({
 
 const timelineReducer = (state = initialState, action) => {
     if (action.type === 'TIMELINE_ADD') {
-        return state.update(action.name, list => list.concat(action.timeline));
+        return state.update(action.payload.name, list => list.concat(action.payload.timeline));
     }
 
     if (action.type === 'TIMELINE_PREPEND') {
-        return state.update(action.name, list => list.insert(0, action.item));
+        console.log(action, action.payload);
+        return state.update(action.payload.name, list => list.insert(0, action.payload.item));
     }
 
     if (action.type === 'TIMELINE_START') {
-        action.api.timeline("home").latest((timeline) => {
-            action.dispatch({
+        action.payload.api.timeline("home").latest((timeline) => {
+            action.payload.dispatch({
                 type: 'TIMELINE_ADD',
-                name: action.timelineName,
-                timeline: timeline,
+                payload: {
+                    name: action.payload.timelineName,
+                    timeline: timeline,
+                },
             });
-            action.dispatch({
+            action.payload.dispatch({
                 type: 'TIMELINE_SUBSCRIBE',
-                timelineName: action.timelineName,
-                api: action.api,
-                stream: "user",
-                dispatch: action.dispatch,
+                payload: {
+                    timelineName: action.payload.timelineName,
+                    api: action.payload.api,
+                    stream: "user",
+                    dispatch: action.payload.dispatch,
+                },
             });
-            action.dispatch({
+            action.payload.dispatch({
                 type: "LOADING_INDICATOR_HIDE",
             });
         });
@@ -53,11 +58,13 @@ const timelineReducer = (state = initialState, action) => {
     }
 
     if (action.type === 'TIMELINE_SUBSCRIBE') {
-        action.api.startStreaming("user", (item) => {
-            action.dispatch({
+        action.payload.api.startStreaming("user", (item) => {
+            action.payload.dispatch({
                 type: "TIMELINE_PREPEND",
-                name: action.timelineName,
-                item: item,
+                payload: {
+                    name: action.payload.timelineName,
+                    item: item,
+                },
             });
         });
         return state;

@@ -37,24 +37,24 @@ const composeReducer = (state = initialState, action) => {
 
     if (action.type === 'COMPOSE_SHOW') {
         let newText = state.get("text");
-        if (state.get("replyTo") && !action.replyTo)
+        if (state.get("replyTo") && !action.payload.replyTo)
             newText = "";
 
-        if (action.replyTo) {
-            let mentions = [{acct: action.replyTo.account.acct}];
-            mentions = mentions.concat(action.replyTo.mentions)
+        if (action.payload.replyTo) {
+            let mentions = [{acct: action.payload.replyTo.account.acct}];
+            mentions = mentions.concat(action.payload.replyTo.mentions)
 
             newText = mentions.map(item => "@" + item.acct).join(" ") + " ";
         }
 
         return state.merge({show: true,
-                            title: action.title || "Toot",
-                            replyTo: action.replyTo && action.replyTo.id,
+                            title: action.payload.title || "Toot",
+                            replyTo: action.payload.replyTo && action.payload.replyTo.id,
                             text: newText});
     }
 
     if (action.type === 'COMPOSE_SET_TEXT') {
-        return state.set("text", action.text);
+        return state.set("text", action.payload.text);
     }
 
     return state;

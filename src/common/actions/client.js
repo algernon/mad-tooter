@@ -44,7 +44,9 @@ export const authorizeClient = (config) => {
                         }
                         store.dispatch({
                             type: 'STORE_CONFIGURATION',
-                            config: newConfig,
+                            payload: {
+                                config: newConfig,
+                            },
                         });
                     })
                     .catch((error) => {
@@ -63,7 +65,9 @@ export const authorizeClient = (config) => {
         }
         store.dispatch({
             type: 'STORE_CONFIGURATION',
-            config: newConfig,
+            payload: {
+                config: newConfig,
+            },
         });
     }
 };

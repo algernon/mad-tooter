@@ -26,8 +26,8 @@ const initialState = Immutable.fromJS({
 
 const errorReducer = (state = initialState, action) => {
     if (action.type === 'SHOW_ERROR') {
-        return state.merge({message: action.message,
-                            transient: action.transient,
+        return state.merge({message: action.payload.message,
+                            transient: action.payload.transient,
                             show: true});
     }
 

@@ -21,7 +21,9 @@ import store from '../../store';
 export const showMediaInGallery = (idx, media) => () => {
     store.dispatch({
         type: 'GALLERY_SHOW',
-        images: media,
-        startIndex: idx,
+        payload: {
+            images: media,
+            startIndex: idx,
+        },
     });
 };

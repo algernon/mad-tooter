@@ -29,8 +29,8 @@ const configurationReducer = (state = initialState, action) => {
     }
 
     if (action.type === 'STORE_CONFIGURATION') {
-        window.localStorage.setItem("mastodon", JSON.stringify(action.config));
-        return state.set("mastodon", Immutable.fromJS(action.config));
+        window.localStorage.setItem("mastodon", JSON.stringify(action.payload.config));
+        return state.set("mastodon", Immutable.fromJS(action.payload.config));
     }
 
     return state;
