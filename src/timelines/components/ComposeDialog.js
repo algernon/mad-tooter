@@ -40,7 +40,6 @@ import PublicIcon from 'material-ui-icons/Public';
 import VignetteIcon from 'material-ui-icons/Vignette';
 
 import { postToot } from '../../common/actions/Mastodon';
-import store from '../../store';
 import QuotedTootCard from './QuotedTootCard';
 
 const maxTootLength = 500;
@@ -88,7 +87,7 @@ const styles = theme => ({
 
 class ComposeDialog extends React.Component {
     handleRequestClose = () => {
-        store.dispatch({type: 'COMPOSE_HIDE'})
+        this.props.dispatch({type: 'COMPOSE_HIDE'})
     };
 
     lookupToot = (id) => {
@@ -106,7 +105,7 @@ class ComposeDialog extends React.Component {
     }
 
     cancelToot = () => {
-        store.dispatch({type: 'COMPOSE_CANCEL'});
+        this.props.dispatch({type: 'COMPOSE_CANCEL'});
     }
 
     tootLength = () => {
@@ -144,7 +143,7 @@ class ComposeDialog extends React.Component {
                     <TextField autoFocus multiline
                                rows={10}
                                value={this.props.text}
-                               onChange={(e) => {store.dispatch({type: 'COMPOSE_SET_TEXT', text: e.target.value});}}
+                               onChange={(e) => {dispatch({type: 'COMPOSE_SET_TEXT', text: e.target.value});}}
                       placeholder="What is on your mind?"/>
                   </FormControl>
                   <FormControl className={classes.actions}>

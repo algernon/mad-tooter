@@ -22,8 +22,6 @@ import { connect } from 'react-redux';
 import Snackbar from 'material-ui/Snackbar';
 import { withStyles } from 'material-ui/styles';
 
-import store from '../../store';
-
 const styles = theme => ({
     snackbar: {
         bottom: theme.spacing.unit,
@@ -34,7 +32,7 @@ const styles = theme => ({
 
 class ErrorMessage extends React.Component {
     handleRequestClose = () => {
-        store.dispatch({type: 'HIDE_ERROR'});
+        this.props.dispatch({type: 'HIDE_ERROR'});
     }
 
     render() {

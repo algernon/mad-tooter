@@ -21,8 +21,6 @@ import { connect } from 'react-redux';
 
 import Lightbox from 'react-image-lightbox';
 
-import store from '../../store';
-
 class GalleryViewer extends React.Component {
     constructor(props) {
         super(props);
@@ -30,7 +28,7 @@ class GalleryViewer extends React.Component {
     }
 
     handleCloseRequest () {
-        store.dispatch({type: 'GALLERY_HIDE'})
+        this.props.dispatch({type: 'GALLERY_HIDE'})
     }
 
     handleMovePrevRequest = self => () => {
