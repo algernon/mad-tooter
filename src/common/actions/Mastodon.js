@@ -16,8 +16,8 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-import store from '../store';
-import { MastodonMultiAPI } from '../mastodon/API';
+import store from '../../store';
+import { MastodonMultiAPI } from '../../mastodon/API';
 
 let api = null;
 

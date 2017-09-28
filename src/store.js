@@ -19,12 +19,12 @@
 import { createStore } from 'redux';
 import { combineReducers } from 'redux-immutable';
 
-import composeReducer from './reducers/composeReducer';
-import configurationReducer from './reducers/configurationReducer';
-import errorReducer from './reducers/errorReducer';
-import galleryReducer from './reducers/galleryReducer';
-import loadingIndicatorReducer from './reducers/loadingIndicatorReducer';
-import timelineReducer from './reducers/timelineReducer';
+import composeReducer from './timelines/reducers/composeReducer';
+import configurationReducer from './common/reducers/configurationReducer';
+import errorReducer from './common/reducers/errorReducer';
+import galleryReducer from './timelines/reducers/galleryReducer';
+import loadingIndicatorReducer from './common/reducers/loadingIndicatorReducer';
+import timelineReducer from './timelines/reducers/timelineReducer';
 
 const reducers = combineReducers({
     compose: composeReducer,

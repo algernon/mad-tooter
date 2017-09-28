@@ -25,7 +25,7 @@ import { CardHeader } from 'material-ui/Card';
 import { withStyles } from 'material-ui/styles';
 
 import TootAge from './TootAge';
-import { showAccount } from '../../../actions/toot';
+import { showAccount } from '../../actions/toot';
 
 const styles = theme => ({
     header: {

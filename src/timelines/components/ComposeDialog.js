@@ -39,7 +39,7 @@ import PersonIcon from 'material-ui-icons/Person';
 import PublicIcon from 'material-ui-icons/Public';
 import VignetteIcon from 'material-ui-icons/Vignette';
 
-import { postToot } from '../../actions/Mastodon';
+import { postToot } from '../../common/actions/Mastodon';
 import store from '../../store';
 import QuotedTootCard from './QuotedTootCard';
 

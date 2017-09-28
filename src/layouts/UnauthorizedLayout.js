@@ -19,7 +19,7 @@
 import React from 'react';
 import { Switch, Route, Redirect } from 'react-router-dom';
 
-import ClientAuthorizationPage from '../pages/ClientAuthorizationPage';
+import ClientAuthorizationPage from '../auth/pages/ClientAuthorizationPage';
 
 const UnauthorizedLayout = () => (
     <Switch>

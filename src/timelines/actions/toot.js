@@ -16,8 +16,8 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-import { showError } from '../utils';
-import store from '../store';
+import { showError } from '../../common/actions/errorMessage';
+import store from '../../store';
 
 const showComposeDialog = (replyTo) => {
     store.dispatch({

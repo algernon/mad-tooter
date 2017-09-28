@@ -21,7 +21,7 @@ import { Switch, Route, Redirect } from 'react-router-dom';
 
 import { withStyles } from 'material-ui/styles';
 
-import TimelinePage from '../pages/TimelinePage';
+import TimelinePage from '../timelines/pages/TimelinePage';
 
 const styles = theme => ({
     appFrame: {

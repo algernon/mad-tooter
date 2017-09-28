@@ -22,7 +22,7 @@ import { connect } from 'react-redux';
 import Snackbar from 'material-ui/Snackbar';
 import { withStyles } from 'material-ui/styles';
 
-import store from '../store';
+import store from '../../store';
 
 const styles = theme => ({
     snackbar: {

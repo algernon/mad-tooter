@@ -23,8 +23,8 @@ import { render } from 'react-dom';
 
 import AuthorizedRoute from './routers/AuthorizedRoute';
 import store from './store';
-import { loadConfiguration } from './actions/client';
-import withRoot from './utils/withRoot';
+import { loadConfiguration } from './common/actions/client';
+import withRoot from './styles/withRoot';
 
 import UnauthorizedLayout from './layouts/UnauthorizedLayout';
 import PrimaryLayout from './layouts/PrimaryLayout';

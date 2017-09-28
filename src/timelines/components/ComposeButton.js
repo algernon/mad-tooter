@@ -23,7 +23,7 @@ import { withStyles } from 'material-ui/styles';
 
 import CreateIcon from 'material-ui-icons/Create';
 
-import { composeNewToot } from '../../actions/toot';
+import { composeNewToot } from '../actions/toot';
 
 const styles = theme => ({
     button: {

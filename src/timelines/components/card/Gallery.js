@@ -21,7 +21,7 @@ import React from 'react';
 import Paper from 'material-ui/Paper';
 import { withStyles } from 'material-ui/styles';
 
-import { showMediaInGallery } from '../../../actions/gallery';
+import { showMediaInGallery } from '../../actions/gallery';
 
 const styles = theme => ({
     image: {

@@ -16,9 +16,9 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-import store from '../store';
-import { MastodonAPI } from '../mastodon/API';
-import { showError } from '../utils';
+import store from '../../store';
+import { MastodonAPI } from '../../mastodon/API';
+import { showError } from './errorMessage';
 
 export const loadConfiguration = () => {
     store.dispatch({

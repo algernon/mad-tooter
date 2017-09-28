@@ -16,12 +16,12 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-import store from './store';
+import store from '../../store';
 
-export const showError = (message, transient = false) => {
+export const showMediaInGallery = (idx, media) => () => {
     store.dispatch({
-        type: 'SHOW_ERROR',
-        message: message,
-        transient: transient,
+        type: 'GALLERY_SHOW',
+        images: media,
+        startIndex: idx,
     });
 };

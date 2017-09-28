@@ -32,15 +32,15 @@ import PeopleIcon from 'material-ui-icons/People';
 import PublicIcon from 'material-ui-icons/Public';
 import WhatshotIcon from 'material-ui-icons/Whatshot';
 
-import AppBar from '../components/AppBar';
-import ComposeButton from '../components/timelines/ComposeButton';
-import ComposeDialog from '../components/timelines/ComposeDialog';
-import ErrorMessage from '../components/ErrorMessage';
-import GalleryViewer from '../components/timelines/GalleryViewer';
-import LoadingIndicator from '../components/LoadingIndicator';
-import Timeline from '../components/timelines/Timeline';
+import AppBar from '../../common/components/AppBar';
+import ComposeButton from '../components/ComposeButton';
+import ComposeDialog from '../components/ComposeDialog';
+import ErrorMessage from '../../common/components/ErrorMessage';
+import GalleryViewer from '../components/GalleryViewer';
+import LoadingIndicator from '../../common/components/LoadingIndicator';
+import Timeline from '../components/Timeline';
 
-import { mastodonInit, loadNextTimelineBatch } from '../actions/Mastodon';
+import { mastodonInit, loadNextTimelineBatch } from '../../common/actions/Mastodon';
 
 const styles = theme => ({
     appBarIcon: {

@@ -34,7 +34,7 @@ import StarIcon from 'material-ui-icons/Star';
 
 import Gallery from './card/Gallery';
 import TootHeader from './card/TootHeader';
-import { updateToot, replyToToot, showContext } from '../../actions/toot';
+import { updateToot, replyToToot, showContext } from '../actions/toot';
 
 const styles = theme => ({
     toot: {

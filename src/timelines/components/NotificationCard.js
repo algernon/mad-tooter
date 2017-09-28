@@ -26,7 +26,7 @@ import { withStyles } from 'material-ui/styles';
 
 import TootCard from './TootCard';
 import TootHeader from './card/TootHeader';
-import { showError } from '../../utils';
+import { showError } from '../../common/actions/errorMessage';
 
 const styles = theme => ({
     notification: {

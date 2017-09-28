@@ -24,9 +24,9 @@ import AppBar from 'material-ui/AppBar';
 import Toolbar from 'material-ui/Toolbar';
 import Typography from 'material-ui/Typography';
 
-import { authorizeClient } from '../actions/client';
-import AddAccount from '../components/account/AddAccount';
-import ErrorMessage from '../components/ErrorMessage';
+import { authorizeClient } from '../../common/actions/client';
+import AddAccount from '../components/AddAccount';
+import ErrorMessage from '../../common/components/ErrorMessage';
 
 class ClientAuthorizationPage extends React.Component {
     render() {

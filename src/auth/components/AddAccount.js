@@ -27,7 +27,7 @@ import Switch from 'material-ui/Switch';
 import TextField from 'material-ui/TextField';
 import Typography from 'material-ui/Typography';
 
-import { showError } from '../../utils';
+import { showError } from '../../common/actions/errorMessage';
 
 const styles = theme => ({
     textField: {
