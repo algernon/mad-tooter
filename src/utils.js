@@ -18,12 +18,6 @@
 
 import store from './store';
 
-export const loadConfiguration = () => {
-    store.dispatch({
-        type: 'LOAD_CONFIGURATION',
-    });
-};
-
 export const showError = (message, transient = false) => {
     store.dispatch({
         type: 'SHOW_ERROR',

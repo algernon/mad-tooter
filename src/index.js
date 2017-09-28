@@ -23,25 +23,32 @@ import { render } from 'react-dom';
 
 import AuthorizedRoute from './routers/AuthorizedRoute';
 import store from './store';
-import { loadConfiguration } from './utils';
+import { loadConfiguration } from './actions/client';
 import withRoot from './utils/withRoot';
 
 import UnauthorizedLayout from './layouts/UnauthorizedLayout';
 import PrimaryLayout from './layouts/PrimaryLayout';
 
-const App = props => (
-    <Provider store={store}>
-      <HashRouter>
-        <Switch>
-          <Route path="/auth" component={UnauthorizedLayout} />
-          <AuthorizedRoute path="/" component={PrimaryLayout} />
-          <Redirect to="/auth" />
-        </Switch>
-      </HashRouter>
-    </Provider>
-);
-const AppWrapper = withRoot(App);
+class App extends React.Component {
+    constructor(props) {
+        super(props);
+        loadConfiguration();
+    }
 
-loadConfiguration();
+    render() {
+        return (
+            <Provider store={store}>
+              <HashRouter>
+                <Switch>
+                  <Route path="/auth" component={UnauthorizedLayout} />
+                  <AuthorizedRoute path="/" component={PrimaryLayout} />
+                  <Redirect to="/auth" />
+                </Switch>
+              </HashRouter>
+            </Provider>
+        );
+    }
+}
+App = withRoot(App);
 
-render(<AppWrapper />, document.querySelector('#root'));
+render(<App />, document.querySelector('#root'));

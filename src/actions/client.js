@@ -20,6 +20,12 @@ import store from '../store';
 import { MastodonAPI } from '../mastodon/API';
 import { showError } from '../utils';
 
+export const loadConfiguration = () => {
+    store.dispatch({
+        type: 'LOAD_CONFIGURATION',
+    });
+};
+
 export const authorizeClient = (config) => {
     if (config.accessToken === "") {
         let api = new MastodonAPI(config.key, {api: {baseURL: 'https://' + config.baseURI}});
