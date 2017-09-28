@@ -28,7 +28,6 @@ const timelineReducer = (state = initialState, action) => {
     }
 
     if (action.type === 'TIMELINE_PREPEND') {
-        console.log(action, action.payload);
         return state.update(action.payload.name, list => list.insert(0, action.payload.item));
     }
 
