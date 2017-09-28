@@ -31,6 +31,38 @@ const timelineReducer = (state = initialState, action) => {
         return state.update(action.name, list => list.insert(0, action.item));
     }
 
+    if (action.type === 'TIMELINE_START') {
+        action.api.timeline("home").latest((timeline) => {
+            action.dispatch({
+                type: 'TIMELINE_ADD',
+                name: action.timelineName,
+                timeline: timeline,
+            });
+            action.dispatch({
+                type: 'TIMELINE_SUBSCRIBE',
+                timelineName: action.timelineName,
+                api: action.api,
+                stream: "user",
+                dispatch: action.dispatch,
+            });
+            action.dispatch({
+                type: "LOADING_INDICATOR_HIDE",
+            });
+        });
+        return state;
+    }
+
+    if (action.type === 'TIMELINE_SUBSCRIBE') {
+        action.api.startStreaming("user", (item) => {
+            action.dispatch({
+                type: "TIMELINE_PREPEND",
+                name: action.timelineName,
+                item: item,
+            });
+        });
+        return state;
+    }
+
     return state;
 };
 

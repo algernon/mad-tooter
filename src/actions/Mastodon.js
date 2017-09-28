@@ -21,22 +21,6 @@ import { MastodonMultiAPI } from '../mastodon/API';
 
 let api = null;
 
-const addTimelineItems = (name, timeline) => {
-    store.dispatch({
-        type: 'TIMELINE_ADD',
-        name: name,
-        timeline: timeline,
-    });
-};
-
-const prependTimelineItem = (timelineName, item) => {
-    store.dispatch({
-        type: "TIMELINE_PREPEND",
-        name: timelineName,
-        item: item,
-    });
-};
-
 export const mastodonInit = (props) => {
     api = new MastodonMultiAPI(props.config.toJS());
 
@@ -44,14 +28,11 @@ export const mastodonInit = (props) => {
         type: "LOADING_INDICATOR_SHOW",
     });
 
-    api.timeline("home").latest((timeline) => {
-        addTimelineItems(props.timelineName, timeline);
-        store.dispatch({
-            type: "LOADING_INDICATOR_HIDE",
-        });
-    });
-    api.startStreaming("user", (item) => {
-        prependTimelineItem(props.timelineName, item);
+    store.dispatch({
+        type: "TIMELINE_START",
+        api: api,
+        dispatch: store.dispatch,
+        timelineName: props.timelineName,
     });
 };
 
@@ -61,7 +42,11 @@ export const loadNextTimelineBatch = (props) => {
     });
 
     api.timeline("home").next((timeline) => {
-        addTimelineItems(props.timelineName, timeline);
+        store.dispatch({
+            type: 'TIMELINE_ADD',
+            name: props.timelineName,
+            timeline: timeline,
+        });
         store.dispatch({
             type: "LOADING_INDICATOR_HIDE",
         });
