@@ -15,6 +15,7 @@
   "license": "AGPL-3.0+",
   "dependencies": {
     "axios": "^0.16.2",
+    "immutable": "^3.8.1",
     "jss": "latest",
     "jss-preset-default": "latest",
     "material-ui": "next",
@@ -31,6 +32,7 @@
     "react-scripts": "latest",
     "recompose": "latest",
     "redux": "^3.7.2",
+    "redux-immutable": "^4.0.0",
     "twemoji": "^2.5.0"
   },
   "scripts": {

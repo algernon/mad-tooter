@@ -91,6 +91,11 @@ class ComposeDialog extends React.Component {
         store.dispatch({type: 'COMPOSE_HIDE'})
     };
 
+    lookupToot = (id) => {
+        // TODO
+        return null;
+    }
+
     postToot = () => {
         postToot({
             status: this.props.text,
@@ -132,7 +137,7 @@ class ComposeDialog extends React.Component {
                   </Toolbar>
                 </AppBar>
               </DialogTitle>
-              <QuotedTootCard toot={replyTo} />
+              <QuotedTootCard toot={this.lookupToot(replyTo)} />
               <DialogContent className={replyTo ? null : classes.content}>
                 <form className={classes.form} autoComplete="none">
                   <FormControl className={classNames(classes.formControl, classes.tootText)}>
@@ -176,12 +181,12 @@ class ComposeDialog extends React.Component {
 
 ComposeDialog = withStyles(styles)(ComposeDialog);
 
-const stateToProps = ({ configuration, compose }) => ({
-    defaultAccount: Object.keys(configuration.mastodon)[0],
-    show: compose.show,
-    title: compose.title,
-    replyTo: compose.replyTo,
-    text: compose.text,
+const stateToProps = (state, props) => ({
+    defaultAccount: state.getIn(["configuration", "mastodon"]).keySeq().first(),
+    show: state.getIn(["compose", "show"]),
+    title: state.getIn(["compose", "title"]),
+    replyTo: state.getIn(["compose", "replyTo"]),
+    text: state.getIn(["compose", "text"]),
 });
 
 export default connect(stateToProps)(ComposeDialog);

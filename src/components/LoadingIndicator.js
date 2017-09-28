@@ -49,8 +49,8 @@ class LoadingIndicator extends React.Component {
     }
 }
 
-const stateToProps = ({ loadingIndicator }) => ({
-    show: loadingIndicator.show,
+const stateToProps = (state, props) => ({
+    show: state.getIn(["loadingIndicator", "show"]),
 });
 
 export default connect(stateToProps)(withStyles(styles)(LoadingIndicator));

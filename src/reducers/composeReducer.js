@@ -16,32 +16,28 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-const initialState = {
+import Immutable from 'immutable';
+
+const initialState = Immutable.fromJS({
     show: false,
     title: "Toot",
     replyTo: null,
     text: "",
-};
+});
 
 const composeReducer = (state = initialState, action) => {
     if (action.type === 'COMPOSE_HIDE') {
-        return Object.assign({}, state, {
-            show: false,
-            text: state.text,
-        });
+        return state.set("show", false);
     }
 
     if (action.type === 'COMPOSE_CANCEL') {
-        return Object.assign({}, state, {
-            show: false,
-            text: "",
-        });
+        return state.merge({show: false,
+                            text: ""});
     }
 
     if (action.type === 'COMPOSE_SHOW') {
-        let newText = state.text;
-
-        if (state.replyTo && !action.replyTo)
+        let newText = state.get("text");
+        if (state.get("replyTo") && !action.replyTo)
             newText = "";
 
         if (action.replyTo) {
@@ -51,18 +47,14 @@ const composeReducer = (state = initialState, action) => {
             newText = mentions.map(item => "@" + item.acct).join(" ") + " ";
         }
 
-        return Object.assign({}, state, {
-            show: true,
-            title: action.title || "Toot",
-            replyTo: action.replyTo,
-            text: newText,
-        });
+        return state.merge({show: true,
+                            title: action.title || "Toot",
+                            replyTo: action.replyTo && action.replyTo.id,
+                            text: newText});
     }
 
     if (action.type === 'COMPOSE_SET_TEXT') {
-        return Object.assign({}, state, {
-            text: action.text,
-        });
+        return state.set("text", action.text);
     }
 
     return state;

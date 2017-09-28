@@ -56,10 +56,10 @@ class ErrorMessage extends React.Component {
     }
 }
 
-const stateToProps = ({ error }) => ({
-    message: error.message,
-    show: error.show,
-    transient: error.transient,
+const stateToProps = (state, props) => ({
+    message: state.getIn(["error", "message"]),
+    show: state.getIn(["error", "show"]),
+    transient: state.getIn(["error", "transient"]),
 });
 
 export default connect(stateToProps)(withStyles(styles)(ErrorMessage));

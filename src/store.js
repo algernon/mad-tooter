@@ -16,7 +16,8 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-import { createStore, combineReducers } from 'redux';
+import { createStore } from 'redux';
+import { combineReducers } from 'redux-immutable';
 
 import composeReducer from './reducers/composeReducer';
 import configurationReducer from './reducers/configurationReducer';

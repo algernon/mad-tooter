@@ -16,23 +16,21 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-const initialState = {
+import Immutable from 'immutable';
+
+const initialState = Immutable.fromJS({
     mastodon: {},
-};
+});
 
 const configurationReducer = (state = initialState, action) => {
     if (action.type === 'LOAD_CONFIGURATION') {
         const mastodonConfig = JSON.parse(window.localStorage.getItem("mastodon"));
-        return Object.assign({}, state, {
-            mastodon: mastodonConfig,
-        });
+        return state.set("mastodon", Immutable.fromJS(mastodonConfig));
     }
 
     if (action.type === 'STORE_CONFIGURATION') {
         window.localStorage.setItem("mastodon", JSON.stringify(action.config));
-        return Object.assign({}, state, {
-            mastodon: action.config,
-        });
+        return state.set("mastodon", Immutable.fromJS(action.config));
     }
 
     return state;

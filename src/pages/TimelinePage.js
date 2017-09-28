@@ -183,16 +183,16 @@ class TimelinePage extends React.Component {
                     onScroll={this.handleScroll(this)}>
                 <div id="top" />
                 <Timeline name={timelineName}
-                          items={this.props.timeline[timelineName]} />
+                          items={this.props.timeline.get(timelineName)} />
               </main>
             </div>
         );
     }
 };
 
-const stateToProps = ({ configuration, timeline }) => ({
-    mastodonConfig: configuration.mastodon,
-    timeline: timeline,
+const stateToProps = (state, props) => ({
+    mastodonConfig: state.getIn(["configuration", "mastodon"]),
+    timeline: state.get("timeline"),
 });
 
 export default connect(stateToProps)(withStyles(styles)(TimelinePage));

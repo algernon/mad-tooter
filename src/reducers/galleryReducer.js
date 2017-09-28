@@ -16,25 +16,23 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-const initialState = {
+import Immutable from 'immutable';
+
+const initialState = Immutable.fromJS({
     show: false,
     images: null,
     startIndex: 0,
-};
+});
 
 const galleryReducer = (state = initialState, action) => {
     if (action.type === 'GALLERY_HIDE') {
-        return Object.assign({}, state, {
-            show: false,
-        });
+        return state.set("show", false);
     }
 
     if (action.type === 'GALLERY_SHOW') {
-        return Object.assign({}, state, {
-            show: true,
-            images: action.images,
-            startIndex: action.startIndex,
-        });
+        return state.merge({show: true,
+                            images: action.images,
+                            startIndex: action.startIndex});
     }
 
     return state;

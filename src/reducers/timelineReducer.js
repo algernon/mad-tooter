@@ -16,22 +16,19 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-const initialState = {
-};
+import Immutable from 'immutable';
+
+const initialState = Immutable.fromJS({
+    firehose: [],
+});
 
 const timelineReducer = (state = initialState, action) => {
     if (action.type === 'TIMELINE_ADD') {
-        let newState = {};
-        newState[action.name] = (state[action.name] || []).concat(action.timeline);
-        return Object.assign({}, state, newState);
+        return state.update(action.name, list => list.concat(action.timeline));
     }
 
     if (action.type === 'TIMELINE_PREPEND') {
-        let newState = {};
-        let newTimeline = state[action.name].slice();
-        newTimeline.unshift(action.item);
-        newState[action.name] = newTimeline;
-        return Object.assign({}, state, newState);
+        return state.update(action.name, list => list.insert(0, action.item));
     }
 
     return state;

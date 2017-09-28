@@ -36,9 +36,9 @@ class AuthorizedRoute extends React.Component {
     }
 }
 
-const stateToProps = ({ configuration }) => ({
-    configured: !!configuration.mastodon,
-    pending: configuration.mastodon === {},
+const stateToProps = (state, props) => ({
+    configured: !!state.getIn(["configuration", "mastodon"]),
+    pending: state.getIn(["configuration", "mastodon"]) === {},
 });
 
 export default connect(stateToProps)(AuthorizedRoute);

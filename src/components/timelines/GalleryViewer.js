@@ -71,10 +71,10 @@ class GalleryViewer extends React.Component {
     }
 }
 
-const stateToProps = ({ gallery }) => ({
-    show: gallery.show,
-    images: gallery.images,
-    startIndex: gallery.startIndex,
+const stateToProps = (state, props) => ({
+    show: state.getIn(["gallery", "show"]),
+    images: state.getIn(["gallery", "images"]),
+    startIndex: state.getIn(["gallery", "startIndex"]),
 });
 
 export default connect(stateToProps)(GalleryViewer);

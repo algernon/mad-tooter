@@ -38,7 +38,7 @@ const prependTimelineItem = (timelineName, item) => {
 };
 
 export const mastodonInit = (props) => {
-    api = new MastodonMultiAPI(props.config);
+    api = new MastodonMultiAPI(props.config.toJS());
 
     store.dispatch({
         type: "LOADING_INDICATOR_SHOW",

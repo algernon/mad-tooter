@@ -16,21 +16,19 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-const initialState = {
+import Immutable from 'immutable';
+
+const initialState = Immutable.fromJS({
     show: false,
-};
+});
 
 const loadingIndicatorReducer = (state = initialState, action) => {
     if (action.type === 'LOADING_INDICATOR_SHOW') {
-        return Object.assign({}, state, {
-            show: true,
-        });
+        return state.set("show", true);
     }
 
     if (action.type === 'LOADING_INDICATOR_HIDE') {
-        return Object.assign({}, state, {
-            show: false,
-        });
+        return state.set("show", false);
     }
 
     return state;

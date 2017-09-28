@@ -16,24 +16,23 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-const initialState = {
+import Immutable from 'immutable';
+
+const initialState = Immutable.fromJS({
     message: "",
     show: false,
-};
+    transient: false,
+});
 
 const errorReducer = (state = initialState, action) => {
     if (action.type === 'SHOW_ERROR') {
-        return Object.assign({}, state, {
-            message: action.message,
-            transient: action.transient,
-            show: true,
-        });
+        return state.merge({message: action.message,
+                            transient: action.transient,
+                            show: true});
     }
 
     if (action.type === 'HIDE_ERROR') {
-        return Object.assign({}, state, {
-            show: false,
-        });
+        return state.set("show", false);
     }
 
     return state;
