@@ -44,7 +44,7 @@ class TimelineItem extends React.Component {
 
 class Timeline extends React.Component {
     render () {
-        if (!this.props.items)
+        if (!this.props.items.size)
             return (
                 <List dense width="100%">
                   {[1, 2, 3, 4].map(index => {
