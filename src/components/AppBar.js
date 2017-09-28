@@ -17,7 +17,6 @@
  */
 
 import React from 'react';
-import { connect } from 'react-redux'
 
 import classNames from 'classnames';
 
@@ -139,10 +138,4 @@ class _AppBar extends React.Component {
     }
 };
 
-const stateToProps = ({ appBar }) => ({
-    icon: appBar.icon,
-    toolbar: appBar.toolbar,
-    drawerItems: appBar.drawerItems,
-});
-
-export default connect(stateToProps)(withStyles(styles)(_AppBar));
+export default withStyles(styles)(_AppBar);

@@ -40,7 +40,6 @@ import GalleryViewer from '../components/timelines/GalleryViewer';
 import LoadingIndicator from '../components/LoadingIndicator';
 import Timeline from '../components/timelines/Timeline';
 
-import { appBarInit } from '../actions/AppBar';
 import { mastodonInit, loadNextTimelineBatch } from '../actions/Mastodon';
 
 const styles = theme => ({
@@ -147,12 +146,6 @@ const TimelineDrawer = withRouter((props) => (
 
 class TimelinePage extends React.Component {
     componentDidMount() {
-        appBarInit({
-            icon: (<TimelineIcon className={this.props.classes.appBarIcon} />),
-            toolbar: (<TimelineAppToolbar />),
-            drawerItems: (<TimelineDrawer />),
-        });
-
         mastodonInit({config: this.props.mastodonConfig,
                       timelineName: this.props.match.params.timeline});
 
@@ -177,7 +170,10 @@ class TimelinePage extends React.Component {
               <GalleryViewer />
               <ComposeDialog />
               <ComposeButton />
-              <AppBar />
+              <AppBar icon={<TimelineIcon className={this.props.classes.appBarIcon}/>}
+                      toolbar={<TimelineAppToolbar />}
+                      drawerItems={<TimelineDrawer />} />
+
               <LoadingIndicator />
 
               <main className={this.props.classes.content}
