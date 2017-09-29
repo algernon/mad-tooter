@@ -30,13 +30,14 @@ const timelineReducer = (state = initialState, action) => {
         let statuses = {};
         action.payload.timeline.forEach(item => statuses[item.id] = item);
 
-        return state
-            .mergeIn(["statuses"], statuses)
+        let newState = state.mergeIn(["statuses"], statuses);
+
+        return newState
             .updateIn(["timelines", action.payload.name],
                       list => {
                           return list
                               .concat(action.payload.timeline.map(item => item.id.toString()))
-                              .sort((a, b) => statuses[a].created_at < statuses[b].created_at)
+                              .sort((a, b) => newState.getIn(["statuses", a]).created_at < newState.getIn(["statuses", b]).created_at)
                       });
     }
 
