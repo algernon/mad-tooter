@@ -19,16 +19,32 @@
 import Immutable from 'immutable';
 
 const initialState = Immutable.fromJS({
-    firehose: [],
+    statuses: {},
+    timelines: {
+        firehose: [],
+    },
 });
 
 const timelineReducer = (state = initialState, action) => {
     if (action.type === 'TIMELINE_ADD') {
-        return state.update(action.payload.name, list => list.concat(action.payload.timeline));
+        let statuses = {};
+        action.payload.timeline.forEach(item => statuses[item.id] = item);
+
+        return state
+            .mergeIn(["statuses"], statuses)
+            .updateIn(["timelines", action.payload.name],
+                      list => {
+                          return list
+                              .concat(action.payload.timeline.map(item => item.id.toString()))
+                              .sort((a, b) => statuses[a].created_at < statuses[b].created_at)
+                      });
     }
 
     if (action.type === 'TIMELINE_PREPEND') {
-        return state.update(action.payload.name, list => list.insert(0, action.payload.item));
+        return state
+            .setIn(["statuses", action.payload.item.id], Immutable.fromJS(action.payload.item))
+            .updateIn(["timelines", action.payload.name],
+                      list => list.insert(0, action.payload.item.id));
     }
 
     if (action.type === 'TIMELINE_START') {

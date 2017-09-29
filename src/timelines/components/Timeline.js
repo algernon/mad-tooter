@@ -60,10 +60,11 @@ class Timeline extends React.Component {
         return (
             <List dense width="100%">
               {this.props.items.map(item => {
+                  let status = this.props.statuses.get(item).toJS();
                   return (
-                      <ListItem key={`item-${item.id}-${item.__mad_tooter && item.__mad_tooter.source}`}
-                                id={`item-${item.id}-${item.__mad_tooter && item.__mad_tooter.source}`}>
-                        <TimelineItem item={item} />
+                      <ListItem key={`item-${status.id}-${status.__mad_tooter && status.__mad_tooter.source}`}
+                                id={`item-${status.id}-${status.__mad_tooter && status.__mad_tooter.source}`}>
+                        <TimelineItem item={status} />
                       </ListItem>
                   );
               })}
